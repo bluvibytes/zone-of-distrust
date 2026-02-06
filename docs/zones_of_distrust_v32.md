@@ -740,4 +740,4 @@ The architecture maps directly to existing regulatory and compliance frameworks 
 
 ---
 
-*Version 3.2 — February 2026*
+*Version 3.2 — BluVi.ai — February 2026*
