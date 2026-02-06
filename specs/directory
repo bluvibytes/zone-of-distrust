@@ -1,7 +1,0 @@
-spec/
-  ZOD-SPEC-v0.1.md
-  schemas/
-    execution-token.schema.json
-    integrity-event.schema.json
-    delegation-chain.schema.json
-    memory-event.schema.json
