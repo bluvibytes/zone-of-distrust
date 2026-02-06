@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bluvi.ai/schemas/zod/memory-event.schema.json",
+  "title": "ZoD Memory Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "timestamp", "agent_id", "operation", "content_digest", "source"],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 8 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "agent_id": { "type": "string", "minLength": 3 },
+    "operation": {
+      "type": "string",
+      "enum": ["create", "update", "delete", "read", "snapshot"]
+    },
+    "memory_key": {
+      "type": "string",
+      "description": "Logical key/identifier for the memory item (if applicable)."
+    },
+    "content_digest": {
+      "type": "string",
+      "description": "Digest of stored content (not raw content).",
+      "minLength": 16
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_type"],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": ["user_input", "tool_output", "rag_retrieval", "agent_output", "system"]
+        },
+        "source_id": { "type": "string" }
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "description": "Optional audit annotations (risk tags, classifier outputs).",
+      "additionalProperties": true
+    }
+  }
+}
