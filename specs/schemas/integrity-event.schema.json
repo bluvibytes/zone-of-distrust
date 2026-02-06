@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bluvi.ai/schemas/zod/integrity-event.schema.json",
+  "title": "ZoD Integrity Signal Channel Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "timestamp", "source_layer", "event_type", "severity", "data"],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 8 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "source_layer": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 7,
+      "description": "ZoD layer emitting the event."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "token.issued",
+        "token.denied",
+        "token.replay_attempt",
+        "execution.started",
+        "execution.succeeded",
+        "execution.failed",
+        "execution.mismatched_action",
+        "execution.orphaned_action",
+        "policy.changed",
+        "monitor.drift_alert",
+        "memory.event"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["debug", "info", "low", "medium", "high", "critical"]
+    },
+    "correlation_id": {
+      "type": "string",
+      "description": "Optional correlation identifier spanning CA/executor/monitoring."
+    },
+    "agent_id": { "type": "string" },
+    "token_id": { "type": "string" },
+    "data": {
+      "type": "object",
+      "description": "Event payload. Structure depends on event_type.",
+      "additionalProperties": true
+    }
+  }
+}
