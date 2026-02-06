@@ -1,1 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bluvi.ai/schemas/zod/execution-token.schema.json",
+  "title": "ZoD Execution Token",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "token_id",
+    "issuer",
+    "subject_agent_id",
+    "action",
+    "issued_at",
+    "expires_at",
+    "nonce",
+    "executor_id",
+    "signature"
+  ],
+  "properties": {
+    "token_id": {
+      "type": "string",
+      "description": "Unique token identifier (UUID or equivalent).",
+      "minLength": 8
+    },
+    "issuer": {
+      "type": "string",
+      "description": "Identifier of the issuing CA.",
+      "minLength": 3
+    },
+    "subject_agent_id": {
+      "type": "string",
+      "description": "Agent identity the token was issued for.",
+      "minLength": 3
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "target", "tool", "parameter_binding", "content_binding"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Action type (e.g., email.send, db.read, file.write).",
+          "minLength": 3
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool/executor capability name.",
+          "minLength": 2
+        },
+        "target": {
+          "type": "string",
+          "description": "Target resource identifier (URI/ARN/path/etc).",
+          "minLength": 1
+        },
+        "parameter_binding": {
+          "type": "object",
+          "description": "Machine-evaluable parameter binding for the action.",
+          "additionalProperties": false,
+          "required": ["binding_type"],
+          "properties": {
+            "binding_type": {
+              "type": "string",
+              "enum": ["digest", "constraints"]
+            },
+            "digest": {
+              "type": "string",
+              "description": "Cryptographic digest over canonicalized parameters."
+            },
+            "constraints": {
+              "type": "object",
+              "description": "Explicit constraints if digesting is not possible."
+            }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "binding_type": { "const": "digest" } } },
+              "then": { "required": ["digest"] }
+            },
+            {
+              "if": { "properties": { "binding_type": { "const": "constraints" } } },
+              "then": { "required": ["constraints"] }
+            }
+          ]
+        },
+        "content_binding": {
+          "type": "object",
+          "description": "Binding or constraints for the action payload/content.",
+          "additionalProperties": false,
+          "required": ["binding_type"],
+          "properties": {
+            "binding_type": {
+              "type": "string",
+              "enum": ["hash", "constraints"]
+            },
+            "hash": {
+              "type": "string",
+              "description": "Cryptographic hash of approved content payload."
+            },
+            "constraints": {
+              "type": "object",
+              "description": "Explicit payload constraints (domains, size limits, patterns)."
+            }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "binding_type": { "const": "hash" } } },
+              "then": { "required": ["hash"] }
+            },
+            {
+              "if": { "properties": { "binding_type": { "const": "constraints" } } },
+              "then": { "required": ["constraints"] }
+            }
+          ]
+        },
+        "mutable_fields": {
+          "type": "array",
+          "description": "Fields allowed to vary between approval and execution.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Single-use cryptographic nonce.",
+      "minLength": 8
+    },
+    "executor_id": {
+      "type": "string",
+      "description": "Identity of the authorized executor.",
+      "minLength": 3
+    },
+    "policy": {
+      "type": "object",
+      "description": "Optional policy metadata for traceability.",
+      "additionalProperties": true
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "kid", "value"],
+      "properties": {
+        "alg": { "type": "string", "minLength": 3 },
+        "kid": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 16 }
+      }
+    }
+  }
+}
 
