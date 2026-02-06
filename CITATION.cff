@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "Zones of Distrust"
+message: "If you use this work, please cite it as below."
+type: software
+authors:
+  - family-names: "Babylon"
+    given-names: "Sherri"
+    affiliation: "BluVi"
+repository-code: "https://github.com/bluvibytes/zone-of-distrust"
+license: "Apache-2.0"
+preferred-citation:
+  type: report
+  title: "Zones of Distrust: A Layered Security Architecture for Autonomous AI Agents"
+  authors:
+    - family-names: "Babylon"
+      given-names: "Sherri"
+      affiliation: "BluVi"
+  year: 2026
+  version: "3.1"
+  institution: "BluVi"
+  url: "https://github.com/bluvibytes/zone-of-distrust"
