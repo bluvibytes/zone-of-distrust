@@ -2,12 +2,26 @@ cff-version: 1.2.0
 title: "Zones of Distrust"
 message: "If you use this work, please cite it as below."
 type: software
+version: "0.9"
+date-released: "2026-02-05"
 authors:
   - family-names: "Babylon"
     given-names: "Sherri"
     affiliation: "BluVi"
 repository-code: "https://github.com/bluvibytes/zone-of-distrust"
-license: "Apache-2.0"
+url: "https://github.com/bluvibytes/zone-of-distrust"
+license: "Apache-2.0 AND CC-BY-4.0"
+abstract: "Zones of Distrust (ZoD) is a layered execution-governance architecture for securing autonomous AI agents by separating reasoning from execution, enforcing CA-issued parameter-bound execution tokens, and enabling integrity signal correlation, monitoring, and memory audit."
+keywords:
+  - AI security
+  - agent security
+  - autonomous agents
+  - prompt injection
+  - execution governance
+  - zero trust
+  - policy enforcement
+  - memory poisoning
+  - integrity monitoring
 preferred-citation:
   type: report
   title: "Zones of Distrust: A Layered Security Architecture for Autonomous AI Agents"
@@ -16,6 +30,6 @@ preferred-citation:
       given-names: "Sherri"
       affiliation: "BluVi"
   year: 2026
-  version: "3.1"
+  version: "0.9"
   institution: "BluVi"
   url: "https://github.com/bluvibytes/zone-of-distrust"
