@@ -42,4 +42,105 @@ Key questions:
 ### Architecture Validity
 - Are the ZoD trust boundaries correct?
 - Does the separation of reasoning and execution reduce real-world agent risk?
-- Are Layers 4
+- Are Layers 4–5 defined clearly enough to prevent ambiguity?
+
+### Execution Token Model
+- Is the execution token design sufficient to prevent replay, substitution, and parameter tampering?
+- What should be bound into tokens (parameters, intent, context, chain metadata)?
+- What failure modes are not covered by token binding?
+
+### Policy Enforcement
+- Is ZoD-L2 semantic intent enforcement feasible at scale?
+- Can policies remain enforceable without becoming brittle allowlists?
+- Is "policy opacity" a valid security property or an operational risk?
+
+### Memory Audit and Baseline Integrity
+- Is memory audit defined clearly enough to be actionable?
+- What minimum provenance requirements should exist for memory writes?
+- Is baseline integrity verification realistic, and what metrics should be standardized?
+
+### Integrity Signal Correlation
+- What events must be emitted to enable reliable correlation?
+- Can integrity logging be made tamper-resistant in real deployments?
+- What is the minimum viable integrity signal channel implementation?
+
+### Multi-Agent Delegation Chains
+- Are delegation chain schemas sufficient to prevent chain abuse?
+- How should chain risk scoring be defined?
+- What are the strongest known multi-agent escalation patterns that ZoD must address?
+
+---
+
+## Out of Scope (For v0.9)
+
+ZoD does not claim to solve all AI security problems.
+
+The following are considered out of scope unless explicitly addressed:
+
+- model training security and dataset provenance
+- model extraction prevention
+- hardware enclave security guarantees
+- full OS-level agent isolation primitives
+- general AI alignment and value alignment problems
+- prevention of hallucination (ZoD focuses on constraining hallucinated execution)
+
+ZoD assumes standard security practices exist for:
+- IAM and identity management
+- TLS and key management
+- OS hardening
+- network segmentation
+- dependency and supply chain security
+
+---
+
+## What Would Make This RFC "Successful"
+
+This RFC is considered successful if it produces:
+
+- actionable critiques that improve the spec
+- adversarial test cases that challenge ZoD assumptions
+- implementable reference patterns for CA + executor enforcement
+- stronger schema definitions for tokens, integrity events, and memory events
+- early adopters who prototype ZoD-L1 or ZoD-L2 deployments
+- contributors who expand the attack harness and compliance mappings
+
+---
+
+## How to Provide Feedback
+
+We welcome feedback through:
+
+- GitHub Issues (architecture critiques, schema issues, policy gaps)
+- Pull Requests (documentation/spec improvements, test cases, schemas)
+- GitHub Discussions (broader debates and design questions)
+
+If you believe you found a security vulnerability in any reference implementation code,
+please report it privately:
+
+**security@bluvi.ai**
+
+See: `SECURITY.md`
+
+---
+
+## Versioning
+
+This repository is released as **ZoD v0.9**.
+
+Breaking changes may occur prior to v1.0 as peer review and implementation feedback is incorporated.
+
+---
+
+## Attribution and Licensing
+
+ZoD is dual-licensed:
+
+- specification and documentation: **CC BY 4.0**
+- code and reference implementation: **Apache 2.0**
+
+See:
+- `LICENSE`
+- `LICENSE-CC-BY`
+- `LICENSES.md`
+
+If you use this work in research or publication, please cite using `CITATION.cff`.
