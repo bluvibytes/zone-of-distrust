@@ -18,6 +18,8 @@ Please report security vulnerabilities by emailing:
 
 **security@bluvi.ai**
 
+If your report contains highly sensitive details, request an encrypted reporting channel.
+
 Include the following when possible:
 
 - a clear description of the issue
@@ -34,7 +36,13 @@ If you believe the issue is actively exploitable, please indicate urgency in the
 
 ## Response Timeline
 
-We will acknowledge receipt within a reasonable time.
+We will acknowledge receipt as soon as reasonably possible.
+
+Where possible, we aim to respond within:
+
+- **Critical severity:** 48 hours
+- **High severity:** 5 business days
+- **Medium/Low severity:** as capacity permits
 
 We will coordinate a fix and disclosure timeline based on severity and reproducibility.
 
@@ -51,6 +59,7 @@ If you:
 - avoid disruption of services or infrastructure
 - do not exploit beyond proof-of-concept
 - do not attempt persistence, lateral movement, or destructive actions
+- do not test against production systems or third-party systems without explicit authorization
 
 then we will not pursue legal action related to your report.
 
