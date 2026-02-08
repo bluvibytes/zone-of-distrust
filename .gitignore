@@ -1,0 +1,39 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Build outputs
+build/
+dist/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Node (if we add tooling later)
+node_modules/
+
+# Python (if we add tooling later)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment files
+.env
+.env.*
+venv/
