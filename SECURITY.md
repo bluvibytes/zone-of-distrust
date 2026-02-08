@@ -80,12 +80,15 @@ The following are generally out of scope unless they result in a clear security 
 
 ## Security Philosophy
 
-ZoD is designed under the assumption that reasoning systems can be manipulated. Security issues that demonstrate bypass of:
+ZoD is built on the assumption that reasoning systems (LLMs/agents) can be manipulated, misled, or prompt-injected.  
+Because of that, general model misbehavior is expected and not always a ZoD vulnerability by itself.
 
-- policy enforcement
-- token binding
-- executor validation
-- integrity signal correlation
-- memory audit assumptions
+High-priority security issues are those that demonstrate a bypass of ZoD’s enforcement boundaries, including:
 
-are considered high priority.
+- **Policy enforcement bypass** (actions executed outside allowed scope)
+- **Execution token bypass** (tokens can be replayed, forged, reused, or used with modified parameters)
+- **Executor validation failure** (executor performs actions without correct signature/TTL/nonce/binding checks)
+- **Integrity logging / monitoring bypass** (actions occur without reliable audit signals or correlation visibility)
+- **Memory integrity / provenance failure** (poisoned or tampered memory can influence execution without detection)
+
+In short: ZoD assumes reasoning can fail. Vulnerabilities that enable unauthorized execution despite ZoD controls are treated as highest severity.
