@@ -100,4 +100,22 @@ Security issues are coordinated through maintainers and handled with responsible
 
 ## Conflicts of Interest
 
-ZoD is maintained by BluVi. BluVi may implement ZoD commercially and may make decisions that preserve architectural integrity, attribution requirements, and long-term project stability
+ZoD is maintained by BluVi. BluVi may implement ZoD commercially and may make decisions that preserve architectural integrity, attribution requirements, and long-term project stability.
+
+This project welcomes community participation while maintaining consistent stewardship of the specification.
+
+---
+
+## Community Standards
+
+All participation is governed by:
+
+- `CODE_OF_CONDUCT.md`
+
+Harassment, abuse, or bad-faith participation will not be tolerated.
+
+---
+
+## Changes to Governance
+
+Changes to this governance model may be proposed through issues or pull requests, but final approval remains with the maintainers.
