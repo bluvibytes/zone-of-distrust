@@ -7,6 +7,10 @@ ZoD is intended to be complementary to existing security standards and framework
 
 Review is welcome from researchers, practitioners, engineers, students, and anyone able to provide rigorous technical critique.
 
+Major feedback themes and review outcomes may be tracked in:
+
+- `/reviews/REVIEW_LOG.md`
+
 ---
 
 ## What We Are Asking Reviewers to Evaluate
