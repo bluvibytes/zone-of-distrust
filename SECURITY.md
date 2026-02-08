@@ -5,7 +5,7 @@ This project is under active development. Security issues should be reported pri
 
 ## Reporting a Vulnerability
 Please report security vulnerabilities by emailing:
-info@bluvi.ai
+security@bluvi.ai
 
 Include:
 - a clear description of the issue,
