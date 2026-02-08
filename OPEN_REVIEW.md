@@ -1,9 +1,11 @@
-# Peer Review and External Feedback
+# Open Review and External Feedback
 
 Zones of Distrust (ZoD) is published as an RFC-stage security architecture and specification.  
-This repository explicitly welcomes adversarial critique and technical peer review.
+This repository explicitly welcomes adversarial critique and technical review.
 
 ZoD is intended to be complementary to existing security standards and frameworks, not a replacement.
+
+Review is welcome from researchers, practitioners, engineers, students, and anyone able to provide rigorous technical critique.
 
 ---
 
@@ -32,8 +34,7 @@ Feedback is welcome via:
 - Pull Requests (proposed edits to specs/docs/schemas)
 - GitHub Discussions (broader architectural debate)
 
-If you believe you found a security vulnerability in any reference implementation code,
-please report it privately:
+If you believe you found a security vulnerability in any reference implementation code, please report it privately:
 
 **security@bluvi.ai**
 
