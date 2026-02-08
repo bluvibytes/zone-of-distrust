@@ -15,4 +15,4 @@ We aim to build a constructive, adversarial-friendly security community around Z
 
 ## Reporting
 Report Code of Conduct issues to:
-info@bluvi.ai
+security@bluvi.ai
