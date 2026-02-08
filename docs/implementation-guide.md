@@ -32,15 +32,17 @@ This guide provides practical implementation guidance for the Zones of Distrust 
 
 ## Minimum Viable Security
 
-You don't need all seven layers on day one. Start with the core trust boundary.
+You don't need all seven layers to start. Begin with the core trust boundary.
 
-### Week 1: The Critical Three
+### Start Here: The Critical Three
 
 | Layer | Minimum Implementation | Why It's Essential |
 |-------|----------------------|-------------------|
 | **L3: Cognitive Isolation** | Separate reasoning process from execution process | Without this, a compromised agent can act directly |
 | **L4: Request Validation** | Basic scope checking + action logging | Without this, no independent verification |
 | **L5: Execution** | Token-based execution with logging | Without this, no audit trail |
+
+*Timeline varies significantly based on starting point, team experience, and existing infrastructure. Greenfield with container experience may take days; retrofitting existing systems may take weeks.*
 
 ### Implementation Pattern
 
@@ -118,7 +120,7 @@ networks:
 
 ## Phased Implementation
 
-### Phase 1: Core Containment (Weeks 1-2)
+### Phase 1: Core Containment
 
 **Goal:** Separate reasoning from execution with basic validation and logging.
 
@@ -149,7 +151,7 @@ networks:
 
 ---
 
-### Phase 2: Input Control (Weeks 3-4)
+### Phase 2: Input Control
 
 **Goal:** Screen inputs before the agent reasons about them.
 
@@ -177,7 +179,7 @@ networks:
 
 ---
 
-### Phase 3: Behavioral Baseline & Anomaly Detection (Weeks 5-6)
+### Phase 3: Behavioral Baseline & Anomaly Detection
 
 **Goal:** Move from basic logging to behavioral analysis and anomaly detection.
 
@@ -206,7 +208,7 @@ networks:
 
 ---
 
-### Phase 4: Enhanced Validation (Weeks 7-8)
+### Phase 4: Enhanced Validation
 
 **Goal:** Add semantic intent policy and behavioral baseline checks to L4.
 
@@ -250,7 +252,7 @@ class ExecutionToken:
 
 ---
 
-### Phase 5: Memory Audit (Weeks 9-10)
+### Phase 5: Memory Audit
 
 **Goal:** External audit of agent persistent memory.
 
@@ -299,7 +301,7 @@ class ExecutionToken:
 
 ---
 
-### Phase 6: OS Foundation (Weeks 11-12)
+### Phase 6: OS Foundation
 
 **Goal:** Harden the infrastructure layer.
 
@@ -627,14 +629,14 @@ spec:
 
 ## Implementation Checklist
 
-### Minimum Viable (Week 1)
+### Minimum Viable
 
-- [ ] L3: Agent process isolated (no network egress, no exec)
+- [ ] L3: Agent process isolated (no external egress, hardened execution surface)
 - [ ] L4: Basic scope validation
 - [ ] L5: Token-based execution
 - [ ] Logging: All actions logged with tokens
 
-### Production Ready (Week 12)
+### Full Implementation
 
 - [ ] L1: Agent identity, credential broker, model verification
 - [ ] L2: Input screening with degraded modes
@@ -646,6 +648,8 @@ spec:
 - [ ] Integrity channel: Append-only, out-of-band, correlation-ready
 - [ ] Recovery: Documented playbook, tested procedures
 
+*Phases are sequential dependencies, not calendar commitments. Actual timeline depends on team size, existing infrastructure, and starting point.*
+
 ---
 
 ## Common Pitfalls
@@ -654,7 +658,7 @@ spec:
 |---------|----------------|--------------|
 | **Agent can still reach internet** | Network isolation incomplete | Test with actual requests; verify firewall rules |
 | **Credentials in environment variables** | Convenience over security | Use credential broker; agent never sees secrets |
-| **Logging but not monitoring** | Logs exist but no one watches | Set up alerts on day 1; review weekly |
+| **Logging but not monitoring** | Logs exist but no one watches | Set up alerts from the start; review regularly |
 | **L4 validates identity but not content** | Traditional IAM thinking | Add semantic intent policy; content hash binding |
 | **No recovery plan** | Focus on prevention | Document playbook before you need it |
 | **Human approval fatigue** | Too many escalations | Tune risk thresholds; use tiered validation |
