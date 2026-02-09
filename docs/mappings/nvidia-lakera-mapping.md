@@ -275,12 +275,11 @@ NVIDIA's AI-Q Research Assistant case study provides empirical data.
 
 ## References
 
-- [NVIDIA AI Safety and Security Framework](https://arxiv.org/abs/2411.10685)
-- [Nemotron-AIQ Dataset](https://huggingface.co/datasets/nvidia/Nemotron-AIQ)
+- [NVIDIA AI Safety and Security Framework for Real-World Agentic Systems](https://arxiv.org/abs/2511.21990)
+- [Nemotron-AIQ Dataset](https://huggingface.co/datasets/nvidia/Nemotron-AIQ-Agentic-Safety-Dataset-1.0)
 - [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Implementation Guide](../docs/implementation-guide.md)
-
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Implementation Guide](../implementation-guide.md)
 ---
 
 *Zones of Distrust v0.9 RFC — February 2026 — BluVi*
