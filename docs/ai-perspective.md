@@ -477,7 +477,7 @@ The AI's perspective is not the only input to security architecture. But it is a
 
 ## Related Documents
 
-- [Architecture Specification](architecture.md) — The seven layers that implement this perspective
+- [Architecture Specification](ARCHITECTURE.md) — The seven layers that implement this perspective
 - [Security Properties](security-properties.md) — Measurable properties (P1-P12)
 - [Threat Model](threat-model.md) — The attacks these insights defend against
 
