@@ -270,10 +270,11 @@ See [ROADMAP.md](../../ROADMAP.md) for implementation timeline.
 
 ## Related Documents
 
-- [ZOD-SPEC-v0.9-RFC.md](../ZOD-SPEC-v0.9-RFC.md) — Companion Specification
+- [Companion Specification](../ZOD-SPEC-v0.9-RFC.md) — ZOD-SPEC-v0.9-RFC.md
 - [Architecture](../../docs/ARCHITECTURE.md) — Full architecture specification
 - [Security Properties](../../docs/security-properties.md) — Measurable security properties
 - [Threat Model](../../docs/threat-model.md) — Attacker positions and trust assumptions
+- [ROADMAP](../../ROADMAP.md) — Development milestones
 
 ---
 
