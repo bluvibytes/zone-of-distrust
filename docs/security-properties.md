@@ -533,7 +533,7 @@ For each property, verify:
 - [Architecture Specification](ARCHITECTURE.md) — How the layers implement these properties
 - [Threat Model](threat-model.md) — What attacks these properties defend against
 - [Implementation Guide](implementation-guide.md) — How to build systems that achieve these properties
-- 
+  
 ---
 
 *Zones of Distrust v0.9 RFC — February 2026 — BluVi*
