@@ -658,7 +658,7 @@ Machine-readable schemas for ZoD data structures are provided in the `schemas/` 
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 0.9 RFC | February 2026 | Added degradation assumptions, fast-path processing, goal integrity validation, key protection requirements, goal drift detection, ISC backpressure handling, probing resistance tests, policy opacity requirements |
+| 0.9 RFC | February 2026 | Initial draft |
 
 ---
 
