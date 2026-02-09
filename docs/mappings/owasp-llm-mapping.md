@@ -292,7 +292,7 @@ The OWASP Top 10 for LLM Applications identifies vulnerabilities in Large Langua
 
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [OWASP Agentic Mapping](owasp-agentic-mapping.md)
-- [ZoD Architecture Specification](../docs/architecture.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
 
 ---
 
