@@ -106,7 +106,7 @@ See [LICENSES](LICENSES.md) for complete licensing details.
 
 ## 🏢 About BluVi
 
-Too many solutions are bandaids—security built for humans at the keyboard, retrofitted for AI agents. We've watched incident after incident unfold like a horror movie, everyone yelling "DON'T OPEN THE DOOR!" while eating popcorn intently. You just can't stop watching.
+Too many solutions are bandaids—security built for humans at the keyboard, retrofitted for AI agents. We've watched incident after incident unfold like a horror movie, everyone yelling "DON'T OPEN THE DOOR!" while eating popcorn intently do just that. But, you still can't seem to change the channel. 
 
 We decided to do something about it instead.
 
@@ -114,9 +114,11 @@ Zones of Distrust is our open contribution to shift the mindset and raise the ba
 
 Old solutions solve old problems. We need new ones. Let's build what works.
 
-**Learn more:** [Zone of Distrust](https://bluvi.ai/zones-of-distrust)
-**Contact:** security@bluvi.ai  
+**Learn more:** [Zone of Distrust](https://bluvi.ai/zones-of-distrust)  
+
 **GitHub:** [@bluvibytes](https://github.com/bluvibytes/zone-of-distrust)
+
+**Contact:** security@bluvi.ai
 
 ---
 
