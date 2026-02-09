@@ -112,9 +112,9 @@ Most recently example was OpenClaw. Did we really see 22K people fork OpenClaw t
 
 We decided to do something about it instead.
 
-Zones of Distrust is our open contribution to shift the mindset and raise the bar for agentic AI security. 
+Zones of Distrust is our open contribution to help raise the bar for agentic AI security. 
 
-Old solutions solve old problems. We need new ones. Let's build what works.
+We need new solutions. Let's build what works.
 
 **Learn more:** [Zone of Distrust](https://bluvi.ai/zones-of-distrust)  
 
