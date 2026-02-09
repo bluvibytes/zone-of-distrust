@@ -339,8 +339,8 @@ ZoD adds these principles beyond traditional ZTA:
 ## References
 
 - [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/publications/detail/sp/800-207/final)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Implementation Guide](../docs/implementation-guide.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Implementation Guide](../implementation-guide.md)
 
 ---
 
