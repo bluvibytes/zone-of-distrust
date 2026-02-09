@@ -10,14 +10,15 @@
 
 ---
 
-
-
 ## Overview
 
-MAESTRO (Multi-Agent Environment Security, Trust, Risk and Oversight) is the Cloud Security Alliance's methodology for assessing and securing multi-agent AI systems. It defines seven control domains that enterprise multi-agent deployments must address.
+MAESTRO (Multi-Agent Environment, Security, Threat, Risk and Outcome) is the Cloud Security Alliance's methodology for assessing and securing multi-agent AI systems. It defines seven architectural layers that enterprise multi-agent deployments must address.
 
 **Relationship:** MAESTRO tells you *what* controls should exist. ZoD tells you *how* to implement them.
 
+**Related CSA Guidance:** The Agentic Trust Framework (ATF, February 2026) complements MAESTRO—MAESTRO identifies *what could go wrong*, ATF addresses *how to maintain control*. ZoD implements both.
+
+**Note:** This mapping reframes MAESTRO's seven architectural layers as control domains for practical alignment with ZoD's layer-based architecture.
 ```
 ┌─────────────────────────────────────────┐
 │     MAESTRO (Assessment Methodology)    │
@@ -319,9 +320,12 @@ For MAESTRO compliance, verify ZoD controls:
 
 ## References
 
-- [CSA MAESTRO Framework](https://cloudsecurityalliance.org/research/working-groups/artificial-intelligence/)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Security Properties](../docs/security-properties.md)
+- [CSA MAESTRO Framework](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro)
+- [CSA MAESTRO GitHub](https://github.com/CloudSecurityAlliance/MAESTRO)
+- [CSA Agentic Trust Framework (ATF)](https://cloudsecurityalliance.org/blog/2026/02/02/the-agentic-trust-framework-zero-trust-governance-for-ai-agents)
+- [CSA AI Controls Matrix](https://cloudsecurityalliance.org/artifacts/ai-controls-matrix)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Security Properties](../security-properties.md)
 
 ---
 
