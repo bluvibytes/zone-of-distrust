@@ -201,7 +201,7 @@ The framework is published under Apache 2.0. Use it, modify it, build on it.
 
 For the full technical specification, see the [Architecture Document](ARCHITECTURE.md).
 
-For framework mappings, see the [Framework Mappings](/mappings/README.md).
+For framework mappings, see the [Framework Mappings](../mappings/README.md).
 
 ---
 
