@@ -278,8 +278,8 @@ CoSAI's defender preparation workstream provides:
 
 - [Coalition for Secure AI (CoSAI)](https://www.coalitionforsecureai.org/)
 - [OASIS Open Projects](https://www.oasis-open.org/)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Framework Positioning](../docs/framework-positioning.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Framework Positioning](../framework-positioning.md)
 
 ---
 
