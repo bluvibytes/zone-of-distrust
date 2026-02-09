@@ -602,7 +602,7 @@ This architecture will improve through real-world implementation and community f
 
 **GitHub:** [github.com/bluvibytes/zones-of-distrust](https://github.com/bluvibytes/zone-of-distrust/)
 
-See [CONTRIBUTING](https://github.com/bluvibytes/zones-of-distrust/blob/main/CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING](https://github.com/bluvibytes/zone-of-distrust/blob/main/CONTRIBUTING.md) for guidelines.
 
 ---
 
