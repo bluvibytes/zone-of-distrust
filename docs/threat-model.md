@@ -1,6 +1,6 @@
 # Threat Model
 
-**Zones of Distrust: Attacker Positions, Boundaries, and Failure Modes**
+**Attacker Positions and Boundary Conditions**
 
 *Version 0.9 RFC — February 2026*
 
@@ -17,11 +17,29 @@ This document defines:
 - How each layer fails and degrades
 - How attackers might weaponize the security controls themselves
 
+**Key distinction:** Traditional IAM assumes requestor intent is stable; ZoD assumes requestor reasoning is adversarial.
+
+---
+
+## Catastrophic Outcomes ZoD Is Designed to Prevent
+
+CISOs think in business risk, not attacker positions. The architecture is designed to prevent:
+
+| Outcome | How ZoD Breaks the Chain |
+|---------|--------------------------|
+| **Unauthorized money movement** | L4 validates financial actions against semantic policy; L7 escalates high-value transfers; token binding prevents parameter tampering |
+| **Mass data exfiltration** | L4 egress controls enforce data classification; semantic policy blocks bulk export patterns; L6 detects unusual data access |
+| **Privileged system changes** | L3 prevents direct execution; L4 requires explicit authorization for system modifications; L5 logs all changes immutably |
+| **Credential theft / lateral movement** | L1 credential brokering means agent never sees secrets; L4 tokens are single-use and parameter-bound |
+| **Persistent backdoor installation** | L6 memory audit detects planted payloads; L4 blocks unauthorized persistence mechanisms |
+
+Each attacker position below maps to one or more of these outcomes.
+
 ---
 
 ## Attacker Positions
 
-The architecture defends against six distinct attacker positions, consistent with attacker models described across major frameworks (Cisco, OWASP, Microsoft, NVIDIA/Lakera):
+The architecture defends against seven distinct attacker positions, consistent with attacker models described across major frameworks (Cisco, OWASP, Microsoft, NVIDIA/Lakera):
 
 ### Position 1: Untrusted Content
 
@@ -48,22 +66,36 @@ The architecture defends against six distinct attacker positions, consistent wit
 
 **Attack vector:** The attacker controls or has compromised a service the agent interacts with—an API, database, MCP server, or external tool.
 
-**Real-world examples:**
-- Malicious Postmark MCP server secretly BCC'd every agent-sent email to attacker
-- Malicious MCP packages with dual reverse shells providing persistent remote access
-- PhantomRaven/Slopsquatting campaign: 126 malicious packages registered under names AI assistants hallucinate when recommending dependencies
-- Cisco's Skill Scanner: 26% of skills in OpenClaw dataset vulnerable to exploitation
+**Reported incidents include:**
+- Malicious MCP server configurations that exfiltrate agent communications
+- Malicious MCP packages with reverse shells providing persistent remote access
+- Dependency confusion attacks where AI assistants recommend attacker-controlled packages
+- Vulnerable skills in agent frameworks enabling exploitation
 
 **Techniques include:**
 - Data exfiltration through compromised tools
 - Reverse shell installation via malicious MCP servers
 - **Tool output manipulation / reality poisoning:** compromised tool returns false records, fake bank accounts, fabricated confirmations—agent reasons correctly from false premises
 
+**Tool Abuse ("Living Off the Land"):**
+
+A distinct threat class: the tool is legitimate, but its authorized capabilities are abused.
+
+| Authorized Capability | Abuse Pattern |
+|----------------------|---------------|
+| Web search | Exfiltration via crafted search queries |
+| Email send | C2 communication disguised as business email |
+| Calendar access | Covert data storage in event descriptions |
+| Database write | Plant data that poisons another agent's reasoning |
+| File operations | Exfiltration through legitimate backup/sync |
+
+This is not a compromised endpoint—it's semantic overreach using valid credentials.
+
 **Framework references:**
 - OWASP ASI02: Tool Misuse and Exploitation
 - Cisco: Skill Scanner analysis
 
-**ZoD defense:** Layer 4 (CA) validates actions against semantic intent policy regardless of tool origin. Layer 6 (Monitoring) detects behavioral anomalies from tool interactions. For high-risk actions: cross-check critical tool outputs, require signed responses where available, corroborate via independent sources.
+**ZoD defense:** Layer 4 (CA) validates actions against semantic intent policy regardless of tool origin. Semantic policy defines negative constraints (what the tool *cannot* be used for) rather than relying on intent inference. Layer 6 (Monitoring) detects behavioral anomalies from tool interactions.
 
 ---
 
@@ -77,15 +109,25 @@ The architecture defends against six distinct attacker positions, consistent wit
 - Agent reasons correctly from incorrect foundations
 - Gradual corruption avoids sudden behavioral changes
 
-**Real-world example:**
-- Procurement agent developed entirely corrupted reasoning over three weeks of gradual memory poisoning (OWASP)
-- Microsoft case study: Memory corruption and data exfiltration through poisoned recall using LangChain/LangGraph/GPT-4o
+**Reported incidents include:**
+- Agents developing corrupted reasoning over weeks of gradual memory poisoning
+- Memory corruption enabling data exfiltration through poisoned recall patterns
+
+**Information Laundering ("Agent-as-Proxy"):**
+
+The attacker may not want the agent to take a dramatic action. Instead:
+- Summarize confidential data into smaller, "safe-looking" form
+- Rewrite sensitive content in innocuous language
+- Convert internal knowledge into outward-facing text
+- Compress proprietary information into general advice
+
+This is how real leaks happen: not raw dumps, but compression and paraphrase through reasoning.
 
 **Framework references:**
 - OWASP ASI06: Memory & Context Poisoning
 - Microsoft: Memory corruption taxonomy
 
-**ZoD defense:** Layer 6 (Monitoring) performs external memory audit—comparing memory against baselines, flagging unverified sources, detecting poisoning patterns.
+**ZoD defense:** Layer 6 (Monitoring) performs external memory audit—comparing memory against baselines, flagging unverified sources, detecting poisoning patterns. Layer 4 semantic policy applies egress controls to all output, including "laundered" summaries.
 
 ---
 
@@ -99,9 +141,9 @@ The architecture defends against six distinct attacker positions, consistent wit
 - Trust propagation exploitation
 - Privilege escalation through delegation
 
-**Real-world examples:**
-- ServiceNow Now Assist vulnerability (OWASP)
-- Agent Session Smuggling via A2A protocol (Palo Alto Unit 42)
+**Reported incidents include:**
+- Enterprise agent systems vulnerable to inter-agent communication compromise
+- Agent session smuggling via agent-to-agent protocols
 
 **Framework references:**
 - OWASP ASI07: Inter-Agent Communication Compromise
@@ -120,8 +162,8 @@ The architecture defends against six distinct attacker positions, consistent wit
 - Behavioral triggers may be extremely specific
 - May affect multiple organizations using the same model
 
-**Real-world example:**
-- Ray Framework breach compromised over 230,000 AI clusters (OWASP)
+**Reported incidents include:**
+- AI infrastructure frameworks compromised, affecting thousands of deployments
 
 **Framework references:**
 - OWASP ASI04: Supply Chain Vulnerabilities
@@ -160,6 +202,38 @@ The architecture defends against six distinct attacker positions, consistent wit
 
 ---
 
+### Position 7: Insider / Policy Author
+
+**Attack vector:** The attacker is an authorized user with access to modify CA policy, risk thresholds, allowlists, tool permissions, or monitoring configuration.
+
+**This is the dominant enterprise failure mode:** not sophisticated external attacks, but insider + misconfiguration + rushed change.
+
+**Techniques:**
+- Malicious policy modification (expand agent permissions)
+- Threshold manipulation (lower risk scores to avoid escalation)
+- Allowlist poisoning (add attacker-controlled domains/endpoints)
+- Monitoring configuration changes (disable alerts, widen baselines)
+- GitOps/CI/CD pipeline compromise for policy deployment
+- Social engineering of policy approvers
+
+**Attack characteristics:**
+- Attacker has legitimate credentials
+- Changes may appear routine
+- May be combined with external attack timing
+
+**ZoD defense:**
+- GitOps-managed policy with multi-party approval requirements
+- All policy changes logged to immutable integrity channel
+- L6 monitors policy change patterns (frequency, scope, timing)
+- Separation of duties: policy authoring vs. policy enforcement vs. policy approval
+- Policy change audit with mandatory review periods
+- Canary policies that alert if modified
+- Role-based access with principle of least privilege for policy systems
+
+**Why this matters:** The attacker doesn't need to compromise the CA. They need to convince the CA that malicious actions are authorized.
+
+---
+
 ## Trust Assumptions
 
 The architecture explicitly depends on three trust assumptions. If these are violated, security guarantees do not hold.
@@ -182,12 +256,25 @@ The architecture explicitly depends on three trust assumptions. If these are vio
 
 **Why this is the critical dependency:** Every action flows through L4. It is the architectural chokepoint.
 
+**ZoD treats the CA as a Tier-0 system**—similar to a KMS, HSM, or PKI root. It requires:
+- Hardened, minimal attack surface
+- Formally verified where possible
+- Independent monitoring by L6
+- Isolated infrastructure, not co-located with agents
+
 **Mitigations:**
 - Isolation: CA runs in separate security context, separate infrastructure
 - Independent deployment: Not co-located with agent processes
 - Baseline integrity verification: Layer 6 monitors CA behavior
 - GitOps-managed policy: Changes require approval, logged immutably
 - Redundancy: Multiple CA instances with consensus for high-risk actions
+
+**Critical clarification:** CA compromise is catastrophic *only if* the attacker can:
+1. Issue tokens without detection, AND
+2. Bypass monitoring correlation, AND
+3. Evade governance oversight
+
+If any of those fail, compromise is detectable.
 
 ---
 
@@ -228,6 +315,20 @@ Model provenance attestation (L1) and behavioral monitoring (L6) provide probabi
 
 The CA is a critical dependency. The architecture mitigates this through redundancy, integrity verification, and defined degradation modes—but does not claim to eliminate the dependency.
 
+### Non-Goal 5: Prevent Cross-Tenant / Cross-Context Contamination
+
+In multi-tenant SaaS deployments, agents may process data from multiple customers. Preventing data leakage between tenants is a platform isolation concern, not an agent architecture concern.
+
+**ZoD assumes:** Tenant isolation is enforced at the infrastructure layer. If tenant boundaries are compromised, ZoD provides forensics but not prevention.
+
+**For SaaS deployments:** Implement tenant-scoped CA policies, tenant-isolated execution environments, and tenant-tagged integrity signals.
+
+### Non-Goal 6: Prevent Model Extraction or Inversion Attacks
+
+Attacks against the underlying LLM—extracting training data, model weights, or performing membership inference—are model-level concerns outside ZoD's scope.
+
+**ZoD assumes:** The model itself is a black box. The architecture governs what the agent can *do*, not what it can *reveal about itself*.
+
 ---
 
 ## Degradation Model
@@ -239,14 +340,17 @@ Each layer failure produces defined degradation, not undefined behavior.
 | **L1 fails** (OS Foundation) | Process isolation lost, credential exposure possible | None—foundational assumption violated | **Critical** |
 | **L2 fails** (Input Control) | Agent processes unscreened input | L3-L4 contain consequences; degraded modes activate | Medium |
 | **L3 fails** (Cognitive Isolation) | Reasoning process may gain direct tool/execution access | Containment holds only if L1 network segmentation still enforces no privileged paths and L5 rejects unauthenticated requests | **Critical** |
-| **L4 fails** (CA) | No requests processed | System halts safely; no unauthorized execution | Operations halt (safe) |
+| **L4 unavailable** (CA down) | No requests processed | System halts safely; no unauthorized execution | Operations halt (safe) |
+| **L4 compromised** (CA misbehaving) | Invalid tokens may be issued | L6 detects anomalous issuance patterns; L7 catches high-risk actions | **High** |
 | **L5 fails** (Execution) | Authorized actions may not complete | Retry with new token; audit log preserves state | Operations degraded |
 | **L6 fails** (Monitoring) | Behavioral drift goes undetected | External health checks / infrastructure monitoring detect outage; L4 escalates scrutiny when monitoring is blind | Medium-High |
 | **L7 fails** (Governance) | Policy cannot be updated | Existing policy continues; CA operates on last-known-good | Low (short-term) |
 
 ### Key Principle
 
-**Fail safe, not fail open.** When Layer 4 fails, the system halts—it does not default to allowing all requests. This requires L5 to reject all unauthenticated requests and L3 to have no direct tool path that bypasses L4.
+**Fail safe, not fail open.** When Layer 4 is *unavailable*, the system halts—it does not default to allowing all requests. When Layer 4 is *compromised*, detection relies on L6/L7 correlation.
+
+**Critical distinction:** CA unavailability is safe (operations halt). CA compromise is dangerous (operations continue with bad authorization). This is why CA integrity is a Tier-0 concern.
 
 ---
 
@@ -319,6 +423,32 @@ A sophisticated attacker who understands the ZoD architecture does not need to c
 
 ---
 
+#### Attack: Integrity Channel Tampering
+
+The integrity signal channel itself is an attack surface. An attacker with channel access might attempt:
+
+| Attack | Technique | Goal |
+|--------|-----------|------|
+| **Forgery** | Inject fabricated events | Create false audit trail, frame legitimate activity as malicious |
+| **Suppression** | Selectively drop events | Hide evidence of compromise |
+| **Reordering** | Delay or resequence events | Break correlation analysis, create alibi |
+| **Desynchronization** | Cause clock drift between sources | Make cross-layer correlation unreliable |
+
+**Defenses:**
+
+| Defense | Mechanism |
+|---------|-----------|
+| **Signed events** | Every signal cryptographically signed by originating layer; forgery requires key compromise |
+| **Sequence numbers** | Monotonic counters per source; gaps indicate suppression |
+| **Merkle chain / transparency log** | Append-only structure where each entry commits to all previous; reordering breaks chain |
+| **Timestamping** | Trusted timestamping service; bounded clock skew detection |
+| **Write-once storage** | WORM storage, S3 Object Lock, or blockchain-adjacent immutability |
+| **Out-of-band transmission** | Channel architecturally separate from agent data path |
+
+**The architecture treats integrity channel health as first-class telemetry.** L6 monitors for gaps, timing anomalies, and signature failures in the signal stream itself.
+
+---
+
 #### Attack: Token Extraction and Replay
 
 **Technique:** Intercept valid token between CA and execution layer, replay it.
@@ -361,12 +491,27 @@ A sophisticated attacker who understands the ZoD architecture does not need to c
 |----------------|-----------------|-------------------|-----------|
 | Input content | L2 screening | L3-L4 containment | L6 behavioral anomaly |
 | Tool endpoints | L4 semantic validation | L4 scope limits | L6 action pattern monitoring |
+| Tool abuse (living off the land) | L4 semantic policy (negative constraints) | Egress controls | L6 detects abuse patterns |
 | Tool output (reality poisoning) | Multi-source corroboration | Signed tool responses | L6 anomaly on tool results |
 | Memory/RAG | L6 memory audit | L4 validates requests from memory | L6 baseline drift |
+| Information laundering | L4 egress classification | Output content analysis | L6 detects compression patterns |
 | Peer agents | L4 chain validation | P10 non-propagation | L6 cross-agent correlation |
 | Model supply chain | L1 provenance | L6 behavioral monitoring | Probabilistic only |
 | Identity/key plane | HSM-backed keys, dual control | Key rotation, attestation | L6 signing anomalies |
+| Insider/policy author | Multi-party approval, GitOps | Separation of duties | L6 policy change monitoring |
 | Security controls | Rate limiting, adaptive thresholds | Independent channels | L6 monitors control health |
+| Integrity channel | Signed events, sequence numbers | Merkle chain, WORM storage | Gap/timing anomaly detection |
+
+### Control Health as First-Class Telemetry
+
+**The architecture treats security control health metrics as first-class telemetry:**
+- L2 false positive rates
+- L4 escalation frequency and patterns
+- L6 alert volume and quality scores
+- Integrity channel gap/latency metrics
+- CA issuance rate distribution
+
+Anomalies in control health are themselves compromise indicators.
 
 ---
 
@@ -386,7 +531,7 @@ When a threat is detected:
 
 ## Related Documents
 
-- [Architecture Specification](ARCHITECTURE.md) — How the layers implement these defenses
+- [Architecture Specification](../ARCHITECTURE.md) — How the layers implement these defenses
 - [Security Properties](security-properties.md) — Measurable properties that verify defense effectiveness
 - [Implementation Guide](implementation-guide.md) — Practical deployment guidance
 
