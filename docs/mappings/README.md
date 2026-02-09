@@ -146,7 +146,7 @@ Which frameworks validate which properties:
 ### For Compliance Audits
 
 1. Identify applicable standards (EU AI Act, SOC 2, ISO 27001, etc.)
-2. Open [compliance Mapping](../compliance-mapping.md)
+2. Open [Compliance Mapping](../compliance-mapping.md)
 3. Use verification checklists to demonstrate control implementation
 4. Reference specific ZoD layers/properties for each requirement
 
