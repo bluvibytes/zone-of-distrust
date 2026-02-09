@@ -64,7 +64,7 @@ L7 Human Governance
 | Threat landscape | L2, L4 | Screening signatures, semantic policy constraints |
 | Assumptions documentation | Threat Model | Trust assumptions, explicit non-goals |
 
-**Key ZoD Artifact:** [Threat Model](../docs/threat-model.md)
+**Key ZoD Artifact:** [Threat Model](../threat-model.md)
 
 **Implementation:**
 ```
@@ -257,8 +257,8 @@ NIST AI RMF identifies characteristics of trustworthy AI. ZoD mapping:
 ## References
 
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Security Properties](../docs/security-properties.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Security Properties](../security-properties.md)
 - [ZoD Threat Model](../docs/threat-model.md)
 
 ---
