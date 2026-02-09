@@ -16,7 +16,7 @@ This directory contains detailed mappings between the Zones of Distrust architec
 
 **Purpose:** Enable organizations to understand how ZoD architectural controls align with and support implementation of framework requirements. These mappings provide audit-relevant evidence artifacts, not automatic compliance.
 
-**Quick Start:** See [quick-reference](quick-reference.md) for a one-page cheatsheet.
+**Quick Start:** See [ZoD Mapping Quick Reference](quick-reference.md) for a one-page cheatsheet.
 
 ---
 
@@ -58,7 +58,7 @@ This directory contains detailed mappings between the Zones of Distrust architec
 | Mapping | Purpose | Focus |
 |---------|---------|-------|
 | [Incident Mapping](incident-mapping.md) | Case studies | Real attacks → ZoD controls |
-| [Quick Reference](quick-reference.md) | Cheatsheet | One-page crosswalk |
+| [ZoD Mapping Quick Reference](quick-reference.md) | Cheatsheet | One-page crosswalk |
 
 ---
 
@@ -146,7 +146,7 @@ Which frameworks validate which properties:
 ### For Compliance Audits
 
 1. Identify applicable standards (EU AI Act, SOC 2, ISO 27001, etc.)
-2. Open [compliance-mapping.md](compliance-mapping.md)
+2. Open [compliance Mapping](../compliance-mapping.md)
 3. Use verification checklists to demonstrate control implementation
 4. Reference specific ZoD layers/properties for each requirement
 
@@ -162,7 +162,7 @@ Which frameworks validate which properties:
 1. Review all mappings against current implementation
 2. Identify unchecked items in verification checklists
 3. Prioritize based on risk and compliance requirements
-4. Use [implementation guide](../implementation-guide.md) for remediation
+4. Use [Implementation Guide](../implementation-guide.md) for remediation
 
 ### For Security Assessments
 
