@@ -2,7 +2,7 @@
 
 **Breach is the premise. Containment is the architecture."**
 
-**A Layered Security Architecture for Autonomous AI**
+A Layered Security Architecture for Autonomous AI
 
 Version 0.9 RFC — February 2026
 
