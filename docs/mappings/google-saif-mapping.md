@@ -378,8 +378,8 @@ Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OAS
 - [SAIF Data Donation to CoSAI (September 2025)](https://www.coalitionforsecureai.org/google-donates-secure-ai-framework-saif-data-to-coalition-for-secure-ai/)
 
 ### ZoD Documentation
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Implementation Guide](../docs/implementation-guide.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Implementation Guide](../implementation-guide.md)
 
 ---
 
