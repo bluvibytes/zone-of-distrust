@@ -1,8 +1,8 @@
 # ZONES OF DISTRUST
 
-*A Layered Security Architecture for Autonomous AI Agents*
+*Breach is the premise. Containment is the architecture."
 
-**Reducing the blast radius through architecture, not trust.**
+**A Layered Security Architecture for Autonomous AI**
 
 Version 0.9 RFC — February 2026
 
