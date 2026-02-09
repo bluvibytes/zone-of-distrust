@@ -6,7 +6,7 @@
 
 ---
 
-> **Important:** These mappings demonstrate *conceptual alignment* and *control coverage*, not certification or compliance. ZoD is **complementary to**, not a replacement for, established frameworks and standards. Mappings do not imply endorsement by or affiliation with referenced organizations. See [DISCLAIMER.md](../DISCLAIMER.md) and [TRADEMARKS.md](../TRADEMARKS.md).
+> **Important:** These mappings demonstrate *conceptual alignment* and *control coverage*, not certification or compliance. ZoD is **complementary to**, not a replacement for, established frameworks and standards. Mappings do not imply endorsement by or affiliation with referenced organizations. See [DISCLAIMER](../DISCLAIMER.md) and [TRADEMARKS](../TRADEMARKS.md).
 
 ---
 
@@ -70,11 +70,11 @@ Frameworks that identify *what* can go wrong:
 
 | Framework | Mapping | Key Contribution |
 |-----------|---------|------------------|
-| OWASP Agentic | [owasp-agentic-mapping.md](owasp-agentic-mapping.md) | 10 agent-specific risk categories |
-| Cisco | [cisco-mapping.md](cisco-mapping.md) | 150+ techniques, scanner tools |
-| Microsoft AIRT | [microsoft-airt-mapping.md](microsoft-airt-mapping.md) | Novel failure mode classification |
-| NVIDIA/Lakera | [nvidia-lakera-mapping.md](nvidia-lakera-mapping.md) | Autonomy levels, ARP methodology |
-| MITRE ATLAS | [mitre-atlas-mapping.md](mitre-atlas-mapping.md) | AI-specific TTPs |
+| OWASP Agentic | [owasp-agentic-mapping](owasp-agentic-mapping.md) | 10 agent-specific risk categories |
+| Cisco | [cisco-mapping](cisco-mapping.md) | 150+ techniques, scanner tools |
+| Microsoft AIRT | [microsoft-airt-mapping](microsoft-airt-mapping.md) | Novel failure mode classification |
+| NVIDIA/Lakera | [nvidia-lakera-mapping](nvidia-lakera-mapping.md) | Autonomy levels, ARP methodology |
+| MITRE ATLAS | [mitre-atlas-mapping](mitre-atlas-mapping.md) | AI-specific TTPs |
 
 ### Methodology & Governance
 
@@ -82,11 +82,11 @@ Frameworks that define *how* to assess and govern:
 
 | Framework | Mapping | Key Contribution |
 |-----------|---------|------------------|
-| MAESTRO | [maestro-mapping.md](maestro-mapping.md) | Multi-agent assessment methodology |
-| CSA ATF | [csa-atf-mapping.md](csa-atf-mapping.md) | Cloud AI security patterns |
-| NIST AI RMF | [nist-ai-rmf-mapping.md](nist-ai-rmf-mapping.md) | Govern/Map/Measure/Manage |
-| Google SAIF | [google-saif-mapping.md](google-saif-mapping.md) | Lifecycle phases |
-| AWS Scoping | [aws-scoping-mapping.md](aws-scoping-mapping.md) | Deployment & agency categorization |
+| MAESTRO | [maestro-mapping](maestro-mapping.md) | Multi-agent assessment methodology |
+| CSA ATF | [csa-atf-mapping](csa-atf-mapping.md) | Cloud AI security patterns |
+| NIST AI RMF | [nist-ai-rmf-mapping](nist-ai-rmf-mapping.md) | Govern/Map/Measure/Manage |
+| Google SAIF | [google-saif-mapping](google-saif-mapping.md) | Lifecycle phases |
+| AWS Scoping | [aws-scoping-mapping](aws-scoping-mapping.md) | Deployment & agency categorization |
 
 ### Regulatory & Compliance
 
@@ -94,10 +94,10 @@ Standards for certification and regulatory compliance:
 
 | Standard | Mapping | Key Contribution |
 |----------|---------|------------------|
-| EU AI Act | [compliance-mapping.md](compliance-mapping.md) | High-risk AI requirements |
-| SOC 2 | [compliance-mapping.md](compliance-mapping.md) | Trust Service Criteria |
-| ISO 27001 | [compliance-mapping.md](compliance-mapping.md) | Information security controls |
-| ISO 42001 | [compliance-mapping.md](compliance-mapping.md) | AI-specific certification |
+| EU AI Act | [compliance-mapping](compliance-mapping.md) | High-risk AI requirements |
+| SOC 2 | [compliance-mapping](compliance-mapping.md) | Trust Service Criteria |
+| ISO 27001 | [compliance-mapping](compliance-mapping.md) | Information security controls |
+| ISO 42001 | [compliance-mapping](compliance-mapping.md) | AI-specific certification |
 
 ---
 
@@ -162,7 +162,7 @@ Which frameworks validate which properties:
 1. Review all mappings against current implementation
 2. Identify unchecked items in verification checklists
 3. Prioritize based on risk and compliance requirements
-4. Use [implementation guide](../docs/implementation-guide.md) for remediation
+4. Use [implementation guide](../implementation-guide.md) for remediation
 
 ### For Security Assessments
 
