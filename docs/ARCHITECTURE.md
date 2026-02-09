@@ -48,7 +48,7 @@ ZoD provides value only when these conditions are met:
 
 ```
                               ┃ POLICY ┃
-                              ┃ flows  ┃
+                              ┃ FLOWS  ┃
                               ▼ DOWN   ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                             │
@@ -100,11 +100,17 @@ ZoD provides value only when these conditions are met:
 │         ▲                                                                   │
 └─────────────────────────────────────────────────────────────────────────────┘
                               ┃  DATA  ┃
-                              ┃ flows  ┃
+                              ┃ FLOWS  ┃
                               ┃   UP   ┃
 ```
 
 The double-line box (╔═══╗) highlights L3-L4-L5 as the **core trust boundary**—the critical separation between reasoning and execution.
+
+---
+
+> **What Makes This Different From Layered Security?**
+> 
+> Traditional defense-in-depth assumes a trusted principal making requests. Each layer validates the *identity*. ZoD assumes the principal itself is compromised. Each layer validates the *action* independent of who is asking. The CA doesn't ask "is this agent authorized?" It asks "is this specific action, with these exact parameters, on this exact content, consistent with policy and behavioral history?" This is execution governance, not access control.
 
 ---
 
@@ -320,6 +326,17 @@ Most deployments should implement tiered validation:
 
 This keeps CA overhead low for routine operations while preserving strong containment for high-risk actions.
 
+#### Expected Latency Ranges
+
+| Path | Typical Latency | Use Case |
+|------|-----------------|----------|
+| Fast path (cached/allowlisted) | 1-5ms | Routine, pre-approved actions |
+| Standard path | 10-50ms | Normal validation |
+| Elevated path | 50-200ms | High-risk, additional scrutiny |
+| Human escalation | Minutes to hours | Policy-defined thresholds |
+
+These ranges assume co-located CA infrastructure. For comparison, typical LLM inference latency is 500ms-5s, making CA overhead negligible for most agent workloads.
+
 #### CA Feasibility Assumption
 
 ZoD assumes that CA validation latency is small relative to typical agent workloads (LLM inference and external tool/API calls). For most enterprise agents, CA checks can be engineered as low-millisecond operations with caching and pre-approved patterns.
@@ -357,19 +374,6 @@ Critics may observe that request validation exists in many systems. What makes t
 
 The cumulative effect: the CA implements *execution governance for compromised reasoning*, not identity-based access control.
 
-#### Token Binding Specification
-
-The execution token issued by the CA is not a general-purpose authorization. It is a parameter-bound certificate that specifies exactly what action is authorized:
-
-| Field | Purpose |
-|-------|---------|
-| **Action binding** | The specific action authorized (e.g., "send_email", "query_database"). Execution layer rejects mismatches. |
-| **Content binding** | Cryptographic hash of the content being acted upon. Hash mismatch invalidates token. |
-| **Replay resistance** | Unique nonce and TTL. Previously-seen nonces are rejected. |
-| **Executor attestation** | Specifies which execution service instance is authorized to use the token. |
-| **Temporal bound** | TTL set by Layer 7 policy based on risk classification. |
-| **Scope limitation** | For multi-step operations, authorizes exactly one step. |
-
 #### Semantic Intent Policy
 
 The CA does not just check whether the agent is authorized to perform an action. It checks whether the content of the action is legitimate.
@@ -384,6 +388,31 @@ The policy language supports:
 
 The negative constraint model is particularly important. It defines what is never permitted, regardless of context or justification. A compromised agent that constructs an elaborate justification for why an exception is warranted still hits the hard constraint at the CA. The CA does not reason about justifications. It evaluates constraints deterministically.
 
+#### Semantic Policy Implementation Approaches
+
+The semantic intent policy can be implemented through multiple mechanisms with different tradeoff profiles:
+
+| Approach | Latency | Accuracy | Explainability |
+|----------|---------|----------|----------------|
+| Rule engine with pattern matching | <10ms | High for known patterns | Full |
+| Classification model | 10-50ms | Medium-high | Partial |
+| LLM-as-judge | 100-500ms | Highest | Full (with reasoning) |
+
+Production deployments typically layer these: fast rule engine for common cases, classifier for edge cases, LLM-as-judge for high-risk escalations. The architecture does not mandate a specific implementation.
+
+#### Token Binding Specification
+
+The execution token issued by the CA is not a general-purpose authorization. It is a parameter-bound certificate that specifies exactly what action is authorized:
+
+| Field | Purpose |
+|-------|---------|
+| **Action binding** | The specific action authorized (e.g., "send_email", "query_database"). Execution layer rejects mismatches. |
+| **Content binding** | Cryptographic hash of the content being acted upon. Hash mismatch invalidates token. |
+| **Replay resistance** | Unique nonce and TTL. Previously-seen nonces are rejected. |
+| **Executor attestation** | Specifies which execution service instance is authorized to use the token. |
+| **Temporal bound** | TTL set by Layer 7 policy based on risk classification. |
+| **Scope limitation** | For multi-step operations, authorizes exactly one step. |
+
 #### Multi-Agent Request Chain Validation
 
 When an agent's request originates from another agent's output—a common pattern in orchestrator/worker architectures—the CA validates the entire request chain:
@@ -394,6 +423,16 @@ When an agent's request originates from another agent's output—a common patter
 - Verify the collective action across the chain does not exceed any single agent's authorization boundaries
 
 This prevents multi-agent privilege escalation—where agent A asks agent B to do something that agent A is not authorized to do directly.
+
+#### Multi-Agent Topology Considerations
+
+| Topology | Validation Approach |
+|----------|---------------------|
+| Orchestrator → Workers | Orchestrator's CA validates delegation scope; worker CAs validate individual actions |
+| Peer-to-peer | Each agent's CA validates incoming requests against source agent's authorization chain |
+| Hierarchical | Authorization flows down; each level's CA enforces scope reduction |
+
+The architecture does not assume a single CA. Federated CA topologies are supported with cross-CA trust chains validated at each hop.
 
 #### Key Principle
 
@@ -499,6 +538,14 @@ The monitoring system performs systematic external audits of the agent's persist
 
 Memory audit is the Layer 6 function that addresses OWASP's ASI05 (Memory Poisoning) at the architectural level. It is the external verification that the agent's accumulated state has not been corrupted—something the agent cannot perform for itself.
 
+For current agent frameworks, memory audit can be implemented through:
+
+- **Periodic memory dumps** to external audit service
+- **Memory write interception** at the framework level (where supported)
+- **Inference-time memory access logging** comparing retrieved context against baseline
+
+Reference implementations for major agent frameworks are in development as the ecosystem matures.
+
 #### Baseline Integrity Verification
 
 The monitoring system itself is a potential target. An attacker who can corrupt the behavioral baseline—shifting what "normal" looks like—can make malicious behavior appear normal.
@@ -509,6 +556,17 @@ The architecture addresses this through:
 - Cross-validation against the immutable audit log
 
 This is the recursive security problem: who watches the watchers? The architecture's answer is that the monitoring system's baseline is anchored to cryptographically verifiable reference points that cannot be modified without Layer 7 authorization.
+
+#### Model Update and Re-baselining
+
+When an agent's underlying model is updated:
+
+1. **L1 attestation** verifies new model provenance before loading
+2. **L6 baseline** enters "re-baselining mode" with tightened thresholds
+3. **L4 policy** may temporarily elevate risk classifications during transition
+4. **L7 approval** required before baseline exits re-baselining mode
+
+Model updates are a known high-risk window. The architecture treats them as controlled transitions, not seamless swaps.
 
 #### Key Principle
 
@@ -547,6 +605,16 @@ Layer 7 is the ultimate authority for the entire architecture:
 - Authorizes recovery actions
 
 Policy changes propagate through the architecture through a controlled pipeline—not through the agent.
+
+#### Break-Glass Procedures
+
+Emergency scenarios may require expedited action. The architecture supports break-glass through:
+
+- **Pre-authorized emergency tokens** — Time-limited, scope-limited tokens issued in advance for specific emergency scenarios, logged immutably
+- **Dual-authorization override** — Two L7-authorized humans can approve immediate action with enhanced logging
+- **Post-hoc audit requirement** — Any break-glass usage triggers mandatory review within 24 hours
+
+Break-glass is not "bypass"—it is an audited, constrained, high-scrutiny path that preserves the integrity signal channel.
 
 #### Key Principle
 
