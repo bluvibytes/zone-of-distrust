@@ -192,10 +192,10 @@ CoSAI-RM integrates insights from member frameworks:
 
 | Member | Framework | ZoD Mapping |
 |--------|-----------|-------------|
-| Google | SAIF | [google-saif-mapping.md](google-saif-mapping.md) |
-| Cisco | AI Security Framework | [cisco-mapping.md](cisco-mapping.md) |
-| Microsoft | AIRT Taxonomy | [microsoft-airt-mapping.md](microsoft-airt-mapping.md) |
-| NVIDIA | AI Safety Framework | [nvidia-lakera-mapping.md](nvidia-lakera-mapping.md) |
+| Google | SAIF | [google-saif-mapping](google-saif-mapping.md) |
+| Cisco | AI Security Framework | [cisco-mapping](cisco-mapping.md) |
+| Microsoft | AIRT Taxonomy | [microsoft-airt-mapping](microsoft-airt-mapping.md) |
+| NVIDIA | AI Safety Framework | [nvidia-lakera-mapping](nvidia-lakera-mapping.md) |
 
 **ZoD Integration:** ZoD provides the architectural implementation for controls recommended across all CoSAI member frameworks.
 
