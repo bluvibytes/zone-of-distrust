@@ -279,8 +279,8 @@ ATF integrates with CSA Cloud Controls Matrix. ZoD supports this integration:
 
 - [Cloud Security Alliance](https://cloudsecurityalliance.org/)
 - [CSA Cloud Controls Matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix/)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Security Properties](../docs/security-properties.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Security Properties](../security-properties.md)
 
 ---
 
