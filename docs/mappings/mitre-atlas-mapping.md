@@ -300,7 +300,7 @@ MITRE ATLAS extends the ATT&CK framework to AI/ML systems, providing standardize
 
 - [MITRE ATLAS](https://atlas.mitre.org/)
 - [MITRE ATT&CK](https://attack.mitre.org/)
-- [ZoD Architecture Specification](../architecture.md)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
 - [ZoD Threat Model](../threat-model.md)
 
 ---
