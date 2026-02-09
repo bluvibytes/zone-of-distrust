@@ -2,9 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://bluvi.ai/schemas/zod/execution-token.schema.json",
   "title": "ZoD Execution Token",
+  "description": "Schema for CA-issued execution tokens per ZOD-SPEC Section 9",
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "schema_version",
     "token_id",
     "issuer",
     "subject_agent_id",
@@ -16,10 +18,19 @@
     "signature"
   ],
   "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.9",
+      "description": "Schema version for compatibility"
+    },
     "token_id": {
       "type": "string",
       "description": "Unique token identifier (UUID or equivalent).",
       "minLength": 8
+    },
+    "request_id": {
+      "type": "string",
+      "description": "Original CA request ID for audit correlation"
     },
     "issuer": {
       "type": "string",
@@ -30,6 +41,10 @@
       "type": "string",
       "description": "Agent identity the token was issued for.",
       "minLength": 3
+    },
+    "delegation_chain_id": {
+      "type": "string",
+      "description": "Reference to delegation chain if multi-agent request (per Section 14.1)"
     },
     "action": {
       "type": "object",
@@ -53,7 +68,7 @@
         },
         "parameter_binding": {
           "type": "object",
-          "description": "Machine-evaluable parameter binding for the action.",
+          "description": "Machine-evaluable parameter binding for the action (per Section 9.4).",
           "additionalProperties": false,
           "required": ["binding_type"],
           "properties": {
@@ -83,7 +98,7 @@
         },
         "content_binding": {
           "type": "object",
-          "description": "Binding or constraints for the action payload/content.",
+          "description": "Binding or constraints for the action payload/content (per Section 9.5).",
           "additionalProperties": false,
           "required": ["binding_type"],
           "properties": {
@@ -113,44 +128,79 @@
         },
         "mutable_fields": {
           "type": "array",
-          "description": "Fields allowed to vary between approval and execution.",
+          "description": "Fields allowed to vary between approval and execution (per Section 9.6). All non-declared fields are immutable by default.",
           "items": { "type": "string" }
         }
       }
     },
+    "risk_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "CA-assessed risk score for this action (0 = lowest, 1 = highest)"
+    },
     "issued_at": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "description": "Timestamp when token was issued"
     },
     "expires_at": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "description": "Timestamp when token expires (TTL enforcement per Section 9.2)"
     },
     "nonce": {
       "type": "string",
-      "description": "Single-use cryptographic nonce.",
+      "description": "Single-use cryptographic nonce for replay resistance (per Section 9.7).",
       "minLength": 8
     },
     "executor_id": {
       "type": "string",
-      "description": "Identity of the authorized executor.",
+      "description": "Identity of the authorized executor (token is executor-bound per Section 9.2).",
       "minLength": 3
     },
     "policy": {
       "type": "object",
       "description": "Optional policy metadata for traceability.",
+      "properties": {
+        "policy_id": {
+          "type": "string",
+          "description": "Identifier of the policy that authorized this action"
+        },
+        "policy_version": {
+          "type": "string",
+          "description": "Version of the policy at time of evaluation"
+        },
+        "escalation_level": {
+          "type": "string",
+          "enum": ["none", "logged", "hold-for-approval", "deny-and-escalate"],
+          "description": "Escalation status per Section 8.3"
+        }
+      },
       "additionalProperties": true
     },
     "signature": {
       "type": "object",
+      "description": "Cryptographic signature per Section 9.1. Keys MUST be HSM-protected.",
       "additionalProperties": false,
       "required": ["alg", "kid", "value"],
       "properties": {
-        "alg": { "type": "string", "minLength": 3 },
-        "kid": { "type": "string", "minLength": 1 },
-        "value": { "type": "string", "minLength": 16 }
+        "alg": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Signature algorithm (e.g., ES256, RS256)"
+        },
+        "kid": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Key identifier for signature verification"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 16,
+          "description": "Base64-encoded signature value"
+        }
       }
     }
   }
 }
-
