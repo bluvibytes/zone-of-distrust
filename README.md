@@ -106,7 +106,9 @@ See [LICENSES](LICENSES.md) for complete licensing details.
 
 ## 🏢 About BluVi
 
-Too many solutions are bandaids—security built for humans at the keyboard, retrofitted for AI. We've watched incident after incident unfold like a horror movie, everyone yelling "DON'T OPEN THE DOOR!" while eating popcorn intently do just that. But, you still can't seem to change the channel. Case in point, did we really see 22K people fork OpenClaw to run on their own machines within 6 weeks? That's like watching 22K children with keys to the house and no parental supervision.
+Too many solutions are bandaids—security built for humans at the keyboard, retrofitted for AI. We've watched incident after incident unfold like a horror movie, everyone yelling "DON'T OPEN THE DOOR!" while eating popcorn intently do just that. But, you still can't seem to change the channel. 
+
+Case in point, did we really see 22K people fork OpenClaw to run on their own machines within 6 weeks? That's like watching 22K children with keys to the house and no parental supervision.
 
 We decided to do something about it instead.
 
