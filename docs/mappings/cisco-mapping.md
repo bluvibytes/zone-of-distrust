@@ -232,7 +232,7 @@ Cisco's Integrated AI Security Framework is the most comprehensive threat taxono
 
 ### ZoD References
 - [ZoD Architecture Specification](../ARCHITECTURE.md)
-- [ZoD Threat Model](../docs/threat-model.md)
+- [ZoD Threat Model](../threat-model.md)
 
 ---
 
