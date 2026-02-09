@@ -456,7 +456,7 @@ To sharpen positioning, ZoD explicitly excludes the following from scope:
 
 ## Related Documents
 
-- [Architecture Specification](architecture.md) — The seven-layer implementation
+- [Architecture Specification](ARCHITECTURE.md) — The seven-layer implementation
 - [Security Properties](security-properties.md) — Measurable properties (P1-P12)
 - [Threat Model](threat-model.md) — What ZoD defends against
 
