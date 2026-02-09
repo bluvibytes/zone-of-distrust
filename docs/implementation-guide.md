@@ -667,7 +667,7 @@ spec:
 
 ## Related Documents
 
-- [Architecture Specification](architecture.md) — Layer definitions and interactions
+- [Architecture Specification](ARCHITECTURE.md) — Layer definitions and interactions
 - [Security Properties](security-properties.md) — What to verify (P1-P12)
 - [Threat Model](threat-model.md) — What you're defending against
 
