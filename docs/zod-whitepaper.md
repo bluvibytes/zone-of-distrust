@@ -88,7 +88,13 @@ This is not a theoretical vulnerability. It is a structural property of how larg
 
 ### The Emerging Threat Landscape
 
-The security industry recognizes the problem. OWASP identifies prompt injection as a top threat to large language models. Microsoft, CyberArk, BeyondTrust, Obsidian Security, and dozens of startups are building point solutions.
+The security industry recognizes the problem—and the data is alarming:
+
+- **80% of organizations** report their AI agents have taken unintended actions, including unauthorized system access[^5]
+- **Non-human identities** now outnumber human identities ~80:1 in enterprise environments[^6]
+- **Memory poisoning** ranks as the #1 vulnerability in OWASP's Agentic Applications Top 10[^7]
+
+Microsoft, CyberArk, BeyondTrust, Obsidian Security, and dozens of startups are building point solutions.
 
 But the solutions are fragmented. No widely adopted standard exists for a unified, layered architecture that addresses the complete threat surface with a coherent directional logic.
 
@@ -425,11 +431,17 @@ The agent will be compromised. The architecture is designed to materially reduce
 - **Agent identity:** Microsoft Entra Agent ID provides first-class identity constructs for AI agents with conditional access and lifecycle management.[^1]
 - **Short-lived credentials:** CyberArk Secure AI Agents Solution delivers privilege controls and zero standing privileges for agent identities.[^2] Aembit provides workload identity with just-in-time credential delivery and MCP Identity Gateway.[^3]
 - **Behavioral monitoring:** Zenity provides agent-centric security with step-level execution monitoring and intent-aware threat detection.[^4] Gartner's 2025 Market Guide for AI TRiSM identifies this as an emerging category.
+- **Threat taxonomies and methodologies:** CSA MAESTRO provides multi-agent threat modeling[^8]. Cisco's AI Security Framework catalogs 150+ attack techniques with open-source scanners[^9]. OWASP's Agentic Top 10 prioritizes agent-specific vulnerabilities (ASI01-ASI10)[^7].
 
 [^1]: Microsoft, "Microsoft Entra Agent ID," announced May 2025, public preview November 2025. https://learn.microsoft.com/en-us/entra/
 [^2]: CyberArk, "Secure AI Agents Solution," GA December 2025. https://www.cyberark.com/
 [^3]: Aembit, "IAM for Agentic AI," October 2025. https://aembit.io/
 [^4]: Zenity, "AI Security Platform," named Gartner Cool Vendor September 2025. https://zenity.io/
+[^5]: SailPoint, "AI Agents: The New Attack Surface," 2025. Research finding: 80% of organizations report unintended agent actions; 23% report credential exposure.
+[^6]: CyberArk, "2025 Identity Security Landscape," 2025. Machine identities outnumber human identities approximately 80:1.
+[^7]: OWASP, "Top 10 for Agentic Applications," December 2025. ASI05: Memory Poisoning ranked as highest-risk vulnerability.
+[^8]: Cloud Security Alliance, "MAESTRO: Multi-Agent Environment for Security Threat and Risk Operations," February 2025.
+[^9]: Cisco, "Integrated AI Security Framework for Agentic Systems," 2025. Includes MCP Scanner, A2A Scanner, Skill Scanner.
 
 ### What Remains Novel
 
