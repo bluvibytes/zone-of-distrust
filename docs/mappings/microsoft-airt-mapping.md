@@ -10,18 +10,16 @@
 
 ---
 
-
-
 ## Overview
 
-Microsoft's AI Red Team (AIRT) published a taxonomy classifying failures across security and safety dimensions, distinguishing novel agentic failures from existing failures with new severity in agentic contexts.
+Microsoft's AI Red Team (AIRT) published a taxonomy classifying failures along two axes—*security vs safety* and *novel vs existing*—distinguishing novel agentic failures from existing failures with elevated severity in agentic contexts.
 
-**Relationship:** Microsoft identifies *failure modes*. ZoD provides *architectural defenses*.
+**Relationship:** Microsoft identifies *failure modes*. ZoD provides *architectural defenses* addressing both axes.
 
 **Key Microsoft Resources:**
-- Taxonomy of Failure Modes in Agentic AI Systems (April 2025)
+- [Taxonomy of Failure Modes in Agentic AI Systems (April 2025)](https://www.microsoft.com/en-us/security/blog/2025/04/24/new-whitepaper-outlines-the-taxonomy-of-failure-modes-in-ai-agents/)
 - Memory poisoning case study (LangChain/LangGraph/GPT-4o)
-- Microsoft SDL for AI (February 2026 update)
+- [Microsoft SDL for AI (February 2026)](https://www.microsoft.com/en-us/security/blog/2026/02/03/microsoft-sdl-evolving-security-practices-for-an-ai-powered-world/)
 
 ---
 
@@ -171,12 +169,13 @@ Microsoft's AI Red Team (AIRT) published a taxonomy classifying failures across 
 ## Microsoft Design Considerations → ZoD Mapping
 
 | Microsoft Recommendation | ZoD Implementation |
-|-------------------------|-------------------|
+|--------------------------|-------------------|
 | **Identity management** | L1 agent identity as distinct principal |
 | **Memory hardening** | L6 memory audit, L2 screening |
 | **Control flow regulation** | L4 request validation, chain validation |
 | **Environment isolation** | L3 cognitive isolation, L5 execution isolation |
 | **Comprehensive logging** | Integrity channel (immutable) |
+| **XPIA defense** | L2 input screening, data/instruction separation |
 
 ---
 
@@ -230,8 +229,9 @@ Microsoft's AI Red Team (AIRT) published a taxonomy classifying failures across 
 
 ## References
 
-- [Microsoft Taxonomy of Failure Modes](https://learn.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning)
-- [Microsoft SDL for AI](https://www.microsoft.com/en-us/security/blog/2026/02/03/microsoft-sdl-evolving-security-practices-for-an-ai-powered-world/)
+- [Microsoft Taxonomy of Failure Modes in AI Agents (April 2025)](https://www.microsoft.com/en-us/security/blog/2025/04/24/new-whitepaper-outlines-the-taxonomy-of-failure-modes-in-ai-agents/)
+- [Microsoft Taxonomy of Failure Modes in ML](https://learn.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning)
+- [Microsoft SDL for AI (February 2026)](https://www.microsoft.com/en-us/security/blog/2026/02/03/microsoft-sdl-evolving-security-practices-for-an-ai-powered-world/)
 - [Microsoft SDL Threat Modeling for AI/ML](https://learn.microsoft.com/en-us/security/engineering/threat-modeling-aiml)
 - [Microsoft SDL Bug Bar for AI/ML](https://learn.microsoft.com/en-us/security/engineering/bug-bar-aiml)
 - [ZoD Architecture Specification](../ARCHITECTURE.md)
