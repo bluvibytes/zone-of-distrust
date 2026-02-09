@@ -190,7 +190,7 @@ Zones of Distrust provides that architecture.
 
 ## About This Document
 
-Zones of Distrust was developed by [BluVi](https://bluvi.com) as an open reference architecture. 
+Zones of Distrust was developed by [BluVi](https://bluvi.ai) as an open reference architecture. 
 
 The framework is published under Apache 2.0. Use it, modify it, build on it.
 
