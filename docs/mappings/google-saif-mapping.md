@@ -1,6 +1,6 @@
 # Google Secure AI Framework (SAIF) Mapping
 
-**Zones of Distrust ↔ Google SAIF (June 2023, Updated January 2026)**
+**Zones of Distrust ↔ Google SAIF / SAIF 2.0 (June 2023, SAIF 2.0 October 2025)**
 
 *Version 0.9 RFC — February 2026*
 
@@ -16,13 +16,16 @@
 
 Google's Secure AI Framework (SAIF) organizes AI security around six core elements and four lifecycle phases. SAIF provides lifecycle guidance that ZoD operationalizes through concrete architectural controls.
 
+> **SAIF 2.0 (October 2025):** Google expanded SAIF to address autonomous AI agents. SAIF 2.0 adds an Agent Risk Map and establishes three core agent security principles: (1) agents must have well-defined human controllers, (2) their powers must be carefully limited, and (3) their actions and planning must be observable. These principles align directly with ZoD's L7 (human oversight), L4 (authorization limits), and L6 (behavioral monitoring).
+
 **Relationship:** SAIF tells you *when* to apply controls. ZoD tells you *what* those controls look like.
 
 **Key SAIF Resources:**
-- Six core elements
+- Six core elements (SAIF 1.0)
+- Agent Risk Map and agent security principles (SAIF 2.0)
 - Four lifecycle phases (Development, Deployment, Execution, Monitoring)
-- January 2026 implementation guidance
-- CoSAI (Coalition for Secure AI) contribution
+- SAIF Map: Four component areas (Data, Infrastructure, Model, Application)
+- CoSAI (Coalition for Secure AI) Risk Map contribution (September 2025)
 
 ---
 
@@ -233,9 +236,61 @@ Google's Secure AI Framework (SAIF) organizes AI security around six core elemen
 
 ---
 
+## SAIF 2.0: Agent Security Principles → ZoD
+
+> **October 2025 Update:** SAIF 2.0 introduces specific guidance for autonomous AI agents, establishing three core principles that map directly to ZoD controls.
+
+### Principle 1: Well-Defined Human Controllers
+
+**SAIF 2.0 Requirement:** Agents must have clearly defined human oversight and accountability.
+
+| SAIF 2.0 Guidance | ZoD Layer | Control |
+|-------------------|-----------|---------|
+| Accountability assignment | L7 | Human governance, policy ownership |
+| Override capability | L7 | Kill switch, emergency stop |
+| Escalation paths | L7 | Escalation workflows |
+| Delegation limits | L4 | Chain validation, delegation depth |
+
+### Principle 2: Carefully Limited Powers
+
+**SAIF 2.0 Requirement:** Agent capabilities must be constrained to necessary scope.
+
+| SAIF 2.0 Guidance | ZoD Layer | Control |
+|-------------------|-----------|---------|
+| Least privilege | L4 | Scoped authorization tokens |
+| Action boundaries | L4 | Semantic policy enforcement |
+| Resource limits | L5 | Execution constraints |
+| Capability enumeration | L4 | Tool allowlists |
+
+### Principle 3: Observable Actions and Planning
+
+**SAIF 2.0 Requirement:** Agent reasoning and actions must be transparent and auditable.
+
+| SAIF 2.0 Guidance | ZoD Layer | Control |
+|-------------------|-----------|---------|
+| Action logging | L5, Integrity | Execution logging, immutable audit |
+| Planning transparency | L4 | Token captures decision context |
+| Behavioral monitoring | L6 | Baseline comparison, drift detection |
+| Memory auditing | L6 | Scheduled inspection |
+
+### SAIF 2.0 Agent Risk Map → ZoD
+
+| Agent Risk Category | ZoD Control |
+|---------------------|-------------|
+| Unauthorized actions | L4 semantic policy, L7 escalation |
+| Scope creep | L4 authorization limits |
+| Chain-of-thought manipulation | L2 screening, L3 isolation |
+| Tool misuse | L4 tool allowlists, L5 execution bounds |
+| Memory poisoning | L6 memory audit, integrity verification |
+| Uncontrolled delegation | L4 chain validation, delegation depth |
+
+---
+
 ## CoSAI Alignment
 
-Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OASIS Open Project.
+Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OASIS Open Project, in September 2025.
+
+> **CoSAI Growth (2024–2025):** CoSAI has expanded to 45+ partner organizations including premier sponsors EY, Google, IBM, Microsoft, NVIDIA, Palo Alto Networks, PayPal, Protect AI, Snyk, Trend Micro, and Zscaler. Four active workstreams address: (1) AI Supply Chain Security, (2) Preparing Defenders, (3) AI Risk Governance, and (4) Secure Design for Agentic Systems.
 
 **CoSAI-RM (Risk Map) → ZoD:**
 
@@ -246,6 +301,16 @@ Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OAS
 | Output risks | L4 semantic policy |
 | Memory risks | L6 memory audit |
 | Integration risks | L1 supply chain, L4 chain validation |
+| Agentic risks | L4, L6, L7 (SAIF 2.0 principles) |
+
+**CoSAI Workstream Alignment:**
+
+| CoSAI Workstream | ZoD Relevance |
+|------------------|---------------|
+| WS1: Supply Chain | L1 provenance, model attestation |
+| WS2: Defenders | L6 monitoring, incident response |
+| WS3: Risk Governance | L7 governance, threat model |
+| WS4: Agentic Systems | L4, L6, L7 agent controls |
 
 ---
 
@@ -259,6 +324,9 @@ Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OAS
 | Element 4: Platform Controls | L1, L3, L6, L7, Integrity |
 | Element 5: AI-Adapted Controls | L2, L3, L4, L6 |
 | Element 6: Contextualize Risks | L4, L7 |
+| **SAIF 2.0: Human Controllers** | **L7** |
+| **SAIF 2.0: Limited Powers** | **L4, L5** |
+| **SAIF 2.0: Observable Actions** | **L5, L6, Integrity** |
 | Phase: Secure Development | L1, L3, Threat Model |
 | Phase: Secure Deployment | L1, L3, L4, L6, L7 |
 | Phase: Secure Execution | L2, L4, L5 |
@@ -268,13 +336,19 @@ Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OAS
 
 ## Verification Checklist
 
-**Core Elements**
+**Core Elements (SAIF 1.0)**
 - [ ] Element 1: Zero Trust extended to AI (L1, L4)
 - [ ] Element 2: AI-specific detection operational (L6)
 - [ ] Element 3: Automation in place (L2, L4, L6)
 - [ ] Element 4: Platform-level implementation
 - [ ] Element 5: AI-adapted controls active
 - [ ] Element 6: Risk classification defined (L7)
+
+**Agent Security Principles (SAIF 2.0)**
+- [ ] Human controllers defined with override capability (L7)
+- [ ] Agent powers limited via scoped tokens (L4)
+- [ ] Actions and planning observable and logged (L5, L6)
+- [ ] Delegation depth enforced (L4)
 
 **Lifecycle Phases**
 - [ ] Secure Development: Provenance, threat model
@@ -291,8 +365,19 @@ Google contributed SAIF risk data to the Coalition for Secure AI (CoSAI), an OAS
 
 ## References
 
-- [Google Secure AI Framework](https://safety.google/cybersecurity-advancements/saif/)
-- [CoSAI (Coalition for Secure AI)](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=cosai)
+### Google SAIF
+- [SAIF Resource Hub](https://saif.google/)
+- [SAIF Map and Risk Assessment](https://saif.google/secure-ai-framework)
+- [Google Safety Center - SAIF Overview](https://safety.google/cybersecurity-advancements/saif/)
+- [SAIF 2.0 Announcement (October 2025)](https://blog.google/technology/safety-security/ai-security-frontier-strategy-tools/)
+- [Introducing SAIF (June 2023)](https://blog.google/technology/safety-security/introducing-googles-secure-ai-framework/)
+
+### Coalition for Secure AI (CoSAI)
+- [CoSAI Website](https://www.coalitionforsecureai.org/)
+- [CoSAI GitHub](https://github.com/cosai-oasis)
+- [SAIF Data Donation to CoSAI (September 2025)](https://www.coalitionforsecureai.org/google-donates-secure-ai-framework-saif-data-to-coalition-for-secure-ai/)
+
+### ZoD Documentation
 - [ZoD Architecture Specification](../docs/architecture.md)
 - [ZoD Implementation Guide](../docs/implementation-guide.md)
 
