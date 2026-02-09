@@ -97,7 +97,7 @@ This is not a compromised endpoint—it's semantic overreach using valid credent
 - OWASP ASI02: Tool Misuse and Exploitation
 - Cisco: Skill Scanner analysis
 
-**ZoD defense:** Layer 4 (CA) validates actions against semantic intent policy regardless of tool origin. Semantic policy defines negative constraints (what the tool *cannot* be used for) rather than relying on intent inference. Layer 6 (Monitoring) detects behavioral anomalies from tool interactions.
+**ZoD defense:** Layer 4 (CA) validates actions against semantic intent policy regardless of tool origin. Semantic policy defines negative constraints (what the tool *cannot* be used for) rather than relying on intent inference. Layer 6 (Monitoring) detects behavioral anomalies from tool interactions. High-risk tool outputs may require corroboration from independent sources before the agent can act on them.
 
 ---
 
@@ -126,7 +126,7 @@ The attacker may not want the agent to take a dramatic action. Instead:
 This is how real leaks happen: not raw dumps, but compression and paraphrase through reasoning.
 
 **Framework references:**
-- OWASP ASI06: Memory & Context Poisoning
+- OWASP ASI05: Memory & Context Poisoning
 - Microsoft: Memory corruption taxonomy
 
 **ZoD defense:** Layer 6 (Monitoring) performs external memory audit—comparing memory against baselines, flagging unverified sources, detecting poisoning patterns. Layer 4 semantic policy applies egress controls to all output, including "laundered" summaries.
@@ -200,7 +200,7 @@ This is how real leaks happen: not raw dumps, but compression and paraphrase thr
 - "Break-glass" kill switch for token issuance with safe-halt capability
 - L6 monitoring of signing operations and token issuance patterns
 
-**Why this matters:** This is why "CA integrity" is a trust assumption, not a guarantee. The architecture limits damage through short TTLs and behavioral monitoring, but cannot fully defend against signing key compromise.
+**Why this matters:** This is an attacker position against the underlying trust fabric. It violates Assumption 2 (CA Integrity). The architecture limits the replay window and increases detectability through short TTLs and behavioral monitoring, but cannot fully defend against signing key compromise.
 
 ---
 
