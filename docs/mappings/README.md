@@ -42,7 +42,7 @@ This directory contains detailed mappings between the Zones of Distrust architec
 | [NIST AI RMF](nist-ai-rmf-mapping.md) | NIST AI Risk Management Framework | Govern/Map/Measure/Manage |
 | [Google SAIF](google-saif-mapping.md) | Google Secure AI Framework | Lifecycle phases |
 | [CoSAI](cosai-mapping.md) | Coalition for Secure AI | Industry coalition risk map |
-| [AWS Scoping](aws-scoping-mapping.md) | AWS AI Scoping Matrix | Deployment risk categorization |
+| [AWS Scoping](aws-scoping-mapping.md) | AWS GenAI + Agentic Scoping Matrices | Deployment risk & agency categorization |
 | [Zero Trust](zero-trust-mapping.md) | NIST SP 800-207 | ZTA extension for agents |
 | [ENISA](enisa-mapping.md) | ENISA AI Threat Landscape | EU threat intelligence |
 
@@ -86,7 +86,7 @@ Frameworks that define *how* to assess and govern:
 | CSA ATF | [csa-atf-mapping.md](csa-atf-mapping.md) | Cloud AI security patterns |
 | NIST AI RMF | [nist-ai-rmf-mapping.md](nist-ai-rmf-mapping.md) | Govern/Map/Measure/Manage |
 | Google SAIF | [google-saif-mapping.md](google-saif-mapping.md) | Lifecycle phases |
-| AWS Scoping | [aws-scoping-mapping.md](aws-scoping-mapping.md) | Deployment categorization |
+| AWS Scoping | [aws-scoping-mapping.md](aws-scoping-mapping.md) | Deployment & agency categorization |
 
 ### Regulatory & Compliance
 
@@ -188,10 +188,10 @@ Which frameworks validate which properties:
 
 ## Related Documents
 
-- [Architecture Specification](../docs/architecture.md) — Layer definitions
-- [Security Properties](../docs/security-properties.md) — P1-P12 specifications
-- [Framework Positioning](../docs/framework-positioning.md) — Strategic overview
-- [Implementation Guide](../docs/implementation-guide.md) — How to build it
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [Security Properties](../security-properties.md) — P1-P12 specifications
+- [Framework Positioning](../framework-positioning.md) — Strategic overview
+- [Implementation Guide](../implementation-guide.md) — How to build it
 
 ---
 
