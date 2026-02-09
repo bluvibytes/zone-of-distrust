@@ -1,6 +1,6 @@
 # ZONES OF DISTRUST
 
-**Breach is the premise. Containment is the architecture."*
+**Breach is the premise. Containment is the architecture."**
 
 **A Layered Security Architecture for Autonomous AI**
 
