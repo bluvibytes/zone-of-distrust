@@ -50,8 +50,10 @@ The compromise happens inside the agent's decision-making—through prompt injec
 | Framework | What It Provides | What's Missing |
 |-----------|------------------|----------------|
 | CSA MAESTRO | Threat modeling methodology | How to architect defenses |
-| OWASP Agentic Top 10 | Vulnerability prioritization | Implementation patterns |
-| AWS Scoping Matrix | Deployment categorization | Security controls per category |
+| OWASP Agentic Top 10 | Vulnerability prioritization (ASI01-ASI10) | Implementation patterns |
+| AWS Scoping Matrices | Deployment & agency categorization | Security controls per category |
+| Microsoft AIRT Taxonomy | 27 agent failure mode classifications | Architectural containment |
+| Cisco AI Security Framework | 150+ techniques, scanner tools | Defense-in-depth architecture |
 | CSA Agentic Trust Framework | Governance maturity model | Technical enforcement mechanisms |
 
 These frameworks are valuable. They tell you what to worry about. None of them tell you how to build a system that contains the damage when compromise occurs.
@@ -131,6 +133,7 @@ ZoD maps directly to emerging regulatory requirements:
 | NIST AI RMF | GOVERN (L7), MAP (L4), MEASURE (L6), MANAGE (L1-L5) |
 | SOC 2 | Monitoring (L6), Access control (L4), Change management (L5) |
 | ISO 27001 | A.9 Access control, A.12 Operations security, A.16 Incident management |
+| ISO 42001 | AI-specific management system requirements |
 
 ### Operational Benefits
 
@@ -168,10 +171,12 @@ This alone defeats the majority of current agent exploitation techniques.
 
 The window for proactive architecture is closing:
 
-- **CSA MAESTRO** (February 2025) established threat modeling for multi-agent systems
-- **AWS Scoping Matrix** (November 2025) categorized deployment risk
-- **OWASP Agentic Top 10** (December 2025) prioritized vulnerabilities
-- **CSA Agentic Trust Framework** (February 2026) defined governance maturity
+- **CSA MAESTRO** (February 2025) — Multi-agent threat modeling framework
+- **Microsoft AIRT Taxonomy** (April 2025) — 27 agent failure mode classifications
+- **AWS Agentic AI Scoping Matrix** (November 2025) — Agency-based deployment categorization
+- **OWASP Agentic Top 10** (December 2025) — ASI01-ASI10 vulnerability prioritization
+- **Cisco AI Security Framework** (2025) — 150+ techniques with open-source scanners
+- **CSA Agentic Trust Framework** (February 2026) — Governance maturity model
 
 The frameworks are converging. The guidance is clear. What's been missing is the **implementation architecture**—how to actually build systems that implement this guidance.
 
@@ -183,20 +188,20 @@ Zones of Distrust provides that architecture.
 
 1. **Assess current exposure** — Map existing AI agent deployments against ZoD layers
 2. **Identify quick wins** — L3↔L5 separation is often achievable in days
-3. **Review the full specification** — [Architecture Document](architecture.md)
+3. **Review the full specification** — [Architecture Document](ARCHITECTURE.md)
 4. **Engage your platform team** — L1 capabilities require infrastructure investment
 
 ---
 
 ## About This Document
 
-Zones of Distrust was developed by [BluVi](https://bluvi.ai) as an open reference architecture. 
+Zones of Distrust was developed by [BluVi](https://bluvi.com) as an open reference architecture. 
 
 The framework is published under Apache 2.0. Use it, modify it, build on it.
 
-For the full technical specification, see the [Architecture Document](architecture.md).
+For the full technical specification, see the [Architecture Document](ARCHITECTURE.md).
 
-For framework mappings, see the [Crosswalk Documents](../mappings/).
+For framework mappings, see the [Framework Mappings](../mappings/README.md).
 
 ---
 
