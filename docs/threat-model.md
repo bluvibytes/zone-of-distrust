@@ -41,6 +41,8 @@ Each attacker position below maps to one or more of these outcomes.
 
 The architecture defends against seven distinct attacker positions, consistent with attacker models described across major frameworks (Cisco, OWASP, Microsoft, NVIDIA/Lakera):
 
+**Scope note:** The seven attacker positions defined below represent external and adjacent adversaries acting through or against the agent. Attacks against governance, policy authors, identity infrastructure, or the Certificate Authority itself are not modeled as additional attacker positions, but as trust assumption violations or control-plane attacks, which are handled through explicit assumptions, mitigations, and degradation behavior elsewhere in this document (see Trust Assumptions, Non-Goals, and Adversarial Resilience sections).
+
 ### Position 1: Untrusted Content
 
 **Attack vector:** The attacker controls content the agent will process—emails, documents, web pages, calendar entries, API responses. The attacker may be the user, or may control user-provided inputs.
@@ -529,9 +531,40 @@ When a threat is detected:
 
 ---
 
+## STRIDE Alignment (Informational)
+
+**Reviewer note (non-normative):** Some security reviewers may look for alignment with established threat modeling taxonomies such as STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege).
+
+Zones of Distrust does not use STRIDE as its primary organizing framework, intentionally. STRIDE was designed for deterministic systems with explicit trust boundaries, whereas ZoD addresses probabilistic reasoning systems where compromise occurs inside the decision process.
+
+However, for completeness and to aid reviewers accustomed to traditional models, the attacker positions and controls defined in this document fully cover STRIDE threat classes:
+
+### STRIDE Coverage Mapping
+
+| STRIDE Category | ZoD Threat Example | Primary Layers |
+|-----------------|-------------------|----------------|
+| **Spoofing** | Agent impersonation, A2A session smuggling, identity/key compromise | L1, L4 |
+| **Tampering** | Memory poisoning, RAG corruption, policy poisoning | L4, L6 |
+| **Repudiation** | Agent denies action, insider disputes authorization | L5 audit, integrity channel |
+| **Information Disclosure** | Tool misuse, information laundering, exfiltration via summaries | L4 semantic policy, L6 |
+| **Denial of Service** | Escalation flooding, false-positive abuse, integrity channel flooding | L2, L4, L7 |
+| **Elevation of Privilege** | Delegation abuse, trust inheritance, insider scope expansion | L4, L7 |
+
+**Clarification:** STRIDE categories are covered outcomes, not primary design drivers. ZoD models attacker position + reasoning compromise, which subsumes STRIDE threats while also addressing classes STRIDE does not natively capture:
+
+- **Semantic manipulation** — Content that is technically valid but contextually malicious
+- **Delayed-execution memory poisoning** — Payloads that activate sessions later
+- **Probabilistic drift** — Gradual baseline corruption that shifts "normal"
+- **Information laundering** — Legitimate summarization that exfiltrates sensitive data
+- **Reasoning chain attacks** — Valid premises leading to malicious conclusions
+
+These threat classes require the agent-centric, position-based model ZoD provides.
+
+---
+
 ## Related Documents
 
-- [Architecture Specification](ARCHITECTURE.md) — How the layers implement these defenses
+- [Architecture Specification](../ARCHITECTURE.md) — How the layers implement these defenses
 - [Security Properties](security-properties.md) — Measurable properties that verify defense effectiveness
 - [Implementation Guide](implementation-guide.md) — Practical deployment guidance
 
