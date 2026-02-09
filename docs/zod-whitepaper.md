@@ -600,7 +600,7 @@ This architecture will improve through real-world implementation and community f
 - Integration patterns for agent frameworks
 - Security research and vulnerability analysis
 
-**GitHub:** [github.com/bluvibytes/zones-of-distrust](https://github.com/bluvibytes/zones-of-distrust)
+**GitHub:** [github.com/bluvibytes/zones-of-distrust](https://github.com/bluvibytes/zone-of-distrust/)
 
 See [CONTRIBUTING](https://github.com/bluvibytes/zones-of-distrust/blob/main/CONTRIBUTING.md) for guidelines.
 
