@@ -36,12 +36,12 @@ The architecture consists of seven interdependent layers:
 
 | Document | Description |
 |----------|-------------|
-| **[Architecture Specification](./docs/ARCHITECTURE.md)** | Complete seven-layer technical specification |
-| **[Executive Brief](./docs/executive-brief.md)** | High-level summary for leadership |
-| **[Security Properties](./docs/security-properties.md)** | 12 measurable properties (P1-P12) |
-| **[Threat Model](./docs/threat-model.md)** | Attacker positions and trust assumptions |
-| **[Implementation Guide](./docs/implementation-guide.md)** | Practical deployment guidance |
-| **[Full Documentation](./docs/README.md)** | Complete documentation index |
+| **[Architecture Specification](/docs/ARCHITECTURE.md)** | Complete seven-layer technical specification |
+| **[Executive Brief](/docs/executive-brief.md)** | High-level summary for leadership |
+| **[Security Properties](/docs/security-properties.md)** | 12 measurable properties (P1-P12) |
+| **[Threat Model](/docs/threat-model.md)** | Attacker positions and trust assumptions |
+| **[Implementation Guide](/docs/implementation-guide.md)** | Practical deployment guidance |
+| **[Full Documentation](/docs/README.md)** | Complete documentation index |
 
 ---
 
@@ -51,11 +51,11 @@ ZoD maps to major AI security frameworks, demonstrating alignment and coverage:
 
 | Category | Frameworks |
 |----------|------------|
-| **Threat Taxonomies** | [OWASP Agentic](./docs/mappings/owasp-agentic-mapping.md), [Cisco](./docs/mappings/cisco-mapping.md), [Microsoft AIRT](./docs/mappings/microsoft-airt-mapping.md), [MITRE ATLAS](./docs/mappings/mitre-atlas-mapping.md) |
-| **Methodology** | [MAESTRO](./docs/mappings/maestro-mapping.md), [NIST AI RMF](./docs/mappings/nist-ai-rmf-mapping.md), [Google SAIF](./docs/mappings/google-saif-mapping.md), [AWS Scoping](./docs/mappings/aws-scoping-mapping.md) |
-| **Compliance** | [EU AI Act, SOC 2, ISO 27001, ISO 42001](./docs/mappings/compliance-mapping.md) |
+| **Threat Taxonomies** | [OWASP Agentic](/docs/mappings/owasp-agentic-mapping.md), [Cisco](/docs/mappings/cisco-mapping.md), [Microsoft AIRT](/docs/mappings/microsoft-airt-mapping.md), [MITRE ATLAS](/docs/mappings/mitre-atlas-mapping.md) |
+| **Methodology** | [MAESTRO](/docs/mappings/maestro-mapping.md), [NIST AI RMF](/docs/mappings/nist-ai-rmf-mapping.md), [Google SAIF](/docs/mappings/google-saif-mapping.md), [AWS Scoping](/docs/mappings/aws-scoping-mapping.md) |
+| **Compliance** | [EU AI Act, SOC 2, ISO 27001, ISO 42001](/docs/mappings/compliance-mapping.md) |
 
-See the [complete mapping index](./docs/mappings/README.md) for all 18 framework mappings.
+See the [complete mapping index](/docs/mappings/README.md) for all 18 framework mappings.
 
 ---
 
@@ -73,12 +73,12 @@ We're building a vendor-neutral agent runtime that implements this architecture 
 
 | Document | Description |
 |----------|-------------|
-| [ROADMAP.md](./ROADMAP.md) | Implementation timeline and milestones |
-| [CONTRIBUTING.md](./CONTRIBUTING.md) | How to contribute |
-| [SECURITY.md](./SECURITY.md) | Security policy and reporting |
-| [GOVERNANCE.md](./GOVERNANCE.md) | Project governance model |
-| [DISCLAIMER.md](./DISCLAIMER.md) | Legal disclaimers |
-| [TRADEMARKS.md](./TRADEMARKS.md) | Trademark notices |
+| [ROADMAP.md](/ROADMAP.md) | Implementation timeline and milestones |
+| [CONTRIBUTING.md](/CONTRIBUTING.md) | How to contribute |
+| [SECURITY.md](/SECURITY.md) | Security policy and reporting |
+| [GOVERNANCE.md](/GOVERNANCE.md) | Project governance model |
+| [DISCLAIMER.md](/DISCLAIMER.md) | Legal disclaimers |
+| [TRADEMARKS.md](/TRADEMARKS.md) | Trademark notices |
 
 ---
 
@@ -91,7 +91,7 @@ This architecture is published openly to become an industry standard. We welcome
 - Integration patterns for agent frameworks
 - Real-world use case documentation
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](/CONTRIBUTING.md) for guidelines.
 
 ---
 
@@ -99,10 +99,10 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 | Content | License |
 |---------|---------|
-| Documentation & Specification | [Creative Commons CC-BY 4.0](./LICENSE-CC-BY) |
-| Reference Implementation (when released) | [Apache 2.0](./LICENSE) |
+| Documentation & Specification | [Creative Commons CC-BY 4.0](/LICENSE-CC-BY) |
+| Reference Implementation (when released) | [Apache 2.0](/LICENSE) |
 
-See [LICENSES.md](./LICENSES.md) for complete licensing details.
+See [LICENSES.md](/LICENSES.md) for complete licensing details.
 
 ---
 
