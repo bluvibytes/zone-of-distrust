@@ -297,11 +297,11 @@ ISO 42001 is the first AI-specific certification standard, addressing AI managem
 ## References
 
 - [EU AI Act](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
-- [SOC 2 Trust Service Criteria](https://www.aicpa.org/soc)
+- [SOC 2 Trust Services Criteria (AICPA 2017, revised 2022)](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2)
 - [ISO/IEC 27001:2022](https://www.iso.org/standard/27001)
-- [ISO/IEC 42001:2023](https://www.iso.org/standard/81230.html)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Security Properties](../docs/security-properties.md)
+- [ISO/IEC 42001:2023](https://www.iso.org/standard/42001)
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Security Properties](../security-properties.md)
 
 ---
 
