@@ -259,7 +259,7 @@ NIST AI RMF identifies characteristics of trustworthy AI. ZoD mapping:
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
 - [ZoD Architecture Specification](../ARCHITECTURE.md)
 - [ZoD Security Properties](../security-properties.md)
-- [ZoD Threat Model](../docs/threat-model.md)
+- [ZoD Threat Model](../threat-model.md)
 
 ---
 
