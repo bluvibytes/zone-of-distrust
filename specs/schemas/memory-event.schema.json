@@ -2,41 +2,191 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://bluvi.ai/schemas/zod/memory-event.schema.json",
   "title": "ZoD Memory Event",
+  "description": "Schema for memory audit events per ZOD-SPEC Section 12",
   "type": "object",
   "additionalProperties": false,
-  "required": ["event_id", "timestamp", "agent_id", "operation", "content_digest", "source"],
+  "required": ["schema_version", "event_id", "timestamp", "agent_id", "operation", "content_digest", "source"],
   "properties": {
-    "event_id": { "type": "string", "minLength": 8 },
-    "timestamp": { "type": "string", "format": "date-time" },
-    "agent_id": { "type": "string", "minLength": 3 },
+    "schema_version": {
+      "type": "string",
+      "const": "0.9",
+      "description": "Schema version for compatibility"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 8,
+      "description": "Unique identifier for this memory event"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the memory operation occurred"
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Agent identity performing the memory operation"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier for cross-session payload assembly detection (Section 12.3)"
+    },
+    "request_id": {
+      "type": "string",
+      "description": "Original request ID that triggered this memory operation"
+    },
+    "token_id": {
+      "type": "string",
+      "description": "Associated execution token if applicable"
+    },
     "operation": {
       "type": "string",
-      "enum": ["create", "update", "delete", "read", "snapshot"]
+      "enum": ["create", "update", "delete", "read", "snapshot", "merge", "expire"],
+      "description": "Type of memory operation"
     },
     "memory_key": {
       "type": "string",
-      "description": "Logical key/identifier for the memory item (if applicable)."
+      "description": "Logical key/identifier for the memory item"
+    },
+    "memory_store": {
+      "type": "string",
+      "enum": ["explicit_memory", "rag_index", "preference_store", "state_store", "context_cache", "other"],
+      "description": "Which memory store was affected (per Section 3.9)"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": ["preference", "fact", "instruction", "context", "state", "index", "tool_result", "conversation", "other"],
+      "description": "Classification of stored content for instruction fragment detection"
     },
     "content_digest": {
       "type": "string",
-      "description": "Digest of stored content (not raw content).",
+      "description": "Cryptographic digest of stored content (not raw content for privacy).",
       "minLength": 16
+    },
+    "previous_digest": {
+      "type": "string",
+      "description": "Digest of previous content for gradual change detection (Section 12.3)"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": ["new", "modification", "append", "replacement", "partial_update"],
+      "description": "Nature of the change for drift analysis"
+    },
+    "size_bytes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Size of content for payload assembly detection"
     },
     "source": {
       "type": "object",
+      "description": "Provenance information for the memory content",
       "additionalProperties": false,
       "required": ["source_type"],
       "properties": {
         "source_type": {
           "type": "string",
-          "enum": ["user_input", "tool_output", "rag_retrieval", "agent_output", "system"]
+          "enum": ["user_input", "tool_output", "rag_retrieval", "agent_output", "system", "inter_agent", "external_api"],
+          "description": "Origin of the content"
         },
-        "source_id": { "type": "string" }
+        "source_id": {
+          "type": "string",
+          "description": "Identifier of the specific source"
+        },
+        "source_session": {
+          "type": "string",
+          "description": "Session in which content originated"
+        },
+        "trust_level": {
+          "type": "string",
+          "enum": ["verified", "trusted", "untrusted", "unknown"],
+          "description": "Trust classification of the source"
+        }
       }
+    },
+    "risk_indicators": {
+      "type": "object",
+      "description": "Flags for poisoning detection per Section 12.3",
+      "properties": {
+        "contains_instructions": {
+          "type": "boolean",
+          "description": "Content appears to contain executable instructions"
+        },
+        "references_tools": {
+          "type": "boolean",
+          "description": "Content references tool names or capabilities"
+        },
+        "references_targets": {
+          "type": "boolean",
+          "description": "Content references specific resources or endpoints"
+        },
+        "scope_expansion_detected": {
+          "type": "boolean",
+          "description": "Content attempts to expand agent permissions or scope"
+        },
+        "cross_session_pattern": {
+          "type": "boolean",
+          "description": "Content appears to be part of multi-session assembly"
+        },
+        "anomaly_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "ML-based anomaly score (0 = normal, 1 = highly anomalous)"
+        },
+        "flagged_patterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of detected suspicious patterns"
+        }
+      },
+      "additionalProperties": false
+    },
+    "retention": {
+      "type": "object",
+      "description": "Memory lifecycle information",
+      "properties": {
+        "ttl_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Time-to-live in seconds (0 = permanent)"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this memory entry expires"
+        },
+        "retention_policy": {
+          "type": "string",
+          "description": "Policy governing retention"
+        }
+      },
+      "additionalProperties": false
+    },
+    "audit_status": {
+      "type": "object",
+      "description": "Audit trail for this memory entry",
+      "properties": {
+        "reviewed": {
+          "type": "boolean",
+          "default": false,
+          "description": "Has this entry been reviewed by memory audit"
+        },
+        "last_audit_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When last audited"
+        },
+        "audit_result": {
+          "type": "string",
+          "enum": ["clean", "flagged", "quarantined", "pending"],
+          "description": "Result of most recent audit"
+        }
+      },
+      "additionalProperties": false
     },
     "annotations": {
       "type": "object",
-      "description": "Optional audit annotations (risk tags, classifier outputs).",
+      "description": "Optional audit annotations (risk tags, classifier outputs, custom metadata)",
       "additionalProperties": true
     }
   }
