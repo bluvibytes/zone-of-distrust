@@ -92,11 +92,11 @@ Even if initial attack succeeded, L6 behavioral monitoring would detect:
 
 ## Case Study 2: PhantomRaven / Slopsquatting Attack
 
-**Source:** Cisco AI Security Research, 2025
+**Source:** [Koi Security (October 2025)](https://www.koi.ai/blog/phantomraven-npm-malware-hidden-in-invisible-dependencies)
 
 ### Incident Description
 
-Researchers discovered 126 malicious packages on PyPI exploiting "slopsquatting"—registering package names that LLMs commonly hallucinate. When developers asked AI assistants for code, the AI recommended non-existent packages, and attackers had pre-registered those names with malicious code.
+Koi Security discovered 126 malicious npm packages exploiting "slopsquatting"—registering package names that LLMs commonly hallucinate. When developers asked AI assistants for code recommendations, the AI suggested non-existent packages, and attackers had pre-registered those names with credential-stealing malware. The campaign used Remote Dynamic Dependencies (RDD) to hide malicious code in externally hosted packages fetched at install time, bypassing npm's security scans. Over 86,000 downloads occurred before detection.
 
 ### Attack Vector
 
@@ -273,7 +273,7 @@ Agent A Request → Agent B
 
 ## Case Study 5: ShadowRay 2.0 — Ray Framework Breach
 
-**Source:** Oligo Security Research, March 2024 (ShadowRay), November 2025 (ShadowRay 2.0)
+**Source:** Oligo Security Research — [ShadowRay (March 2024)](https://www.oligo.security/blog/shadowray-attack-ai-workloads-actively-exploited-in-the-wild), ShadowRay 2.0 (November 2025)
 
 **CVE:** CVE-2023-48022 (CVSS 9.8) — Disputed by vendor, remains unpatched
 
@@ -557,9 +557,10 @@ L7 governance would require:
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 
 ### Incident Research
-- [ShadowRay 2.0 — Oligo Security (November 2025)](https://www.oligo.security/blog/shadowray-2-0-attackers-turn-ai-against-itself-in-global-campaign-that-hijacks-ai-into-self-propagating-botnet)
-- [Slopsquatting/PhantomRaven — Cisco AI Security](https://www.cisco.com/c/en/us/solutions/security/ai-security.html)
-- [Microsoft AI Red Team](https://www.microsoft.com/en-us/security/blog/topic/ai-machine-learning/)
+- [ShadowRay — Oligo Security (March 2024)](https://www.oligo.security/blog/shadowray-attack-ai-workloads-actively-exploited-in-the-wild)
+- [PhantomRaven/Slopsquatting — Koi Security (October 2025)](https://www.koi.ai/blog/phantomraven-npm-malware-hidden-in-invisible-dependencies)
+- [Slopsquatting Academic Research — Socket.dev](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks)
+- [Microsoft AI Red Team (AIRT)](https://learn.microsoft.com/en-us/security/ai-red-team/)
 
 ### ZoD Documentation
 - [ZoD Threat Model](../threat-model.md)
