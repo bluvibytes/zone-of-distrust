@@ -220,8 +220,18 @@ Cisco's Integrated AI Security Framework is the most comprehensive threat taxono
 
 ## References
 
-- [Cisco Integrated AI Security Framework](https://www.cisco.com/c/en/us/solutions/security/ai-security.html)
-- [ZoD Architecture Specification](../docs/architecture.md)
+### Cisco AI Security Framework
+- [Cisco AI Security and Safety Framework (Official)](https://www.cisco.com/site/us/en/learn/topics/artificial-intelligence/ai-security-safety-framework.html)
+- [Introducing Cisco's Integrated AI Security and Safety Framework (Blog)](https://blogs.cisco.com/ai/security-framework)
+- [Cisco Integrated AI Security and Safety Framework Report (arXiv)](https://arxiv.org/abs/2512.12921)
+
+### Cisco Open-Source Scanners
+- [MCP Scanner (GitHub)](https://github.com/cisco-ai-defense/mcp-scanner)
+- [A2A Scanner (GitHub)](https://github.com/cisco-ai-defense/a2a-scanner)
+- [Skill Scanner (GitHub)](https://github.com/cisco-ai-defense/skill-scanner)
+
+### ZoD References
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
 - [ZoD Threat Model](../docs/threat-model.md)
 
 ---
