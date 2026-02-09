@@ -64,13 +64,17 @@ These frameworks are valuable. They tell you what to worry about. None of them t
 
 > **Breach is the premise. Containment is the architecture.**
 
-Zones of Distrust is a seven-layer reference architecture built on a single assumption: **the agent will be compromised**. The architecture ensures that compromise doesn't cascade into catastrophic action.
+Zones of Distrust is a seven-layer reference architecture built on a single assumption: **the agent will be compromised**. The architecture is designed to materially reduce the likelihood that compromise cascades into catastrophic action, subject to stated trust assumptions.
 
 ### The Core Mechanism
 
 **The agent that thinks is never the process that acts.**
 
 In ZoD, reasoning and execution are structurally separated. A compromised reasoning process cannot directly execute actions. Every action request must pass through an independent validation layer that the agent cannot influence, cannot see, and cannot bypass.
+
+**The CA is not an LLM.** The Certificate Authority is a deterministic enforcement system, not another AI. Probabilistic signals may inform its decisions, but enforcement is rule-based. This prevents the "you just moved the vulnerability" objection—the CA cannot be prompt-injected because it does not reason.
+
+**Applicability:** ZoD is intended for production AI agents with autonomous execution capability in enterprise or regulated environments. It is not intended for experimental, advisory-only, or human-in-the-loop systems where agents do not execute privileged actions.
 
 ### The Seven Layers
 
@@ -133,14 +137,17 @@ ZoD maps directly to emerging regulatory requirements:
 | NIST AI RMF | GOVERN (L7), MAP (L4), MEASURE (L6), MANAGE (L1-L5) |
 | SOC 2 | Monitoring (L6), Access control (L4), Change management (L5) |
 | ISO 27001 | A.9 Access control, A.12 Operations security, A.16 Incident management |
-| ISO 42001 | AI-specific management system requirements |
+| ISO 42001 | AI governance, operational controls, continuous monitoring |
 
 ### Operational Benefits
 
+- **Fail closed by design** — ZoD fails closed on authorization failures; availability is subordinate to security
 - **Graceful degradation** — When layers fail, the system constrains rather than collapses
 - **Incremental adoption** — Start with L3↔L5 separation, expand coverage over time
 - **Vendor-agnostic** — Reference architecture works with any agent framework
 - **Audit-ready** — Every action is logged with full request/validation/execution chain
+
+**Risk Acceptance:** ZoD does not claim to eliminate risk. Adoption constitutes a documented risk treatment decision to contain, monitor, and govern agent risks rather than assume their absence.
 
 ---
 
@@ -201,7 +208,7 @@ The framework is published under Apache 2.0. Use it, modify it, build on it.
 
 For the full technical specification, see the [Architecture Document](ARCHITECTURE.md).
 
-For framework mappings, see the [Framework Mappings](mappings/README.md).
+For framework mappings, see the [Framework Mappings](./mappings/README.md).
 
 ---
 
