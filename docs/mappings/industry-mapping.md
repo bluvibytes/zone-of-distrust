@@ -10,8 +10,6 @@
 
 ---
 
-
-
 ## Overview
 
 This document maps ZoD controls to industry-specific regulations for sectors deploying AI agents. Each section addresses the unique compliance requirements of that industry.
@@ -22,6 +20,8 @@ This document maps ZoD controls to industry-specific regulations for sectors dep
 
 ### HIPAA Security Rule
 
+> **Regulatory Update (January 2025):** HHS published a Notice of Proposed Rulemaking (NPRM) proposing significant updates to the HIPAA Security Rule. Key proposed changes include mandatory encryption of ePHI at rest and in transit, required multi-factor authentication (MFA), annual security risk assessments and compliance audits, 72-hour system recovery requirements, and elimination of the "addressable" vs "required" distinction. The current rule remains in effect pending finalization (expected late 2025/2026). ZoD controls align with both current requirements and proposed enhancements.
+
 | HIPAA Requirement | § Reference | ZoD Implementation |
 |-------------------|-------------|-------------------|
 | Access controls | §164.312(a)(1) | L1 agent identity, L4 authorization |
@@ -29,6 +29,8 @@ This document maps ZoD controls to industry-specific regulations for sectors dep
 | Integrity controls | §164.312(c)(1) | L4 content hashing, parameter binding |
 | Transmission security | §164.312(e)(1) | L4 token encryption |
 | Authentication | §164.312(d) | L1 identity, L4 token validation |
+| **MFA (proposed)** | NPRM | L1 identity + L4 token validation |
+| **72-hour recovery (proposed)** | NPRM | Recovery protocols |
 
 ### HIPAA Privacy Rule for AI Agents
 
@@ -72,12 +74,20 @@ healthcare:
 
 ### FDA AI/ML Medical Device Guidance
 
+> **Regulatory Update (2024–2025):** FDA has issued significant new guidance for AI-enabled medical devices:
+> - **December 2024:** Final guidance on Predetermined Change Control Plans (PCCP) for AI-enabled device software functions
+> - **January 2025:** Draft guidance on AI-DSF lifecycle management and marketing submissions (Total Product Life Cycle approach)
+> - **June 2024:** Transparency guidance for ML-enabled devices
+> - As of July 2025, over 1,250 AI/ML-enabled devices have received FDA marketing authorization
+
 | FDA Requirement | ZoD Implementation |
 |-----------------|-------------------|
 | Algorithm transparency | L4 token captures decision context |
-| Change control | L7 GitOps policy management |
+| Change control (PCCP) | L7 GitOps policy management |
 | Performance monitoring | L6 behavioral baseline |
 | Risk management | Threat model, L7 risk classification |
+| Bias analysis | L6 monitoring for demographic disparities |
+| Total Product Life Cycle (TPLC) | L7 governance throughout lifecycle |
 
 ---
 
@@ -102,7 +112,9 @@ healthcare:
 | Detecting unauthorized access | L6 behavioral monitoring |
 | Response program | Recovery protocols, L7 incident response |
 
-### PCI DSS 4.0 for AI Payment Agents
+### PCI DSS v4.0.1 for AI Payment Agents
+
+> **Regulatory Update:** PCI DSS v4.0 was retired December 31, 2024. PCI DSS v4.0.1 is now the active standard. Future-dated requirements became mandatory March 31, 2025, including targeted risk analysis, enhanced authentication requirements, and automated log review mechanisms.
 
 | PCI Requirement | ZoD Implementation |
 |-----------------|-------------------|
@@ -140,7 +152,9 @@ payment:
     - "account_modification"
 ```
 
-### SEC AI Guidance (2024-2025)
+### SEC AI Guidance (2024–2025)
+
+> **Regulatory Update:** The SEC's proposed Predictive Data Analytics (PDA) rule was withdrawn in early 2025. However, the SEC's 2025 Examination Priorities explicitly include AI, focusing on compliance policies/procedures and investor disclosures for advisers using AI. The SEC has pursued "AI washing" enforcement actions against firms misrepresenting AI capabilities. In December 2025, the Investor Advisory Committee recommended AI disclosure guidelines (not yet adopted as formal rules).
 
 | SEC Focus Area | ZoD Implementation |
 |----------------|-------------------|
@@ -148,12 +162,16 @@ payment:
 | Conflicts of interest | L4 semantic policy—disclosure requirements |
 | Fiduciary duty | L7 escalation for material decisions |
 | Recordkeeping | Integrity channel—immutable audit |
+| AI compliance policies | L7 governance framework |
+| Accurate AI representations | Documentation, verification methods |
 
 ---
 
 ## Government (FedRAMP, FISMA, CISA)
 
 ### FedRAMP for AI Systems
+
+> **Regulatory Update (2025):** FedRAMP is undergoing significant modernization under OMB Memorandum M-24-15 "Modernizing FedRAMP." The FedRAMP 20x initiative (launched March 2025) introduces a new cloud-native authorization approach emphasizing security over compliance and leveraging automation. Phase 2 pilot is underway through Q2 FY26. Traditional Agency Authorization remains available. Key shifts include security-based (vs. compliance-based) decision making, automated validation of Key Security Indicators, and streamlined significant change notifications.
 
 | FedRAMP Control Family | ZoD Mapping |
 |------------------------|-------------|
@@ -214,18 +232,21 @@ payment:
 
 ### NERC CIP for Energy Sector AI
 
+> **Regulatory Update (2025):** FERC approved CIP-015-1 (Internal Network Security Monitoring) in June 2025, effective September 2025 with a 3-year compliance timeline. This addresses visibility gaps within network perimeters. Additionally, revised standards CIP-003-9, CIP-005-7, CIP-010-4, and CIP-013-2 strengthen requirements for MFA, configuration controls, and vendor oversight. Previously "low-impact" assets may now require medium-impact classification.
+
 | CIP Standard | Requirement | ZoD Implementation |
 |--------------|-------------|-------------------|
-| CIP-003 | Security Management | L7 governance |
+| CIP-003-9 | Security Management | L7 governance |
 | CIP-004 | Personnel & Training | Out of scope |
-| CIP-005 | Electronic Security | L3 isolation |
+| CIP-005-7 | Electronic Security | L3 isolation, MFA |
 | CIP-006 | Physical Security | Out of scope |
 | CIP-007 | System Security | L1, L2, L4 |
 | CIP-008 | Incident Response | Recovery protocols |
 | CIP-009 | Recovery Plans | Recovery protocols |
-| CIP-010 | Configuration Management | L7 GitOps |
+| CIP-010-4 | Configuration Management | L7 GitOps |
 | CIP-011 | Information Protection | L4 semantic policy |
-| CIP-013 | Supply Chain | L1 provenance |
+| CIP-013-2 | Supply Chain | L1 provenance |
+| **CIP-015-1 (new)** | Internal Network Security Monitoring | L6 monitoring within trust zones |
 
 ### AI-Specific Considerations for OT/ICS
 
@@ -240,6 +261,7 @@ critical_infrastructure:
   monitoring:
     real_time_alerting: true
     safety_system_correlation: true
+    internal_network_visibility: true  # CIP-015-1
     
   isolation:
     network: "air_gap_or_data_diode"
@@ -252,14 +274,17 @@ critical_infrastructure:
 
 ### NAIC AI Model Bulletin
 
+> **Regulatory Update (2025):** The NAIC Model Bulletin on the Use of AI Systems by Insurers (adopted December 2023) has now been adopted by 24+ states with minimal modifications. The NAIC Big Data and AI Working Group is developing an AI Systems Evaluation Tool to standardize regulatory assessments (pilot programs expected early 2026). A Third-Party Data and Models Task Force (formed 2024) is evaluating frameworks for vendor AI oversight. Some states (e.g., Colorado) have enacted additional AI-specific legislation.
+
 | NAIC Requirement | ZoD Implementation |
 |------------------|-------------------|
-| Governance framework | L7 human governance |
+| Governance framework (AIS Program) | L7 human governance |
 | Risk management | Threat model, L6 monitoring |
 | Transparency | L4 token captures decision context |
 | Fairness testing | L6 behavioral monitoring for bias |
 | Human oversight | L7 escalation workflows |
 | Audit trail | Integrity channel |
+| Third-party vendor management | L1 provenance, L7 governance |
 
 ### AI Underwriting Controls
 
@@ -279,6 +304,10 @@ insurance:
       
     premium_changes:
       threshold_for_review: 0.10  # 10% change
+      
+    bias_testing:
+      frequency: "annual_minimum"
+      document_methodology: true
 ```
 
 ---
@@ -287,16 +316,16 @@ insurance:
 
 ### Control Mapping by Sector
 
-| Control | Healthcare | Finance | Government | Critical Infra |
-|---------|------------|---------|------------|----------------|
-| L1 Identity | HIPAA | SOX, PCI | FedRAMP | CIP |
-| L2 Screening | HIPAA | GLBA | FISMA | CIP |
-| L3 Isolation | HIPAA | PCI | FedRAMP | CIP |
-| L4 Authorization | HIPAA | PCI, SOX | FedRAMP | CIP |
-| L5 Execution | HIPAA | PCI | FedRAMP | CIP |
-| L6 Monitoring | HIPAA | SOX, SEC | FISMA | CIP |
-| L7 Governance | HIPAA | SOX, SEC | FedRAMP | CIP |
-| Integrity | HIPAA | SOX, PCI | FedRAMP | CIP |
+| Control | Healthcare | Finance | Government | Critical Infra | Insurance |
+|---------|------------|---------|------------|----------------|-----------|
+| L1 Identity | HIPAA | SOX, PCI | FedRAMP | CIP | NAIC |
+| L2 Screening | HIPAA | GLBA | FISMA | CIP | NAIC |
+| L3 Isolation | HIPAA | PCI | FedRAMP | CIP | — |
+| L4 Authorization | HIPAA | PCI, SOX | FedRAMP | CIP | NAIC |
+| L5 Execution | HIPAA | PCI | FedRAMP | CIP | NAIC |
+| L6 Monitoring | HIPAA | SOX, SEC | FISMA | CIP, CIP-015 | NAIC |
+| L7 Governance | HIPAA | SOX, SEC | FedRAMP | CIP | NAIC |
+| Integrity | HIPAA | SOX, PCI | FedRAMP | CIP | NAIC |
 
 ### Industry-Specific Escalation Thresholds
 
@@ -306,6 +335,7 @@ insurance:
 | Finance | Read-only queries | Transactions < $1K | Transactions > $10K |
 | Government | Unclassified | CUI | Classified |
 | Critical Infra | Monitor only | Normal operations | Safety-critical changes |
+| Insurance | Non-adverse decisions | Premium changes < 10% | Adverse actions |
 
 ---
 
@@ -316,33 +346,64 @@ insurance:
 - [ ] Minimum necessary enforcement (L4)
 - [ ] Disclosure approval workflow (L7)
 - [ ] HITRUST controls mapped
+- [ ] Prepared for HIPAA NPRM requirements (MFA, encryption, 72-hour recovery)
 
 ### Financial Services
 - [ ] Transaction limits enforced (L4)
 - [ ] Audit trail immutable (Integrity)
-- [ ] PCI scope isolation (L3)
+- [ ] PCI DSS v4.0.1 scope isolation (L3)
 - [ ] SOX change control (L7)
+- [ ] SEC AI compliance policies documented (L7)
 
 ### Government
 - [ ] FedRAMP control families addressed
 - [ ] Continuous monitoring (L6)
 - [ ] Configuration management (L7)
 - [ ] Supply chain verification (L1)
+- [ ] FedRAMP 20x alignment considered
 
 ### Critical Infrastructure
 - [ ] Safety-critical action controls (L7)
 - [ ] OT/IT isolation (L3)
 - [ ] Real-time monitoring (L6)
+- [ ] Internal network monitoring—CIP-015-1 (L6)
 - [ ] Recovery procedures tested
+
+### Insurance
+- [ ] AIS Program documented (L7)
+- [ ] Bias testing implemented (L6)
+- [ ] Adverse action human review (L7)
+- [ ] Third-party vendor oversight (L1, L7)
 
 ---
 
 ## References
 
-- [HIPAA Security Rule](https://www.hhs.gov/hipaa/for-professionals/security/)
-- [PCI DSS v4.0](https://www.pcisecuritystandards.org/)
+### Healthcare
+- [HIPAA Security Rule](https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html)
+- [HIPAA Security Rule NPRM (January 2025)](https://www.hhs.gov/hipaa/for-professionals/security/hipaa-security-rule-nprm/index.html)
+- [FDA AI/ML Medical Devices](https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-and-machine-learning-software-medical-device)
+
+### Financial Services
+- [PCI DSS v4.0.1](https://www.pcisecuritystandards.org/standards/pci-dss/)
+- [PCI DSS v4.x Resource Hub](https://blog.pcisecuritystandards.org/pci-dss-v4-0-resource-hub)
+- [SEC Division of Examinations](https://www.sec.gov/exams)
+
+### Government
 - [FedRAMP](https://www.fedramp.gov/)
-- [NERC CIP Standards](https://www.nerc.com/pa/Stand/Pages/CIPStandards.aspx)
+- [FedRAMP 20x Overview](https://www.fedramp.gov/20x/)
+- [FedRAMP Changelog](https://www.fedramp.gov/changelog/)
+
+### Critical Infrastructure
+- [NERC CIP Standards](https://www.nerc.com/standards/reliability-standards/cip)
+- [NERC Reliability Standards](https://www.nerc.com/standards/reliability-standards)
+
+### Insurance
+- [NAIC AI Model Bulletin](https://content.naic.org/sites/default/files/cmte-h-big-data-artificial-intelligence-wg-ai-model-bulletin.pdf.pdf)
+- [NAIC Artificial Intelligence Topics](https://content.naic.org/insurance-topics/artificial-intelligence)
+- [NAIC Model Bulletin Adoption Map](https://content.naic.org/sites/default/files/cmte-h-big-data-artificial-intelligence-wg-map-ai-model-bulletin.pdf)
+
+### ZoD Documentation
 - [ZoD Compliance Mapping](compliance-mapping.md)
 
 ---
