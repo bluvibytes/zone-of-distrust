@@ -564,7 +564,7 @@ These threat classes require the agent-centric, position-based model ZoD provide
 
 ## Related Documents
 
-- [Architecture Specification](../ARCHITECTURE.md) — How the layers implement these defenses
+- [Architecture Specification](./ARCHITECTURE.md) — How the layers implement these defenses
 - [Security Properties](security-properties.md) — Measurable properties that verify defense effectiveness
 - [Implementation Guide](implementation-guide.md) — Practical deployment guidance
 
