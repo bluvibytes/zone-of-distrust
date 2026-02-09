@@ -48,7 +48,7 @@ ZoD provides value only when these conditions are met:
 
 ```
                               ┃ POLICY ┃
-                              ┃ flows  ┃
+                              ┃ FLOWS  ┃
                               ▼ DOWN   ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                             │
@@ -100,7 +100,7 @@ ZoD provides value only when these conditions are met:
 │         ▲                                                                   │
 └─────────────────────────────────────────────────────────────────────────────┘
                               ┃  DATA  ┃
-                              ┃ flows  ┃
+                              ┃ FLOWS  ┃
                               ┃   UP   ┃
 ```
 
