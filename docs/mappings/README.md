@@ -6,7 +6,7 @@
 
 ---
 
-> **Important:** These mappings demonstrate *conceptual alignment* and *control coverage*, not certification or compliance. ZoD is **complementary to**, not a replacement for, established frameworks and standards. Mappings do not imply endorsement by or affiliation with referenced organizations. See [DISCLAIMER](../DISCLAIMER.md) and [TRADEMARKS](../TRADEMARKS.md).
+> **Important:** These mappings demonstrate *conceptual alignment* and *control coverage*, not certification or compliance. ZoD is **complementary to**, not a replacement for, established frameworks and standards. Mappings do not imply endorsement by or affiliation with referenced organizations. See [DISCLAIMER](../../DISCLAIMER.md) and [TRADEMARKS](../../TRADEMARKS.md).
 
 ---
 
@@ -16,7 +16,7 @@ This directory contains detailed mappings between the Zones of Distrust architec
 
 **Purpose:** Enable organizations to understand how ZoD architectural controls align with and support implementation of framework requirements. These mappings provide audit-relevant evidence artifacts, not automatic compliance.
 
-**Quick Start:** See [quick-reference.md](quick-reference.md) for a one-page cheatsheet.
+**Quick Start:** See [quick-reference](quick-reference.md) for a one-page cheatsheet.
 
 ---
 
