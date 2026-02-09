@@ -24,6 +24,8 @@ AWS's Generative AI Scoping Matrix provides a practical framework for categorizi
 - Well-Architected Framework integration
 - Shared responsibility model for AI
 
+> **Note:** For agentic AI deployments, AWS released the **Agentic AI Security Scoping Matrix** (November 2025), which categorizes systems by agency and autonomy levels across 4 scopes. The Agentic matrix addresses tool orchestration, persistent memory, identity delegation, and human oversight patterns that align more directly with ZoD's layered control model. See References for links to both matrices.
+
 ---
 
 ## Scoping Categories → ZoD Requirements
@@ -335,10 +337,20 @@ compliance:
 
 ## References
 
-- [AWS Generative AI Security Scoping Matrix](https://docs.aws.amazon.com/prescriptive-guidance/latest/llm-security/)
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [ZoD Implementation Guide](../docs/implementation-guide.md)
-- [ZoD Security Properties](../docs/security-properties.md)
+**AWS Generative AI Security Scoping Matrix:**
+- [Scoping Matrix Overview](https://aws.amazon.com/ai/security/generative-ai-scoping-matrix/)
+- [Introduction Blog Post](https://aws.amazon.com/blogs/security/securing-generative-ai-an-introduction-to-the-generative-ai-security-scoping-matrix/)
+
+**AWS Agentic AI Security Scoping Matrix (November 2025):**
+- [Agentic AI Scoping Matrix](https://aws.amazon.com/ai/security/agentic-ai-scoping-matrix/)
+- [Framework Blog Post](https://aws.amazon.com/blogs/security/the-agentic-ai-security-scoping-matrix-a-framework-for-securing-autonomous-ai-systems/)
+
+**AWS Well-Architected Framework:**
+- [Well-Architected Overview](https://aws.amazon.com/architecture/well-architected/)
+
+**ZoD References:**
+- [ZoD Implementation Guide](../implementation-guide.md)
+- [ZoD Security Properties](../security-properties.md)
 
 ---
 
