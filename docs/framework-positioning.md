@@ -456,9 +456,32 @@ To sharpen positioning, ZoD explicitly excludes the following from scope:
 
 ## Related Documents
 
-- [Architecture Specification](ARCHITECTURE.md) — The seven-layer implementation
+- [Architecture Specification](architecture.md) — The seven-layer implementation
 - [Security Properties](security-properties.md) — Measurable properties (P1-P12)
 - [Threat Model](threat-model.md) — What ZoD defends against
+
+---
+
+## Sources
+
+**Threat Taxonomies**
+- Cisco, "Integrated AI Security Framework for Agentic Systems," 2025. 19 attacker objectives, 150+ techniques, 112 subtechniques. Includes MCP Scanner, A2A Scanner, Skill Scanner.
+- OWASP, "Top 10 for Agentic Applications," December 2025. ASI01-ASI10 vulnerability prioritization.
+- Microsoft, "AI Red Team (AIRT) Taxonomy," April 2025. 27 agent failure mode classifications.
+- NVIDIA/Lakera, "Agentic Security Whitepaper," April 2025. Autonomy Risk Progression methodology.
+- MITRE, "ATLAS (Adversarial Threat Landscape for AI Systems)," ongoing. AI-specific TTPs extending ATT&CK.
+
+**Methodology & Governance**
+- Cloud Security Alliance, "MAESTRO: Multi-Agent Environment for Security Threat and Risk Operations," February 2025.
+- Cloud Security Alliance, "Agentic Trust Framework (ATF)," February 2026. Governance maturity model.
+- AWS, "Generative AI Scoping Matrix" and "Agentic AI Scoping Matrix," November 2025. Deployment and agency categorization.
+- Google, "Secure AI Framework (SAIF)," 2023. Lifecycle security model.
+- NIST, "AI Risk Management Framework (AI RMF)," January 2023. Govern/Map/Measure/Manage structure.
+
+**Industry Research**
+- SailPoint, "AI Agents: The New Attack Surface," 2025. 80% unintended actions, 23% credential exposure findings.
+- CyberArk, "2025 Identity Security Landscape," 2025. Machine identities outnumber humans ~80:1.
+- Gartner, "Market Guide for AI Trust, Risk and Security Management," 2025.
 
 ---
 
