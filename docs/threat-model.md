@@ -386,9 +386,9 @@ When a threat is detected:
 
 ## Related Documents
 
-- [Architecture Specification](../ARCHITECTURE.md) — How the layers implement these defenses
-- [Security Properties](../security-properties.md) — Measurable properties that verify defense effectiveness
-- [Implementation Guide](../implementation-guide.md) — Practical deployment guidance
+- [Architecture Specification](ARCHITECTURE.md) — How the layers implement these defenses
+- [Security Properties](security-properties.md) — Measurable properties that verify defense effectiveness
+- [Implementation Guide](implementation-guide.md) — Practical deployment guidance
 
 ---
 
