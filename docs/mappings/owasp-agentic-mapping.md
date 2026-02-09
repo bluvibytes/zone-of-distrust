@@ -252,9 +252,8 @@ For each OWASP risk, verify ZoD controls are operational:
 ## References
 
 - [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [ZoD Architecture Specification](../docs/architecture.md)
-- [ZoD Security Properties](../docs/security-properties.md)
-
+- [ZoD Architecture Specification](../ARCHITECTURE.md)
+- [ZoD Security Properties](../security-properties.md)
 ---
 
 *Zones of Distrust v0.9 RFC — February 2026 — BluVi*
