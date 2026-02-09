@@ -230,8 +230,10 @@ Microsoft's AI Red Team (AIRT) published a taxonomy classifying failures across 
 
 ## References
 
-- [Microsoft Taxonomy of Failure Modes](https://www.microsoft.com/en-us/security/blog/)
-- [Microsoft SDL for AI](https://www.microsoft.com/en-us/securityengineering/sdl)
+- [Microsoft Taxonomy of Failure Modes](https://learn.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning)
+- [Microsoft SDL for AI](https://www.microsoft.com/en-us/security/blog/2026/02/03/microsoft-sdl-evolving-security-practices-for-an-ai-powered-world/)
+- [Microsoft SDL Threat Modeling for AI/ML](https://learn.microsoft.com/en-us/security/engineering/threat-modeling-aiml)
+- [Microsoft SDL Bug Bar for AI/ML](https://learn.microsoft.com/en-us/security/engineering/bug-bar-aiml)
 - [ZoD Architecture Specification](../ARCHITECTURE.md)
 - [ZoD Threat Model](../threat-model.md)
 
