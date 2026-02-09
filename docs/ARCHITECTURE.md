@@ -48,7 +48,7 @@ ZoD provides value only when these conditions are met:
 
 ```
                               ┃ POLICY ┃
-                              ┃ FLOWS  ┃
+                              ┃ flows  ┃
                               ▼ DOWN   ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                             │
@@ -100,7 +100,7 @@ ZoD provides value only when these conditions are met:
 │         ▲                                                                   │
 └─────────────────────────────────────────────────────────────────────────────┘
                               ┃  DATA  ┃
-                              ┃ FLOWS  ┃
+                              ┃ flows  ┃
                               ┃   UP   ┃
 ```
 
@@ -262,7 +262,7 @@ Controlling what the agent sees is controlling what it thinks. Traditional Zero 
 
 The agent's ability to analyze, plan, and recommend is completely decoupled from its ability to act. No shared pipeline. No single motion from thought to action. The agent produces a structured request, not an action.
 
-The reasoning process runs in an isolated environment with no ability to make system calls, access credentials, or execute operations. It can only emit structured requests that pass through Layer 4 for validation.
+The reasoning process runs in an isolated environment with a restricted syscall profile (seccomp), no shell execution, no outbound network access except to Layer 4, and no access to credentials or tool endpoints. It can only emit structured requests that pass through Layer 4 for validation.
 
 #### Reasoning Chain Attacks
 
@@ -271,6 +271,27 @@ An attacker does not need to inject explicit malicious instructions. They can co
 Microsoft's failure mode taxonomy identifies this as a core novel failure in agentic systems. Their case study demonstrates how an attacker can use memory poisoning to establish false premises that corrupt the agent's future reasoning chains—the agent recalls "facts" from memory that were planted by the attacker and reasons correctly from incorrect foundations.
 
 Cognitive Isolation contains this threat by ensuring that even a perfectly manipulated reasoning chain cannot result in direct action. The agent's conclusion, however well-reasoned it appears, still passes through Layer 4's independent validation.
+
+#### State Provenance
+
+The agent's internal state is an attack surface—not just persistent memory, but also:
+- Conversation state
+- Tool call results
+- Intermediate scratchpad
+- Planner state
+- System prompt modifications
+
+All retrieved context should carry **provenance tags**:
+
+| Tag | Purpose |
+|-----|---------|
+| **source** | Where did this data come from? (memory, tool, user, system) |
+| **timestamp** | When was it retrieved/created? |
+| **trust_level** | verified, unverified, external, untrusted |
+| **classification** | Data sensitivity level |
+| **signature** | Cryptographic attestation where available |
+
+Layer 4 can then evaluate: "This request relies on unverified state—escalate." State provenance enables the CA to distinguish between requests based on verified context versus requests that may be influenced by poisoned transient state.
 
 #### Key Principle
 
@@ -285,6 +306,8 @@ The gap between thought and action is where safety lives. A compromised agent th
 ### Layer 4: Request Validation — Certificate Authority / Policy Decision Plane
 
 This is the architectural centerpiece. Every request from Layer 3 passes through an independent Certificate Authority that the agent cannot influence, manipulate, or bypass.
+
+**The CA is on the execution path, not the reasoning path.** Agent cognition and planning continue even when the CA is unavailable; only privileged action is gated. This preserves business continuity while maintaining security enforcement.
 
 #### Validation Criteria
 
@@ -310,9 +333,24 @@ If approved, the CA issues a single-use, time-bound execution token. The agent n
 
 ZoD uses a CA-style authority because agent compromise occurs inside the decision process, not at the identity boundary. Traditional authorization assumes the caller is a trusted decision-maker once authenticated. ZoD assumes the caller may be adversarial while still authenticated.
 
+**The key distinction from API gateways:** API gateways assume a trustworthy caller making requests within authorized scope. ZoD assumes the caller is potentially compromised and validates not just authorization but also content, pattern, and intent. This is the fundamental architectural difference.
+
 Layer 4 therefore acts as an externalized policy decision point that is independent of the agent's reasoning process.
 
 This is not "PKI for agents." It is an action authorization plane that produces cryptographically verifiable execution approvals.
+
+**The CA is not an LLM-based reasoning component; it is a deterministic enforcement system.** Probabilistic signals (behavioral scores, risk assessments) may inform the CA's decision, but the CA itself applies deterministic rules. This prevents the "you just moved the vulnerability to another agent" objection—the CA cannot be prompt-injected because it does not reason.
+
+**The CA is a regulated control-plane component:** policy changes are treated as security-critical events requiring approval, immutably logged evidence, and rollback control.
+
+**Policy integrity chain:** The CA enforces a complete chain of custody for policy:
+- Policies stored in version-controlled repository (GitOps)
+- Signed at release time by authorized governance keys
+- CA only loads signed policy bundles with valid signatures
+- Policy version hash included in every token issuance log event
+- Rollback requires explicit approval and creates audit record
+
+This allows auditors to trace any enforcement decision back to the exact policy artifact that authorized it.
 
 #### CA Performance Model (Fast Path / Slow Path)
 
@@ -335,24 +373,48 @@ This keeps CA overhead low for routine operations while preserving strong contai
 | Elevated path | 50-200ms | High-risk, additional scrutiny |
 | Human escalation | Minutes to hours | Policy-defined thresholds |
 
-These ranges assume co-located CA infrastructure. For comparison, typical LLM inference latency is 500ms-5s, making CA overhead negligible for most agent workloads.
+These ranges assume co-located CA infrastructure (intra-region deployment, excluding cross-region network RTT). For comparison, typical LLM inference latency is 500ms-5s, making CA overhead negligible for most agent workloads.
+
+**CA validation is not invoked per-token of model inference; it is invoked only at execution boundaries.** An agent may reason through thousands of tokens before requesting a single privileged action. The CA validates that action, not the reasoning.
 
 #### CA Feasibility Assumption
 
 ZoD assumes that CA validation latency is small relative to typical agent workloads (LLM inference and external tool/API calls). For most enterprise agents, CA checks can be engineered as low-millisecond operations with caching and pre-approved patterns.
 
-For extremely high-frequency or low-latency workloads, the CA may issue short-lived bounded capability tokens that authorize a narrow sequence of actions under strict constraints, reducing round-trip validation cost while preserving enforcement.
+For extremely high-frequency or low-latency workloads, the CA may issue short-lived bounded **capability tokens** (similar to macaroons or biscuits) that authorize a narrow sequence of actions under strict constraints, reducing round-trip validation cost while preserving enforcement. These tokens encode attenuation—each delegation can only narrow scope, never expand it. **Capability tokens may only attenuate authority; they can never expand scope or bypass semantic constraints.** This is enforced cryptographically, not by policy.
 
 #### CA Availability and Failure Handling
 
-Layer 4 is a security-critical control plane and must be treated like an authentication service:
+Layer 4 is a security-critical control plane. **ZoD treats the CA as a Tier-0 system**—similar to a KMS, HSM, or PKI root—requiring:
+
+- Hardened, minimal attack surface
+- HSM-backed key storage for signing operations
+- Multi-party approval for configuration changes
+- Independent monitoring by Layer 6
+- Isolated infrastructure, not co-located with agents
+
+The CA must be treated like an authentication service:
 
 - Horizontally scalable
 - Region-local where possible
 - Auditable policy versioning
 - Explicit degraded modes
 
-If the CA is unavailable, systems should fail closed for high-risk actions, and optionally fail restricted-open for low-risk read-only actions depending on Layer 7 governance policy.
+**Critical distinction: Unavailability vs. Compromise**
+
+| Failure Mode | System Behavior | Risk Level |
+|--------------|-----------------|------------|
+| **CA unavailable** (crash/outage) | System halts safely; no requests processed | Operations halt (safe) |
+| **CA compromised** (misbehaving) | Invalid tokens may be issued; operations continue | **High** (unsafe) |
+
+If the CA is *unavailable*, systems fail closed for high-risk actions, and optionally fail restricted-open for low-risk read-only actions depending on Layer 7 governance policy.
+
+If the CA is *compromised*, detection relies on:
+- L6 detecting anomalous token issuance patterns
+- L7 catching high-risk actions through human review
+- Integrity channel correlation across layers
+
+This is why CA integrity is a Tier-0 concern: unavailability is recoverable; compromise is catastrophic without independent detection.
 
 **Key requirement:** The agent cannot bypass Layer 4 to reach Layer 5.
 
@@ -400,6 +462,8 @@ The semantic intent policy can be implemented through multiple mechanisms with d
 
 Production deployments typically layer these: fast rule engine for common cases, classifier for edge cases, LLM-as-judge for high-risk escalations. The architecture does not mandate a specific implementation.
 
+**Critical constraint:** LLM-as-judge output must compile into deterministic constraints before enforcement. The LLM provides risk assessment; the CA makes the final allow/deny decision using deterministic rules. A probabilistic CA undermines P12 (Cryptographic Attribution). If LLM classification is used, it populates fields (e.g., `risk_score`) that deterministic policy rules then evaluate.
+
 #### Token Binding Specification
 
 The execution token issued by the CA is not a general-purpose authorization. It is a parameter-bound certificate that specifies exactly what action is authorized:
@@ -433,6 +497,47 @@ This prevents multi-agent privilege escalation—where agent A asks agent B to d
 | Hierarchical | Authorization flows down; each level's CA enforces scope reduction |
 
 The architecture does not assume a single CA. Federated CA topologies are supported with cross-CA trust chains validated at each hop.
+
+#### CA Compromise Detection & Containment
+
+The CA is Tier-0 infrastructure. Its compromise is catastrophic. The architecture includes explicit mitigations:
+
+| Defense | Mechanism |
+|---------|-----------|
+| **Policy version pinning** | CA refuses policies older than last-known-good revision |
+| **Signed policy bundles** | Policy changes require governance key signatures |
+| **Monotonic revision numbers** | Prevents policy rollback/downgrade attacks |
+| **Quorum approval** | High-risk policy changes require multi-party authorization |
+| **Token issuance anomaly detection** | L6 monitors CA token rate, distribution, and entropy for deviation |
+| **CA attestation** | CA proves its own integrity via hardware attestation (where available) |
+
+**Critical distinction:** CA *unavailability* causes safe halt (operations stop). CA *compromise* causes catastrophic failure (malicious operations authorized). The architecture prioritizes detecting compromise over maximizing availability.
+
+Cross-layer correlation (L6) monitors CA behavior independently. Anomalous token issuance patterns—unusual approval rates, atypical action distributions, authorization for previously-denied patterns—trigger investigation even when individual tokens appear valid.
+
+#### Request Object Schema
+
+Requests from Layer 3 to Layer 4 follow a structured schema:
+
+```json
+{
+  "agent_id": "agent-uuid",
+  "action": "send_email",
+  "target": "recipient@example.com",
+  "payload_hash": "sha256:abc123...",
+  "state_provenance": {
+    "sources": ["memory:verified", "context:unverified"],
+    "trust_level": "partial"
+  },
+  "origin_context": {
+    "session_id": "...",
+    "parent_request_hash": "...",
+    "timestamp": "..."
+  }
+}
+```
+
+This structured format enables deterministic policy evaluation. Unstructured or malformed requests are rejected.
 
 #### Key Principle
 
@@ -526,6 +631,8 @@ To avoid the criticism that L6 is "aspirational SIEM," here are the concrete sig
 
 These signals form the minimum observability surface. Production deployments will extend this, but any ZoD implementation lacking these signals cannot claim L6 compliance.
 
+**Falsifiability criterion:** If you cannot collect these signals, you do not have ZoD. This is how the framework remains testable rather than aspirational.
+
 #### Memory Audit
 
 **This is not yet widely standardized as an architectural requirement across agent frameworks.**
@@ -566,7 +673,7 @@ When an agent's underlying model is updated:
 3. **L4 policy** may temporarily elevate risk classifications during transition
 4. **L7 approval** required before baseline exits re-baselining mode
 
-Model updates are a known high-risk window. The architecture treats them as controlled transitions, not seamless swaps.
+Model updates are a known high-risk window. The architecture treats them as controlled transitions, not seamless swaps. **Model updates are treated as adversarially sensitive events and must never occur concurrently with policy changes or scope expansion.** This separation prevents compound risk during transition periods.
 
 #### Key Principle
 
@@ -582,6 +689,8 @@ The agent cannot monitor itself because it cannot trust itself. External monitor
 
 The top of the stack. Human decision-makers set policy, define risk thresholds, review escalations, and make the judgment calls the architecture is designed to surface.
 
+**Layer 7 authority is restricted to designated governance roles and explicitly excludes agent operators, prompt authors, and application developers.** This separation of duties prevents the people closest to daily operations from unilaterally modifying security constraints.
+
 #### Risk-Weighted Escalation
 
 Not every decision needs a human. The architecture implements risk-weighted escalation:
@@ -593,6 +702,20 @@ Not every decision needs a human. The architecture implements risk-weighted esca
 | High | Escalated to human review |
 
 The risk classification is set by policy, not by the agent. The agent does not assess its own risk level.
+
+#### Escalation Fatigue Controls
+
+Human oversight fails if humans are overwhelmed. The threat model identifies "escalation flooding" as an attacker technique—deliberately triggering escalations to exhaust human attention. Layer 7 mitigates this through:
+
+| Control | Mechanism |
+|---------|-----------|
+| **Queue separation** | Different escalation types route to different queues; attack on one doesn't flood all |
+| **Risk-based triage** | Higher-risk escalations surface first; low-risk can be batched |
+| **Statistical sampling** | When volume exceeds capacity, sample with full audit trail |
+| **Adaptive throttling** | Escalation rate limits trigger automatic scope reduction at L4 |
+| **Escalation source tracking** | Repeated escalations from single agent trigger investigation |
+
+The goal is not to prevent all escalations—it is to ensure that the human layer remains effective under adversarial load.
 
 #### Policy Authority
 
@@ -661,6 +784,196 @@ No single signal is suspicious. The pattern across layers reveals the attack.
 
 No layer is trusted to accurately report its own status. Compromise detection depends on cross-layer signal correlation.
 
+### Integrity Channel Attack Surface
+
+The integrity signal channel itself is an attack surface. An attacker with channel access might attempt:
+
+| Attack | Technique | Goal |
+|--------|-----------|------|
+| **Forgery** | Inject fabricated events | Create false audit trail, frame legitimate activity |
+| **Suppression** | Selectively drop events | Hide evidence of compromise |
+| **Reordering** | Delay or resequence events | Break correlation analysis, create false alibis |
+| **Desynchronization** | Cause clock drift between sources | Make cross-layer correlation unreliable |
+
+**Required Mitigations:**
+
+| Defense | Mechanism |
+|---------|-----------|
+| **Signed events** | Every signal cryptographically signed by originating layer; forgery requires key compromise |
+| **Sequence numbers** | Monotonic counters per source; gaps indicate suppression |
+| **Merkle chain** | Append-only structure where each entry commits to all previous; reordering breaks chain |
+| **Timestamping** | Trusted timestamping service; bounded clock skew detection |
+| **Write-once storage** | WORM storage, S3 Object Lock, or blockchain-adjacent immutability |
+| **Out-of-band transmission** | Channel architecturally separate from agent data path |
+
+### Control Health as First-Class Telemetry
+
+**The architecture treats security control health metrics as first-class telemetry:**
+
+- L2 false positive rates (attack surface if manipulated)
+- L4 escalation frequency and patterns (fatigue indicator)
+- L6 alert volume and quality scores (baseline poisoning indicator)
+- Integrity channel gap/latency metrics (suppression indicator)
+- CA issuance rate distribution (anomaly indicator)
+
+Anomalies in control health are themselves compromise indicators. A sudden spike in L4 escalations may indicate attack probing; a drop in L6 alerts may indicate baseline poisoning.
+
+---
+
+## Recovery and Reset
+
+ZoD answers how to prevent, detect, and contain compromise. It must also answer: how do you restore trust after compromise is confirmed?
+
+### Recovery Actions
+
+| Action | Purpose | Layer |
+|--------|---------|-------|
+| **Memory rollback** | Restore to last attested snapshot, discard potentially poisoned state | L6 → L3 |
+| **Baseline reset** | Re-establish behavioral baseline with human approval | L6 + L7 |
+| **Identity re-keying** | Rotate agent credentials, invalidate all outstanding tokens | L1 + L4 |
+| **Cooling-off period** | Mandatory reduced autonomy while trust is re-established | L4 + L7 |
+| **Root cause analysis** | Update L2/L4/L6 rules based on attack vector identified | L7 |
+
+### Token Revocation / Kill Switch
+
+The architecture supports immediate agent suspension:
+
+1. **CA token revocation** — All outstanding tokens for agent are invalidated
+2. **Executor blocklist** — L5 refuses any action from agent identity
+3. **Memory quarantine** — Agent memory marked untrusted pending audit
+4. **Identity suspension** — L1 credential revoked at OS/platform level
+
+Recovery is not "restart." It is a controlled process that preserves forensic evidence, prevents re-compromise through the same vector, and requires explicit human authorization to restore capability.
+
+### Re-attestation
+
+Before an agent returns to normal operation after recovery:
+
+1. L1 verifies model provenance and runtime integrity
+2. L6 confirms memory state against clean baseline
+3. L4 enters elevated scrutiny mode (tighter thresholds)
+4. L7 approves return to normal operation
+
+Trust is earned back gradually, not restored instantly.
+
+### Agent Disablement as an Attack Goal
+
+An attacker may not want the agent to perform malicious actions—they may want it offline. Forced shutdown can be as damaging as compromise:
+
+| Technique | Mechanism | Defense |
+|-----------|-----------|---------|
+| **False-positive flooding** | Trigger repeated L2/L4 escalations to exhaust human review capacity | L7 escalation fatigue controls, statistical sampling |
+| **Governance exhaustion** | Generate volume of legitimate-seeming edge cases requiring human judgment | Queue separation, adaptive throttling |
+| **Baseline poisoning** | Corrupt L6 behavioral baseline to keep agent permanently in elevated scrutiny | Baseline integrity verification, rollback capability |
+| **Kill switch manipulation** | Trick operators into invoking emergency shutdown via social engineering | Dual-authorization requirements, post-hoc audit |
+
+**ZoD treats forced shutdown as a security event, not a safe outcome.** Agent unavailability may itself be the attacker's goal. The architecture tracks shutdown triggers, monitors for patterns that suggest adversarial availability attacks, and requires root cause analysis before restart.
+
+---
+
+## Minimum Deployable ZoD
+
+For organizations that cannot implement the full architecture, the minimum deployment that can credibly claim ZoD compliance:
+
+| Component | Requirement |
+|-----------|-------------|
+| **L3 sandbox** | Agent reasoning in isolated environment with no credentials |
+| **L4 policy gate** | Allowlist-based authorization with signed tokens |
+| **L5 executor** | Validates token before action; agent cannot invoke directly |
+| **Append-only logging** | Immutable audit trail of all actions |
+
+This is "starter ZoD." It provides cognitive isolation, action authorization, and auditability. It does not provide behavioral baselining, memory audit, or advanced threat correlation—but it establishes the architectural foundation.
+
+**If you skip these minimum components, you do not have ZoD. You have defense-in-depth with extra steps.**
+
+---
+
+## Regulatory and Compliance Alignment
+
+### Accountability and Responsibility Model
+
+Zones of Distrust separates execution authority from governance accountability. **AI agents never hold legal or operational responsibility for outcomes.**
+
+| Role | Responsibility | ZoD Layer |
+|------|----------------|-----------|
+| **System Owner** | Defines agent purpose and acceptable risk envelope | L7 |
+| **Governance Authority** | Sets policies, escalation thresholds, and approval rules | L7 |
+| **Security Operations** | Monitors integrity signals and investigates anomalies | L6 |
+| **Platform Operator** | Maintains infrastructure and CA availability | L1/L4/L5 |
+| **Agent** | Executes within constrained authority; never accountable | L3 |
+
+Accountability for agent actions always maps to a human-controlled role via immutable audit records.
+
+### Compliance Evidence and Auditability
+
+ZoD produces continuous, machine-verifiable evidence of compliance:
+
+- **Immutable action logs** — who, what, when, why for every execution
+- **Policy versions** — active policy state at time of each decision
+- **Token-bound execution records** — cryptographic proof of authorization
+- **Escalation and approval histories** — complete chain of human decisions
+- **Integrity channel health metrics** — evidence that controls were operational
+
+Evidence is retained according to organizational and regulatory retention policies and is independently auditable.
+
+### Risk-Tiered Operation (Regulatory Classification)
+
+ZoD supports risk-tiered operation consistent with regulatory guidance:
+
+| Risk Tier | ZoD Handling | Regulatory Alignment |
+|-----------|--------------|---------------------|
+| **Minimal risk** | Automated execution with monitoring | Routine AI operations |
+| **Limited risk** | Enhanced logging and transparency | EU AI Act limited risk |
+| **High risk** | Human approval and constrained execution | EU AI Act high-risk AI |
+| **Prohibited risk** | Execution disallowed by policy | Regulatory prohibitions |
+
+Risk classification is set by L7 policy, not by agent self-assessment.
+
+### Human Oversight is Enforced, Not Optional
+
+ZoD does not treat human oversight as a procedural control. It is enforced structurally through L4 escalation gates. High-risk actions cannot execute without human authorization, and the agent cannot bypass this path. The architecture makes human oversight a technical enforcement property, not a policy aspiration.
+
+### Change Management and Policy Governance
+
+Policy changes in ZoD are treated as security-critical events:
+
+| Control | Mechanism |
+|---------|-----------|
+| **Multi-party approval** | Policy changes require approval from multiple authorized roles |
+| **Version control** | All policies are versioned with immutable history |
+| **Controlled rollback** | Previous policy versions can be restored through audited process |
+| **Immutable logging** | All changes logged to integrity channel before activation |
+| **Break-glass audit** | Emergency overrides trigger mandatory post-hoc review |
+| **Propagation delay** | High-risk policy changes subject to mandatory review window |
+
+This aligns with SOC 2, ISO 27001, and ISO 42001 change management requirements.
+
+### Human Failure Handling
+
+ZoD assumes human oversight can fail due to fatigue, error, or social engineering. Therefore:
+
+- **No single human approval** can expand agent scope
+- **High-risk actions** require multi-party approval
+- **Repeated approvals** trigger secondary review
+- **Policy changes** are delayed by mandatory review windows
+
+This prevents human authority from becoming a single point of failure.
+
+### Decision Transparency
+
+ZoD provides **decision transparency, not model interpretability**: for every executed action, the system can explain which policy allowed it, who approved it, and under what risk classification. This satisfies regulatory explainability requirements without requiring model-level interpretability.
+
+### Regulatory Mapping Summary (Informational)
+
+| Framework | ZoD Coverage |
+|-----------|--------------|
+| **EU AI Act** | Human oversight (L7), risk management (L4), logging & traceability (L5/L6), limitations documented |
+| **NIST AI RMF** | Govern (L7), Map (Threat Model), Measure (L6), Manage (L1–L5) |
+| **ISO/IEC 42001** | Operational controls, monitoring, incident response, governance separation |
+| **SOC 2 / ISO 27001** | Access control, change management, logging, incident handling |
+
+**ZoD is an architectural pattern, not a certification.** Regulatory compliance depends on organizational implementation and governance.
+
 ---
 
 ## What This Is and What This Is Not
@@ -669,11 +982,11 @@ No layer is trusted to accurately report its own status. Compromise detection de
 
 **This is not a model alignment approach.** The architecture does not attempt to make the agent safer, more honest, or more aligned. It assumes the agent's reasoning is compromised and builds safety around it.
 
-**This is not another IAM product.** IAM validates who is asking. ZoD validates what is being asked, whether the content is legitimate, and whether the request fits behavioral patterns—then cryptographically binds approval to exact execution parameters.
+**This is not another IAM product.** Traditional IAM validates who is asking and assumes requestor intent is stable. ZoD assumes requestor reasoning is adversarial. The architecture validates what is being asked, whether the content is legitimate, and whether the request fits behavioral patterns—then cryptographically binds approval to exact execution parameters.
 
 **This is an execution governance architecture.** It governs the path from reasoning to action for entities that cannot be trusted to govern themselves.
 
-> *The core thesis: Security is not about making the agent trustworthy. It is about building a system that works even when the agent is not.*
+> *The core thesis: The agent will be compromised. The architecture limits the blast radius.*
 
 ---
 
