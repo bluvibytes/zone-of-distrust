@@ -2,17 +2,31 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://bluvi.ai/schemas/zod/integrity-event.schema.json",
   "title": "ZoD Integrity Signal Channel Event",
+  "description": "Schema for ISC events per ZOD-SPEC Section 13",
   "type": "object",
   "additionalProperties": false,
-  "required": ["event_id", "timestamp", "source_layer", "event_type", "severity", "data"],
+  "required": ["schema_version", "event_id", "timestamp", "source_layer", "event_type", "severity", "data"],
   "properties": {
-    "event_id": { "type": "string", "minLength": 8 },
-    "timestamp": { "type": "string", "format": "date-time" },
+    "schema_version": {
+      "type": "string",
+      "const": "0.9",
+      "description": "Schema version for compatibility"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 8,
+      "description": "Unique identifier for this event"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the event occurred"
+    },
     "source_layer": {
       "type": "integer",
       "minimum": 1,
       "maximum": 7,
-      "description": "ZoD layer emitting the event."
+      "description": "ZoD layer emitting the event (L1=OS Foundation through L7=Human Governance)"
     },
     "event_type": {
       "type": "string",
@@ -20,29 +34,117 @@
         "token.issued",
         "token.denied",
         "token.replay_attempt",
+        "token.validation_failed",
+        "token.expired",
         "execution.started",
         "execution.succeeded",
         "execution.failed",
         "execution.mismatched_action",
         "execution.orphaned_action",
         "policy.changed",
+        "policy.evaluation",
         "monitor.drift_alert",
-        "memory.event"
-      ]
+        "monitor.goal_drift",
+        "monitor.baseline_update",
+        "monitor.anomaly",
+        "memory.event",
+        "memory.write",
+        "memory.poisoning_detected",
+        "memory.audit_completed",
+        "key.rotated",
+        "key.accessed",
+        "key.compromise_indicator",
+        "ca.failure",
+        "ca.recovery",
+        "ca.escalation",
+        "ca.approval_requested",
+        "ca.approval_granted",
+        "ca.approval_denied",
+        "isc.backpressure",
+        "isc.recovery",
+        "isc.overflow",
+        "governance.review_requested",
+        "governance.review_completed",
+        "input.quarantined",
+        "input.flagged",
+        "chain.created",
+        "chain.extended",
+        "chain.completed",
+        "chain.rejected"
+      ],
+      "description": "Event classification per Section 13.3"
     },
     "severity": {
       "type": "string",
-      "enum": ["debug", "info", "low", "medium", "high", "critical"]
+      "enum": ["debug", "info", "low", "medium", "high", "critical"],
+      "description": "Event severity level"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["normal", "elevated", "must_not_drop"],
+      "default": "normal",
+      "description": "Queue priority for backpressure handling (Section 13.5). 'must_not_drop' for critical signals."
     },
     "correlation_id": {
       "type": "string",
-      "description": "Optional correlation identifier spanning CA/executor/monitoring."
+      "description": "Correlation identifier spanning CA/executor/monitoring for cross-layer queries (Section 13.4)"
     },
-    "agent_id": { "type": "string" },
-    "token_id": { "type": "string" },
+    "request_id": {
+      "type": "string",
+      "description": "Original CA request ID for audit trail"
+    },
+    "token_id": {
+      "type": "string",
+      "description": "Associated execution token ID if applicable"
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Agent identity associated with this event"
+    },
+    "executor_id": {
+      "type": "string",
+      "description": "Executor identity if applicable"
+    },
+    "delegation_chain_id": {
+      "type": "string",
+      "description": "Reference to delegation chain if multi-agent (Section 14)"
+    },
+    "policy_id": {
+      "type": "string",
+      "description": "Policy identifier if event relates to policy evaluation"
+    },
     "data": {
       "type": "object",
       "description": "Event payload. Structure depends on event_type.",
+      "additionalProperties": true
+    },
+    "context": {
+      "type": "object",
+      "description": "Additional context for correlation and analysis",
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "description": "Type of action if applicable"
+        },
+        "target_resource": {
+          "type": "string",
+          "description": "Target resource if applicable"
+        },
+        "risk_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Associated risk score if applicable"
+        },
+        "baseline_deviation": {
+          "type": "number",
+          "description": "Deviation from baseline for drift events"
+        },
+        "previous_event_id": {
+          "type": "string",
+          "description": "Link to related previous event"
+        }
+      },
       "additionalProperties": true
     }
   }
