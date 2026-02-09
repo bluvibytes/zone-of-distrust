@@ -2,30 +2,99 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://bluvi.ai/schemas/zod/delegation-chain.schema.json",
   "title": "ZoD Delegation Chain",
+  "description": "Schema for multi-agent delegation chain validation per ZOD-SPEC Section 14",
   "type": "object",
   "additionalProperties": false,
-  "required": ["chain_id", "links"],
+  "required": ["chain_id", "created_at", "links"],
   "properties": {
-    "chain_id": { "type": "string", "minLength": 8 },
+    "chain_id": {
+      "type": "string",
+      "minLength": 8,
+      "description": "Unique identifier for this delegation chain"
+    },
+    "root_request_id": {
+      "type": "string",
+      "description": "Original request that initiated this chain"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the chain was initiated"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Chain-level expiration (optional)"
+    },
+    "max_chain_length": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 5,
+      "description": "Maximum allowed delegation depth per policy"
+    },
+    "cumulative_risk_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Aggregated risk across all links (0-1 scale). Required for CA validation per Section 14.2."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "completed", "expired", "revoked", "rejected"],
+      "default": "active",
+      "description": "Current state of the delegation chain"
+    },
     "links": {
       "type": "array",
       "minItems": 1,
+      "description": "Ordered list of delegation hops from origin to current agent",
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["index", "from_agent_id", "to_agent_id", "timestamp", "link_hash"],
         "properties": {
-          "index": { "type": "integer", "minimum": 0 },
-          "from_agent_id": { "type": "string", "minLength": 3 },
-          "to_agent_id": { "type": "string", "minLength": 3 },
-          "timestamp": { "type": "string", "format": "date-time" },
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Position in chain (0 = origin)"
+          },
+          "from_agent_id": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Delegating agent identity"
+          },
+          "to_agent_id": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Receiving agent identity"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this delegation occurred"
+          },
+          "delegation_scope": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Permissions/capabilities being delegated (must not exceed delegator's scope)"
+          },
           "request_summary_digest": {
             "type": "string",
-            "description": "Digest of the delegated request summary/canonical form."
+            "description": "Digest of the delegated request summary/canonical form"
+          },
+          "risk_contribution": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "This link's contribution to cumulative risk score"
+          },
+          "delegator_authorization": {
+            "type": "string",
+            "description": "Reference to authorization proving delegator can delegate (per Section 14.2)"
           },
           "link_hash": {
             "type": "string",
-            "description": "Hash chaining this link to previous links (chain-of-custody)."
+            "description": "Hash chaining this link to previous links (chain-of-custody integrity)"
           }
         }
       }
