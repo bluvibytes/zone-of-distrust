@@ -36,7 +36,7 @@ The following behaviors are not tolerated:
 
 Report Code of Conduct violations to:
 
-**security@bluvi.ai**
+**community@bluvi.ai**
 
 Please include relevant links, screenshots, logs, or other context so issues can be reviewed quickly.
 
