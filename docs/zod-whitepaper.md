@@ -7,9 +7,9 @@ Open reference architecture for securing autonomous AI agents
 Version 0.9 RFC --- February 2026
 Created by BluVi, stewarded in the open.
 
-# Contents {#contents .TOC-Heading}
+# Contents
 
-[Executive Summary [4](#executive-summary)](#executive-summary)
+[Executive Summary(#executive-summary)]
 
 [What This Is and What This Is Not [4](#what-this-is-and-what-this-is-not)](#what-this-is-and-what-this-is-not)
 
