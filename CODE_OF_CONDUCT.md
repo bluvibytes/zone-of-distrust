@@ -15,7 +15,7 @@ Participants are expected to:
 - Provide reproducible reports and evidence when claiming bypasses, vulnerabilities, or failures.
 - Credit others’ prior work and cite relevant research where applicable.
 - Conduct security research in good faith and follow responsible disclosure practices.
-- Assume misunderstandings are unintentional unless proven otherwise.
+- Assume misunderstandings are unintentional unless clearly demonstrated otherwise.
 
 ---
 
@@ -24,11 +24,11 @@ Participants are expected to:
 The following behaviors are not tolerated:
 
 - Harassment, discrimination, threats, intimidation, or hate speech.
-- Doxxing, stalking, or sharing personal information.
+- Doxxing, stalking, or sharing personal information without explicit consent.
 - Sharing private data, credentials, secrets, or proprietary information without authorization.
 - Intentionally disrupting project infrastructure, workflows, or collaboration spaces.
 - Submitting exploit code or attack payloads without responsible context and safeguards.
-- Misrepresenting the project, its maintainers, or claiming endorsement by third parties.
+- Misrepresenting the project, its maintainers, or falsely claiming endorsement by third parties.
 
 ---
 
@@ -38,7 +38,7 @@ Report Code of Conduct violations to:
 
 **security@bluvi.ai**
 
-Please include relevant links, screenshots, or context so issues can be reviewed quickly.
+Please include relevant links, screenshots, logs, or other context so issues can be reviewed quickly.
 
 ---
 
@@ -46,7 +46,7 @@ Please include relevant links, screenshots, or context so issues can be reviewed
 
 Project maintainers may take any action deemed appropriate, including:
 
-- Removing or editing content (issues, comments, PRs)
+- Removing or editing content (issues, comments, pull requests)
 - Locking threads
 - Rejecting contributions
 - Temporarily or permanently banning participants from project spaces
