@@ -6,15 +6,21 @@ Zones of Distrust (ZoD) is a security-focused project. We welcome responsible vu
 
 ## Supported Versions
 
-This project is under active development. Security issues should be reported privately.
+This project is under active development.
 
-At this stage, the `main` branch and the most recent tagged release (if available) are considered supported.
+| Version | Supported |
+|--------|-----------|
+| `main` | Yes |
+| Latest tagged release (if available) | Yes |
+| Older tagged releases | No |
 
 ---
 
 ## Reporting a Vulnerability
 
-Please report security vulnerabilities by emailing:
+**Please do not report security issues via GitHub Issues or Discussions.**
+
+Report vulnerabilities privately by emailing:
 
 **security@bluvi.ai**
 
@@ -22,15 +28,22 @@ If your report contains highly sensitive details, request an encrypted reporting
 
 Include the following when possible:
 
-- a clear description of the issue
-- steps to reproduce (PoC encouraged)
-- expected vs actual behavior
-- affected component(s) and ZoD layer(s)
-- any relevant logs, screenshots, or traces
-- impact assessment (confidentiality, integrity, availability)
-- whether the issue enables policy bypass, token replay, executor abuse, or memory poisoning
+- Clear description of the issue
+- Steps to reproduce (PoC encouraged)
+- Expected vs actual behavior
+- Affected component(s) and ZoD layer(s)
+- Relevant logs, screenshots, or traces
+- Impact assessment (confidentiality, integrity, availability)
+- Whether the issue enables:
+  - policy bypass
+  - token replay
+  - token forgery
+  - executor abuse
+  - integrity logging bypass
+  - monitoring evasion
+  - memory poisoning / provenance corruption
 
-If you believe the issue is actively exploitable, please indicate urgency in the subject line.
+If you believe the issue is actively exploitable, indicate urgency in the subject line.
 
 ---
 
@@ -40,9 +53,9 @@ We will acknowledge receipt as soon as reasonably possible.
 
 Where possible, we aim to respond within:
 
-- **Critical severity:** 48 hours
-- **High severity:** 5 business days
-- **Medium/Low severity:** as capacity permits
+- **Critical severity:** 48 hours  
+- **High severity:** 5 business days  
+- **Medium/Low severity:** as capacity permits  
 
 We will coordinate a fix and disclosure timeline based on severity and reproducibility.
 
@@ -80,24 +93,25 @@ If you plan to publish details of a vulnerability, please coordinate with us fir
 
 The following are generally out of scope unless they result in a clear security impact:
 
-- social engineering attacks
 - denial-of-service via excessive traffic
 - vulnerabilities in third-party dependencies (unless exploitable through ZoD design or default configuration)
 - theoretical attacks without a reproducible demonstration
+- social engineering of humans unless it results in compromise of ZoD artifacts (code, policies, releases, CI/CD)
 
 ---
 
 ## Security Philosophy
 
-ZoD is built on the assumption that reasoning systems (LLMs/agents) can be manipulated, misled, or prompt-injected.  
+ZoD is built on the assumption that reasoning systems (LLMs/agents) can be manipulated, misled, or prompt-injected.
+
 Because of that, general model misbehavior is expected and not always a ZoD vulnerability by itself.
 
 High-priority security issues are those that demonstrate a bypass of ZoD’s enforcement boundaries, including:
 
-- **Policy enforcement bypass** (actions executed outside allowed scope)
-- **Execution token bypass** (tokens can be replayed, forged, reused, or used with modified parameters)
-- **Executor validation failure** (executor performs actions without correct signature/TTL/nonce/binding checks)
-- **Integrity logging / monitoring bypass** (actions occur without reliable audit signals or correlation visibility)
-- **Memory integrity / provenance failure** (poisoned or tampered memory can influence execution without detection)
+- Policy enforcement bypass (actions executed outside allowed scope)
+- Execution token bypass (tokens can be replayed, forged, reused, or used with modified parameters)
+- Executor validation failure (executor performs actions without correct signature/TTL/nonce/binding checks)
+- Integrity logging / monitoring bypass (actions occur without reliable audit signals or correlation visibility)
+- Memory integrity / provenance failure (poisoned or tampered memory can influence execution without detection)
 
 In short: ZoD assumes reasoning can fail. Vulnerabilities that enable unauthorized execution despite ZoD controls are treated as highest severity.
