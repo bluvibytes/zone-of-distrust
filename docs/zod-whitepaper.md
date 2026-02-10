@@ -30,7 +30,7 @@ Created by BluVi, stewarded in the open.
   - [Layer 1: OS Foundation](#layer-1-os-foundation)
   - [Layer 2: Input Control](#layer-2-input-control)
   - [Layer 3: Cognitive Isolation](#layer-3-cognitive-isolation)
-  - [Layer 4: Request Validation — The AI Certificate Authority](#layer-4-request-validation-the-ai-certificate-authority)
+  - [Layer 4: Request Validation — The AI Certificate Authority](#layer-4-request-validation--the-ai-certificate-authority)
   - [Layer 5: Execution](#layer-5-execution) 
   - [Layer 6: Continuous Monitoring](#layer-6-continuous-monitoring)
   - [Layer 7: Human Governance](#layer-7-human-governance)
