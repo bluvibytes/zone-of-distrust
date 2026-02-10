@@ -534,6 +534,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 | Insider/policy-author defense | ~ | --- | --- | ~ | **✓** |
 
 **✓ = core capability ~ = partial --- = absent\***
+
 ## Regulatory and Compliance Alignment
 
 Industry frameworks are converging on unified governance approaches. IBM watsonx.governance [^10] represents this trend toward integrated agentic oversight.
