@@ -32,6 +32,15 @@ The architecture consists of seven interdependent layers:
 
 ---
 
+## 🧭 Repository Map
+
+- `docs/` — Whitepaper, architecture, threat model, implementation guide, security properties
+- `specs/` — Schemas and normative specs (RFC; evolving)
+- `docs/mappings/` — Crosswalks to OWASP/NIST/CSA, compliance mappings, and indexes
+- `.github/` — Issue/PR templates (coming)
+  
+---
+
 ## 📚 Documentation
 
 | Document | Description |
@@ -42,6 +51,7 @@ The architecture consists of seven interdependent layers:
 | [Threat Model](docs/threat-model.md) | Attacker positions and trust assumptions |
 | [Implementation Guide](docs/implementation-guide.md) | Practical deployment guidance |
 | [Full Documentation Index](docs/README.md) | Complete documentation directory |
+
 
 ---
 
