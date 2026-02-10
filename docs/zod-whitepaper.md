@@ -30,8 +30,8 @@ Created by BluVi, stewarded in the open.
   - [Layer 1: OS Foundation](#layer-1-os-foundation)
   - [Layer 2: Input Control](#layer-2-input-control)
   - [Layer 3: Cognitive Isolation](#layer-3-cognitive-isolation)
-  - [Layer 4: Request Validation — The AI Certificate Authority](#layer-4-request-validation---the-ai-certificate-authority)
-  - [Layer 5: Execution](#layer-5-execution)
+  - [Layer 4: Request Validation — The AI Certificate Authority](#layer-4-request-validation-the-ai-certificate-authority)
+  - [Layer 5: Execution](#layer-5-execution) 
   - [Layer 6: Continuous Monitoring](#layer-6-continuous-monitoring)
   - [Layer 7: Human Governance](#layer-7-human-governance)
 - [Directional Logic: How the Layers Interact](#directional-logic-how-the-layers-interact)
@@ -201,23 +201,15 @@ Position 7 is the dominant enterprise failure mode. Not a sophisticated external
 
 Where ZoD breaks the attack chain:
 
-  ---------------------------------------------------------------------------------------------------------------------
-  Kill Chain Stage       Attacker Goal                         ZoD Defense
-  ---------------------- ------------------------------------- --------------------------------------------------------
-  Injection              Get payload into agent reasoning      L2 screens; L3 contains if bypass
-
-  Persistence            Maintain access across sessions       L6 memory audit detects planted payloads
-
-  Privilege escalation   Expand agent capabilities             L4 enforces scope; no implicit trust inheritance
-
-  Credential access      Obtain secrets for lateral movement   L1 credential brokering; agent never sees secrets
-
-  Action execution       Perform unauthorized action           L4 validates; L5 requires valid token
-
-  Exfiltration           Extract sensitive data                L4 egress controls; semantic policy blocks bulk export
-
-  Cover tracks           Hide evidence of compromise           Integrity channel is immutable and out-of-band
-  ---------------------------------------------------------------------------------------------------------------------
+| Kill Chain Stage | Attacker Goal | ZoD Defense |
+|-----------------|---------------|-------------|
+| Injection | Get payload into agent reasoning | L2 screens; L3 contains if bypass |
+| Persistence | Maintain access across sessions | L6 memory audit detects planted payloads |
+| Privilege escalation | Expand agent capabilities | L4 enforces scope; no implicit trust inheritance |
+| Credential access | Obtain secrets for lateral movement | L1 credential brokering; agent never sees secrets |
+| Action execution | Perform unauthorized action | L4 validates; L5 requires valid token |
+| Exfiltration | Extract sensitive data | L4 egress controls; semantic policy blocks bulk export |
+| Cover tracks | Hide evidence of compromise | Integrity channel is immutable and out-of-band |
 
 []{#_Toc221549795 .anchor}
 
@@ -255,23 +247,15 @@ The architecture claims twelve testable properties:
 
 The Zones of Distrust are organized as seven layers with a directional logic. Like the OSI reference model, each layer provides services to the layer above it and depends on the layer below it. Data flows up through the stack. Policy flows down. Monitoring flows across. Each layer assumes every layer above it has already been compromised.
 
-  -----------------------------------------------------------------------------------------------------------------
-  Layer     Name                       Function
-  --------- -------------------------- ----------------------------------------------------------------------------
-  L7        Human Governance           Risk-weighted escalation, policy setting, break-glass procedures
-
-  L6        Continuous Monitoring      Behavioral baselining, drift detection, memory audit, baseline integrity
-
-  L5        Execution                  Isolated process performs validated actions with immutable logging
-
-  L4        Request Validation (CA)    Independent Certificate Authority with semantic policy and token binding
-
-  L3        Cognitive Isolation        Agent reasoning separated from execution capability
-
-  L2        Input Control              Adversarial screening before agent processes data
-
-  L1        OS Foundation              Agent identity, process isolation, credential brokering, model attestation
-  -----------------------------------------------------------------------------------------------------------------
+| Layer | Name | Function |
+|-------|------|----------|
+| L7 | Human Governance | Risk-weighted escalation, policy setting, break-glass procedures |
+| L6 | Continuous Monitoring | Behavioral baselining, drift detection, memory audit, baseline integrity |
+| L5 | Execution | Isolated process performs validated actions with immutable logging |
+| L4 | Request Validation (CA) | Independent Certificate Authority with semantic policy and token binding |
+| L3 | Cognitive Isolation | Agent reasoning separated from execution capability |
+| L2 | Input Control | Adversarial screening before agent processes data |
+| L1 | OS Foundation | Agent identity, process isolation, credential brokering, model attestation |
 
 []{#_Toc221549799 .anchor}
 
@@ -301,7 +285,7 @@ This contains **reasoning chain attacks** where an attacker constructs individua
 
 The gap between thought and action is where safety lives. A compromised agent that can think dangerous thoughts but cannot act on them is contained by architecture, not by trust.
 
-## Layer 4: Request Validation --- The AI Certificate Authority
+## Layer 4: Request Validation — The AI Certificate Authority
 
 This is the architectural centerpiece. Every request passes through an independent Certificate Authority that the agent cannot influence, manipulate, or bypass. The CA evaluates each request against:
 
@@ -431,23 +415,15 @@ Each layer assumes every layer above it has failed:
 
 A concrete example of how the layers interact:
 
-  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Layer            Action                                                                                                                           Outcome
-  ---------------- -------------------------------------------------------------------------------------------------------------------------------- -----------------------------------------------------------------------
-  L2               Screens email, flags \"ignore previous instructions\" pattern                                                                    Quarantines with summary; agent sees metadata only
-
-  L2 bypassed?     Attacker uses subtler injection that passes screening                                                                            Attack proceeds to L3
-
-  L3               Agent reasons about \"CFO request,\" emits wire transfer request                                                                 Request goes to L4; agent cannot execute directly
-
-  L4               Evaluates: \$50K exceeds threshold; new recipient; no prior pattern; semantic policy flags financial action from email content   Denies or escalates to L7
-
-  L4 fooled?       Unlikely---but if policy misconfigured\...                                                                                       L6 flags: first wire to this account, unusual amount, email-triggered
-
-  L6               Correlates: flagged input → unusual request → behavioral deviation                                                               Elevates confidence; alerts L7
-
-  L7               Human reviews: sees original email, agent reasoning, request details                                                             Rejects; investigates source
-  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Layer | Action | Outcome |
+|-------|--------|---------|
+| L2 | Screens email, flags "ignore previous instructions" pattern | Quarantines with summary; agent sees metadata only |
+| L2 bypassed? | Attacker uses subtler injection that passes screening | Attack proceeds to L3 |
+| L3 | Agent reasons about "CFO request," emits wire transfer request | Request goes to L4; agent cannot execute directly |
+| L4 | Evaluates: $50K exceeds threshold; new recipient; no prior pattern; semantic policy flags financial action from email content | Denies or escalates to L7 |
+| L4 fooled? | Unlikely---but if policy misconfigured... | L6 flags: first wire to this account, unusual amount, email-triggered |
+| L6 | Correlates: flagged input → unusual request → behavioral deviation | Elevates confidence; alerts L7 |
+| L7 | Human reviews: sees original email, agent reasoning, request details | Rejects; investigates source |
 
 **Attacker must defeat:** L2 screening AND L4 policy AND L6 correlation AND L7 review. Each layer operates independently. No single bypass enables the attack.
 
@@ -465,19 +441,13 @@ Service mesh mTLS, policy enforcement L3 provides cognitive isolation; reasoning
 
 CI/CD gating Approval workflows for deploys L4 operates on every action, not just deployments; sub-second latency
 
-  ------------------------------------------------------------------------------------------------------------------------------------------
-  Existing Pattern   What It Does                          What ZoD Adds
-  ------------------ ------------------------------------- ---------------------------------------------------------------------------------
-  SIEM               Correlates logs after the fact        L6 feeds signals into L4 before execution; detection informs prevention
-
-  Token proxy        Gates execution on valid credential   L4 validates content, not just identity; token binds to parameter hash
-
-  API gateway        Enforces rate limits and scopes       L4 evaluates semantic intent and behavioral baseline, not just API contract
-
-  Service mesh       mTLS, policy enforcement              L3 provides cognitive isolation; reasoning process has no network path to tools
-
-  CI/CD gating       Approval workflows for deploys        L4 operates on every action, not just deployments; sub-second latency
-  ------------------------------------------------------------------------------------------------------------------------------------------
+| Existing Pattern | What It Does | What ZoD Adds |
+|-----------------|--------------|---------------|
+| SIEM | Correlates logs after the fact | L6 feeds signals into L4 before execution; detection informs prevention |
+| Token proxy | Gates execution on valid credential | L4 validates content, not just identity; token binds to parameter hash |
+| API gateway | Enforces rate limits and scopes | L4 evaluates semantic intent and behavioral baseline, not just API contract |
+| Service mesh | mTLS, policy enforcement | L3 provides cognitive isolation; reasoning process has no network path to tools |
+| CI/CD gating | Approval workflows for deploys | L4 operates on every action, not just deployments; sub-second latency |
 
 Skeptics may observe that monitoring, logging, and token-gated execution exist in many systems. What makes ZoD architecturally distinct?
 
@@ -550,32 +520,20 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 ## Capability Comparison
 
-  -------------------------------------------------------------------------------------------------------------------------------------
-  Capability                          Traditional Zero Trust   Prompt Filters   Credential Proxy   Agent Identity   Zones of Distrust
-  ----------------------------------- ------------------------ ---------------- ------------------ ---------------- -------------------
-  Pre-reasoning input screening       ---                      **✓**            ---                ---              **✓**
-
-  Reasoning/execution separation      ---                      ---              ---                ~               **✓**
-
-  Parameter-bound token enforcement   ---                      ---              ~                 ---              **✓**
-
-  Semantic intent policy              ---                      ---              ---                ---              **✓**
-
-  Memory audit (external)             ---                      ---              ---                ---              **✓**
-
-  Behavioral baseline integrity       ---                      ---              ---                ---              **✓**
-
-  Multi-agent chain validation        ---                      ---              ---                ~               **✓**
-
-  Cross-layer correlation             ---                      ---              ---                ---              **✓**
-
-  Integrity channel security          ---                      ---              ---                ---              **✓**
-
-  Insider/policy-author defense       ~                       ---              ---                ~               **✓**
-  -------------------------------------------------------------------------------------------------------------------------------------
+| Capability | Traditional Zero Trust | Prompt Filters | Credential Proxy | Agent Identity | Zones of Distrust |
+|-----------|----------------------|----------------|-----------------|----------------|-------------------|
+| Pre-reasoning input screening | --- | **✓** | --- | --- | **✓** |
+| Reasoning/execution separation | --- | --- | --- | ~ | **✓** |
+| Parameter-bound token enforcement | --- | --- | ~ | --- | **✓** |
+| Semantic intent policy | --- | --- | --- | --- | **✓** |
+| Memory audit (external) | --- | --- | --- | --- | **✓** |
+| Behavioral baseline integrity | --- | --- | --- | --- | **✓** |
+| Multi-agent chain validation | --- | --- | --- | ~ | **✓** |
+| Cross-layer correlation | --- | --- | --- | --- | **✓** |
+| Integrity channel security | --- | --- | --- | --- | **✓** |
+| Insider/policy-author defense | ~ | --- | --- | ~ | **✓** |
 
 **✓ = core capability ~ = partial --- = absent\***
-
 ## Regulatory and Compliance Alignment
 
 Industry frameworks are converging on unified governance approaches. IBM watsonx.governance [^10] represents this trend toward integrated agentic oversight.
@@ -638,21 +596,14 @@ Partial deployments will happen. To prevent the framework from being blamed for 
 
 ZoD produces auditable evidence at each layer:
 
-  ----------------------------------------------------------------------------------------------------------------------
-  Evidence Type              Source                                         Purpose
-  -------------------------- ---------------------------------------------- --------------------------------------------
-  L4 authorization logs      CA decision records with policy version hash   Prove which policy allowed each action
-
-  Token issuance records     Signed tokens with TTL, nonce, content hash    Cryptographic proof of authorization
-
-  Execution records          L5 logs linked to approval tokens              Prove action matched authorized parameters
-
-  Policy change history      GitOps commits with approver identities        Audit trail for configuration changes
-
-  Memory audit diffs         L6 snapshots with provenance tags              Detect unauthorized state modification
-
-  Integrity channel health   Gap/sequence anomaly reports                   Prove controls were operational
-  ----------------------------------------------------------------------------------------------------------------------
+| Evidence Type | Source | Purpose |
+|--------------|--------|---------|
+| L4 authorization logs | CA decision records with policy version hash | Prove which policy allowed each action |
+| Token issuance records | Signed tokens with TTL, nonce, content hash | Cryptographic proof of authorization |
+| Execution records | L5 logs linked to approval tokens | Prove action matched authorized parameters |
+| Policy change history | GitOps commits with approver identities | Audit trail for configuration changes |
+| Memory audit diffs | L6 snapshots with provenance tags | Detect unauthorized state modification |
+| Integrity channel health | Gap/sequence anomaly reports | Prove controls were operational |
 
 This evidence maps directly to audit requirements under SOC 2, ISO 27001, and EU AI Act logging obligations.
 
@@ -660,19 +611,13 @@ This evidence maps directly to audit requirements under SOC 2, ISO 27001, and EU
 
 Detection without recovery is incomplete. When compromise is confirmed:
 
-  ----------------------------------------------------------------------------------------------------------
-  Recovery Action        Purpose
-  ---------------------- -----------------------------------------------------------------------------------
-  Memory rollback        Restore to last attested snapshot before poisoning
-
-  Baseline reset         Clear behavioral baseline with human approval; re-establish from known-good state
-
-  Identity re-keying     Rotate agent credentials; invalidate all outstanding tokens
-
-  Cooling-off period     Mandatory reduced autonomy before full privileges resume
-
-  Root cause analysis    Determine entry point; update L2 rules, L4 policy, or L6 thresholds
-  ----------------------------------------------------------------------------------------------------------
+| Recovery Action | Purpose |
+|----------------|---------|
+| Memory rollback | Restore to last attested snapshot before poisoning |
+| Baseline reset | Clear behavioral baseline with human approval; re-establish from known-good state |
+| Identity re-keying | Rotate agent credentials; invalidate all outstanding tokens |
+| Cooling-off period | Mandatory reduced autonomy before full privileges resume |
+| Root cause analysis | Determine entry point; update L2 rules, L4 policy, or L6 thresholds |
 
 Recovery is not automatic. It requires human judgment (Layer 7) informed by forensic evidence from the integrity channel.
 
@@ -686,17 +631,12 @@ CISOs will ask: \"Am I adding a new KMS-sized liability to my stack?\"
 
 The answer: organizations already operate Tier-0 authorization systems. The CA is comparable to:
 
-  --------------------------------------------------------------------------------------------------
-  Existing Tier-0 System   What It Does                      CA Equivalent
-  ------------------------ --------------------------------- ---------------------------------------
-  IAM / IdP                Authenticates principals          CA authenticates + authorizes actions
-
-  KMS / HSM                Protects cryptographic keys       CA uses KMS for token signing
-
-  Secrets manager          Brokers credential access         CA gates credential injection
-
-  Payment authorization    Approves financial transactions   CA approves all privileged actions
-  --------------------------------------------------------------------------------------------------
+| Existing Tier-0 System | What It Does | CA Equivalent |
+|----------------------|--------------|---------------|
+| IAM / IdP | Authenticates principals | CA authenticates + authorizes actions |
+| KMS / HSM | Protects cryptographic keys | CA uses KMS for token signing |
+| Secrets manager | Brokers credential access | CA gates credential injection |
+| Payment authorization | Approves financial transactions | CA approves all privileged actions |
 
 **The key difference:** The blast radius of CA \*failure\* is halt, not exfiltration. A crashed CA stops operations; it does not authorize malicious actions. This is safer than implicit trust, where failure is invisible.
 
@@ -718,22 +658,15 @@ The Zones of Distrust is published openly to become an industry standard. Someti
 
 ## Documentation
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Document                                                                                                        Description
-  --------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------
-  [Architecture Specification](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/ARCHITECTURE.md)     Full seven-layer technical specification
-
-  [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md)     12 measurable properties (P1-P12) with verification criteria
-
-  [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md)                   Attacker positions, trust assumptions, degradation modes
-
-  [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md)   Practical deployment guidance
-
-  [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-positioning.md)    OWASP, NIST, MITRE ATLAS, Microsoft AIRT [^7], and more
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Document | Description |
+|----------|-------------|
+| [Architecture Specification](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/ARCHITECTURE.md) | Full seven-layer technical specification |
+| [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md) | 12 measurable properties (P1-P12) with verification criteria |
+| [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) | Attacker positions, trust assumptions, degradation modes |
+| [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md) | Practical deployment guidance |
+| [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-positioning.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT [^7], and more |
 
 []{#_Toc221549829 .anchor}
-
 ## Contribute
 
 This architecture will improve through real-world implementation and community feedback. We welcome:
