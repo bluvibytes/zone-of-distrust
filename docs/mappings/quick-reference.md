@@ -216,23 +216,23 @@ Add: L1 (full), L6 (full), L7 (full), Integrity
 
 | Framework | Mapping Document | Primary Focus |
 |-----------|------------------|---------------|
-| OWASP Agentic | [owasp-agentic-mapping.md](owasp-agentic-mapping.md) | Agent risks |
-| OWASP LLM | [owasp-llm-mapping.md](owasp-llm-mapping.md) | LLM risks |
-| MAESTRO | [maestro-mapping.md](maestro-mapping.md) | Multi-agent |
-| CSA ATF | [csa-atf-mapping.md](csa-atf-mapping.md) | Cloud AI |
-| NIST AI RMF | [nist-ai-rmf-mapping.md](nist-ai-rmf-mapping.md) | Risk management |
-| Google SAIF | [google-saif-mapping.md](google-saif-mapping.md) | Lifecycle |
-| Cisco | [cisco-mapping.md](cisco-mapping.md) | Threat taxonomy |
-| Microsoft AIRT | [microsoft-airt-mapping.md](microsoft-airt-mapping.md) | Failure modes |
-| NVIDIA/Lakera | [nvidia-lakera-mapping.md](nvidia-lakera-mapping.md) | Autonomy |
-| MITRE ATLAS | [mitre-atlas-mapping.md](mitre-atlas-mapping.md) | TTPs |
-| CoSAI | [cosai-mapping.md](cosai-mapping.md) | Industry coalition |
-| Zero Trust | [zero-trust-mapping.md](zero-trust-mapping.md) | ZTA extension |
-| ENISA | [enisa-mapping.md](enisa-mapping.md) | EU threats |
-| AWS Scoping | [aws-scoping-mapping.md](aws-scoping-mapping.md) | Cloud deployment |
-| Compliance | [compliance-mapping.md](compliance-mapping.md) | Regulations |
-| Industry | [industry-mapping.md](industry-mapping.md) | Sector-specific |
-| Incidents | [incident-mapping.md](incident-mapping.md) | Case studies |
+| OWASP Agentic | [owasp-agentic-mapping](owasp-agentic-mapping.md) | Agent risks |
+| OWASP LLM | [owasp-llm-mapping](owasp-llm-mapping.md) | LLM risks |
+| MAESTRO | [maestro-mapping](maestro-mapping.md) | Multi-agent |
+| CSA ATF | [csa-atf-mapping](csa-atf-mapping.md) | Cloud AI |
+| NIST AI RMF | [nist-ai-rmf-mapping](nist-ai-rmf-mapping.md) | Risk management |
+| Google SAIF | [google-saif-mapping](google-saif-mapping.md) | Lifecycle |
+| Cisco | [cisco-mapping](cisco-mapping.md) | Threat taxonomy |
+| Microsoft AIRT | [microsoft-airt-mapping](microsoft-airt-mapping.md) | Failure modes |
+| NVIDIA/Lakera | [nvidia-lakera-mapping](nvidia-lakera-mapping.md) | Autonomy |
+| MITRE ATLAS | [mitre-atlas-mapping](mitre-atlas-mapping.md) | TTPs |
+| CoSAI | [cosai-mapping](cosai-mapping.md) | Industry coalition |
+| Zero Trust | [zero-trust-mapping](zero-trust-mapping.md) | ZTA extension |
+| ENISA | [enisa-mapping](enisa-mapping.md) | EU threats |
+| AWS Scoping | [aws-scoping-mapping](aws-scoping-mapping.md) | Cloud deployment |
+| Compliance | [compliance-mapping](compliance-mapping.md) | Regulations |
+| Industry | [industry-mapping](industry-mapping.md) | Sector-specific |
+| Incidents | [incident-mapping](incident-mapping.md) | Case studies |
 
 ---
 
