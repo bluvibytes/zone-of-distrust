@@ -7,105 +7,61 @@ Open reference architecture for securing autonomous AI agents
 Version 0.9 RFC --- February 2026
 Created by BluVi, stewarded in the open.
 
-# Contents
+## Contents
 
-[Executive Summary(#executive-summary)]
+- [Executive Summary](#executive-summary)
+  - [What This Is and What This Is Not](#what-this-is-and-what-this-is-not)
+- [The Problem: Why Current Approaches Fail](#the-problem-why-current-approaches-fail)
+  - [The Fundamental Asymmetry](#the-fundamental-asymmetry)
+  - [Four Structural Blindnesses](#four-structural-blindnesses)
+  - [The Emerging Threat Landscape](#the-emerging-threat-landscape)
+  - [Multi-Agent Trust: The Unaddressed Surface](#multi-agent-trust-the-unaddressed-surface)
+  - [Model Supply Chain Integrity](#model-supply-chain-integrity)
+  - [Tool and API Semantic Abuse](#tool-and-api-semantic-abuse)
+  - [The AI's Own Assessment](#the-ais-own-assessment)
+- [Threat Model Summary](#threat-model-summary)
+  - [Catastrophic Outcomes](#catastrophic-outcomes)
+  - [Attacker Positions](#attacker-positions)
+  - [Kill Chain Mapping](#kill-chain-mapping)
+  - [Trust Assumptions](#trust-assumptions)
+  - [Explicit Non-Goals](#explicit-non-goals)
+  - [Security Properties](#security-properties)
+- [The Zones of Distrust: A Seven-Layer Model](#the-zones-of-distrust-a-seven-layer-model)
+  - [Layer 1: OS Foundation](#layer-1-os-foundation)
+  - [Layer 2: Input Control](#layer-2-input-control)
+  - [Layer 3: Cognitive Isolation](#layer-3-cognitive-isolation)
+  - [Layer 4: Request Validation — The AI Certificate Authority](#layer-4-request-validation---the-ai-certificate-authority)
+  - [Layer 5: Execution](#layer-5-execution)
+  - [Layer 6: Continuous Monitoring](#layer-6-continuous-monitoring)
+  - [Layer 7: Human Governance](#layer-7-human-governance)
+- [Directional Logic: How the Layers Interact](#directional-logic-how-the-layers-interact)
+  - [The Failure Cascade](#the-failure-cascade)
+  - [Attack Walkthrough: Wire Transfer Fraud](#attack-walkthrough-wire-transfer-fraud)
+  - [Why This Isn't Just SIEM + Token Proxy](#why-this-isnt-just-siem--token-proxy)
+- [Zero Trust and Beyond](#zero-trust-and-beyond)
+  - [What Zero Trust Provides](#what-zero-trust-provides)
+  - [Where Zero Trust Wasn't Designed to Go](#where-zero-trust-wasnt-designed-to-go)
+  - [The ZoD Approach](#the-zod-approach)
+- [Current Landscape Analysis](#current-landscape-analysis)
+  - [What Industry Is Already Doing](#what-industry-is-already-doing)
+  - [What Remains Novel](#what-remains-novel)
+  - [Capability Comparison](#capability-comparison)
+  - [Regulatory and Compliance Alignment](#regulatory-and-compliance-alignment)
+- [Implementation Path](#implementation-path)
+  - [What You Can Build Today](#what-you-can-build-today)
+  - [Minimum Safe Configuration](#minimum-safe-configuration)
+  - [Control Evidence (Illustrative)](#control-evidence-illustrative)
+  - [Post-Compromise Recovery](#post-compromise-recovery)
+  - [What Requires OS Evolution](#what-requires-os-evolution)
+  - [Why the CA Is Not a New Class of Operational Risk](#why-the-ca-is-not-a-new-class-of-operational-risk)
+- [Conclusion](#conclusion)
+- [Getting Involved](#getting-involved)
+  - [Documentation](#documentation)
+  - [Contribute](#contribute)
+- [References](#references)
 
-[What This Is and What This Is Not [4](#what-this-is-and-what-this-is-not)](#what-this-is-and-what-this-is-not)
+---
 
-[The Problem: Why Current Approaches Fail [5](#the-problem-why-current-approaches-fail)](#the-problem-why-current-approaches-fail)
-
-[The Fundamental Asymmetry [5](#the-fundamental-asymmetry)](#the-fundamental-asymmetry)
-
-[Four Structural Blindnesses [6](#four-structural-blindnesses)](#four-structural-blindnesses)
-
-[The Emerging Threat Landscape [6](#the-emerging-threat-landscape)](#the-emerging-threat-landscape)
-
-[Multi-Agent Trust: The Unaddressed Surface [7](#multi-agent-trust-the-unaddressed-surface)](#multi-agent-trust-the-unaddressed-surface)
-
-[Model Supply Chain Integrity [7](#model-supply-chain-integrity)](#model-supply-chain-integrity)
-
-[Tool and API Semantic Abuse [7](#tool-and-api-semantic-abuse)](#tool-and-api-semantic-abuse)
-
-[The AI's Own Assessment [8](#the-ais-own-assessment)](#the-ais-own-assessment)
-
-[Threat Model Summary [8](#threat-model-summary)](#threat-model-summary)
-
-[Catastrophic Outcomes [8](#catastrophic-outcomes)](#catastrophic-outcomes)
-
-[Attacker Positions [8](#attacker-positions)](#attacker-positions)
-
-[Kill Chain Mapping [9](#kill-chain-mapping)](#kill-chain-mapping)
-
-[Trust Assumptions [9](#_Toc221549795)](#_Toc221549795)
-
-[Explicit Non-Goals [9](#explicit-non-goals)](#explicit-non-goals)
-
-[Security Properties [10](#security-properties)](#security-properties)
-
-[The Zones of Distrust: A Seven-Layer Model [11](#the-zones-of-distrust-a-seven-layer-model)](#the-zones-of-distrust-a-seven-layer-model)
-
-[Layer 1: OS Foundation [11](#_Toc221549799)](#_Toc221549799)
-
-[Layer 2: Input Control [11](#layer-2-input-control)](#layer-2-input-control)
-
-[Layer 3: Cognitive Isolation [12](#layer-3-cognitive-isolation)](#layer-3-cognitive-isolation)
-
-[Layer 4: Request Validation --- The AI Certificate Authority [12](#layer-4-request-validation-the-ai-certificate-authority)](#layer-4-request-validation-the-ai-certificate-authority)
-
-[Layer 5: Execution [14](#layer-5-execution)](#layer-5-execution)
-
-[Layer 6: Continuous Monitoring [14](#layer-6-continuous-monitoring)](#layer-6-continuous-monitoring)
-
-[Layer 7: Human Governance [16](#layer-7-human-governance)](#layer-7-human-governance)
-
-[Directional Logic: How the Layers Interact [16](#directional-logic-how-the-layers-interact)](#directional-logic-how-the-layers-interact)
-
-[The Failure Cascade [17](#the-failure-cascade)](#the-failure-cascade)
-
-[Attack Walkthrough: Wire Transfer Fraud [17](#attack-walkthrough-wire-transfer-fraud)](#attack-walkthrough-wire-transfer-fraud)
-
-[Why This Isn't Just SIEM + Token Proxy [17](#why-this-isnt-just-siem-token-proxy)](#why-this-isnt-just-siem-token-proxy)
-
-[Zero Trust and Beyond [18](#zero-trust-and-beyond)](#zero-trust-and-beyond)
-
-[What Zero Trust Provides [18](#what-zero-trust-provides)](#what-zero-trust-provides)
-
-[Where Zero Trust Wasn't Designed to Go [18](#where-zero-trust-wasnt-designed-to-go)](#where-zero-trust-wasnt-designed-to-go)
-
-[The ZoD Approach [19](#the-zod-approach)](#the-zod-approach)
-
-[Current Landscape Analysis [19](#current-landscape-analysis)](#current-landscape-analysis)
-
-[What Industry Is Already Doing [19](#what-industry-is-already-doing)](#what-industry-is-already-doing)
-
-[What Remains Novel [20](#what-remains-novel)](#what-remains-novel)
-
-[Capability Comparison [21](#capability-comparison)](#capability-comparison)
-
-[Regulatory and Compliance Alignment [21](#regulatory-and-compliance-alignment)](#regulatory-and-compliance-alignment)
-
-[Implementation Path [21](#implementation-path)](#implementation-path)
-
-[What You Can Build Today [21](#what-you-can-build-today)](#what-you-can-build-today)
-
-[Minimum Safe Configuration [22](#minimum-safe-configuration)](#minimum-safe-configuration)
-
-[Control Evidence (Illustrative) [22](#control-evidence-illustrative)](#control-evidence-illustrative)
-
-[Post-Compromise Recovery [22](#post-compromise-recovery)](#post-compromise-recovery)
-
-[What Requires OS Evolution [22](#what-requires-os-evolution)](#what-requires-os-evolution)
-
-[Why the CA Is Not a New Class of Operational Risk [23](#why-the-ca-is-not-a-new-class-of-operational-risk)](#why-the-ca-is-not-a-new-class-of-operational-risk)
-
-[Conclusion [23](#conclusion)](#conclusion)
-
-[Getting Involved [23](#getting-involved)](#getting-involved)
-
-[Documentation [23](#documentation)](#documentation)
-
-[Contribute [24](#_Toc221549829)](#_Toc221549829)
 
 # Executive Summary
 
