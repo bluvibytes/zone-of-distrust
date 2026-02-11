@@ -437,7 +437,7 @@ The architecture explicitly does not attempt to defend against full OS compromis
 
 **Multi-tenant scope:** In multi-tenant environments, ZoD assumes tenant isolation is enforced at the execution and policy layers. CA policies, tokens, and integrity signals MUST be tenant-scoped. Cross-tenant contamination is a platform security concern, not an agent security concern.
 
-For complete threat model details, see *Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) document.*
+For complete threat model details, see *Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md).*
 
 ## 2.6 Limitations
 
@@ -749,7 +749,7 @@ This property addresses the "monitor the monitor" problem, where adversaries att
 
 If baselines can drift arbitrarily due to adversarial influence without triggering controls or review, P8 is violated. 
 
-/P8 does not guarantee detection of slow adversarial adaptation; it establishes structural friction against silent drift./
+*P8 does not guarantee detection of slow adversarial adaptation; it establishes structural friction against silent drift.*
 
 ## 3.3 Containment Properties (P9–P10)
 
@@ -1279,7 +1279,7 @@ The architecture maps directly to existing frameworks:
 
 The CSA STAR for AI Assurance Program [^14] provides third-party attestation for AI security controls.
 
-For detailed compliance mappings, see the *Zones of Distrust [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) directory.*
+For detailed compliance mappings, see the *Zones of Distrust [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md).*
 
 ---
 
