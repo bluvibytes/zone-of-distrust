@@ -665,7 +665,7 @@ The Zones of Distrust is published openly to become an industry standard. Someti
 | [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md) | 12 measurable properties (P1-P12) with verification criteria |
 | [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) | Attacker positions, trust assumptions, degradation modes |
 | [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md) | Practical deployment guidance |
-| [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-positioning.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT [^7], and more |
+| [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-positioning.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT, and more |
 
 []{#_Toc221549829 .anchor}
 ## Contribute
@@ -720,4 +720,4 @@ See Zones of Distrust [CONTRIBUTING](https://github.com/bluvibytes/zone-of-distr
 
 ---
 
-*Zones of Distrust v0.9 RFC — February 2026 — BluVi*
+**Zones of Distrust v0.9 RFC — February 2026 — BluVi**
