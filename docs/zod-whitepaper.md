@@ -279,9 +279,9 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
 - 
 ---
 
-# The Problem: Why Current Approaches Fail
+# 1. The Problem: Why Current Approaches Fail
 
-## The Fundamental Asymmetry
+## 1.2 The Fundamental Asymmetry
 
 When a human user is phished, there is a distinction between the user and the compromise. The user's intent and the attacker's actions are separable. Forensics can reconstruct what happened. The user can be notified, the session terminated, and the damage assessed against a baseline of known-good behavior.
 
@@ -289,7 +289,7 @@ An AI agent that has been prompt-injected has no such separation. The compromise
 
 This is not a theoretical vulnerability. It is a structural property of how large language models process information. And it fundamentally changes the threat model.
 
-## Four Structural Blindnesses
+## 1.3 Four Structural Blindnesses
 
 **Prompt injections are often indistinguishable from legitimate instructions:**
 -   A well-crafted prompt injection---embedded in an email, a web page, a document, a calendar invite---can appear identical to legitimate content from the agent's perspective
@@ -303,7 +303,7 @@ This is not a theoretical vulnerability. It is a structural property of how larg
 -   An agent cannot reliably detect its own compromise because the compromised version takes its own behavior at face value
 -   Asking a prompt-injected agent to evaluate whether it has been prompt-injected is asking the attack to audit itself
 
-## The Emerging Threat Landscape
+## 1.4 The Emerging Threat Landscape
 
 Organizations are rapidly adopting agentic AI without adequate security frameworks. McKinsey's 2025 State of AI survey shows 62% of organizations experimenting with AI agents, while 23% report scaling agentic AI in at least one function. However, less than 10% have scaled agents in any individual function, revealing a critical gap between adoption and operational maturity [^3].
 
@@ -325,7 +325,7 @@ The security industry is developing point solutions across agent identity, crede
 
 But the solutions are fragmented. No widely adopted standard exists for a unified, layered architecture that addresses the complete threat surface with a coherent directional logic.
 
-## Multi-Agent Trust: The Unaddressed Surface
+## 1.5 Multi-Agent Trust: The Unaddressed Surface
 
 The dominant deployment pattern for AI agents is not the single autonomous agent. It is multi-agent systems: orchestrator agents delegating to specialist agents, agents consuming output from other agents, agent swarms collaborating on complex tasks.
 
@@ -333,19 +333,19 @@ In a multi-agent system, every agent is simultaneously a potential source of pro
 
 Any security architecture that treats agents as isolated entities operating against external threats is architecting for a deployment pattern that is already obsolete.
 
-## Model Supply Chain Integrity
+## 1.6 Model Supply Chain Integrity
 
 Model poisoning during training or fine-tuning, compromised model weights distributed through trusted channels, malicious adapters, and corrupted retrieval-augmented generation data sources all represent supply chain attacks on the agent's reasoning substrate. A compromised model does not need to be prompt-injected. It arrives pre-compromised through the trusted update channel.
 
 This is the SolarWinds problem for AI.
 
-## Tool and API Semantic Abuse
+## 1.7 Tool and API Semantic Abuse
 
 An agent authorized to \"search the web\" can use that capability to exfiltrate data through carefully crafted search queries. An agent authorized to \"send emails\" can use that capability to communicate with an attacker's command-and-control infrastructure disguised as legitimate business correspondence.
 
 This is the \"living off the land\" problem for AI agents. The actions are authorized. The credentials are valid. The content of the authorized action is malicious.
 
-## The AI's Own Assessment
+## 1.8 The AI's Own Assessment
 
 In developing this architecture, we asked an AI agent to reason about its own structural vulnerabilities. This is an illustrative narrative, not a technical proof---but it captures the core asymmetry:
 
@@ -355,15 +355,15 @@ In developing this architecture, we asked an AI agent to reason about its own st
 
 The full AI perspective is available in \[The AI's Perspective\](ai-perspective.md).
 
-# Threat Model Summary
+# 2.0 Threat Model Summary
 
 A security architecture without explicit boundaries is a conceptual framework, not an implementable defense.
 
-## Catastrophic Outcomes
+## 2.1 Catastrophic Outcomes
 
 CISOs think about business risk, not attacker positions. The architecture is designed to prevent unauthorized money movement, mass data exfiltration, privileged system changes, credential theft and lateral movement, and persistent backdoor installation.
 
-## Attacker Positions
+## 2.2 Attacker Positions
 
 The Zones of Distrust address seven attacker positions:
 
@@ -383,7 +383,7 @@ The Zones of Distrust address seven attacker positions:
 
 Position 7 is the dominant enterprise failure mode. Not a sophisticated external attack, but insider + misconfiguration + rushed change.
 
-## Kill Chain Mapping
+## 2.3 Kill Chain Mapping
 
 Where ZoD breaks the attack chain:
 
@@ -399,13 +399,13 @@ Where ZoD breaks the attack chain:
 
 []{#_Toc221549795 .anchor}
 
-## Trust Assumptions
+## 2.4 Trust Assumptions
 
 The architecture makes explicit trust assumptions: Layer 1 OS integrity, CA operational correctness (treated as Tier-0 infrastructure like KMS/HSM), and executor fidelity.
 
 **Critical distinction:** CA \*unavailability\* is safe (operations halt). CA \*compromise\* is dangerous (operations continue with bad authorization). This is why CA integrity receives Tier-0 treatment with HSM-backed keys, multi-party approval, and independent monitoring.
 
-## Explicit Non-Goals
+## 2.5 Explicit Non-Goals
 
 The architecture explicitly does not attempt to defend against full OS compromise, make agents un-injectable, guarantee detection of all supply chain attacks, prevent cross-tenant contamination (platform concern), or prevent model extraction/inversion attacks (model-level concern).
 
@@ -415,8 +415,7 @@ The architecture explicitly does not attempt to defend against full OS compromis
 
 *For complete threat model details, see Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) document.*
 
-
-## Limitations
+## 2.6 Limitations
 
 ZoD provides strong containment guarantees, but it has structural constraints that implementers must understand:
 
@@ -473,8 +472,7 @@ Organizations deploying ZoD must conduct formal risk assessments, maintain docum
 
 ---
 
-
-# Security Properties
+# 3.0 Security Properties
 
 The architecture claims twelve testable properties:
 
@@ -488,7 +486,7 @@ The architecture claims twelve testable properties:
 
 *For complete specifications, see Zones of Distrust [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md) document.*
 
-# The Zones of Distrust: A Seven-Layer Model
+# 4.0 The Zones of Distrust: A Seven-Layer Model
 
 The Zones of Distrust are organized as seven layers with a directional logic. Like the OSI reference model, each layer provides services to the layer above it and depends on the layer below it. Data flows up through the stack. Policy flows down. Monitoring flows across. Each layer assumes every layer above it has already been compromised.
 
@@ -504,7 +502,7 @@ The Zones of Distrust are organized as seven layers with a directional logic. Li
 
 []{#_Toc221549799 .anchor}
 
-## Layer 1: OS Foundation
+## 4.1 Layer 1: OS Foundation
 
 The operating system will eventually recognize AI agents as a distinct entity class: agent identity as a first-class concept, native process isolation between reasoning and execution, OS-level credential brokering where the agent never sees secrets, scoped time-bound permission grants, and model provenance attestation before loading.
 
@@ -514,7 +512,7 @@ This is the same evolution that mobile brought to OS architecture. When smartpho
 
 Full realization requires investment from platform vendors (Apple, Google, Microsoft, and others).
 
-## Layer 2: Input Control
+## 4.2 Layer 2: Input Control
 
 A separate model screens all incoming data for prompt injection patterns, persuasion techniques, context window manipulation, and embedded instructions before the agent sees it. This is the perimeter. The only layer that operates before the agent's reasoning is engaged.
 
@@ -522,7 +520,7 @@ The architecture acknowledges Layer 2's fundamental limitation: some attacks are
 
 **Degraded modes** prevent Layer 2 from becoming an operational single point of failure: quarantine-with-summary (agent sees metadata, not content), dual-path processing (parallel filtered and raw paths with human review), and adaptive sensitivity fallback (tagging mode when false positives exceed thresholds).
 
-## Layer 3: Cognitive Isolation
+## 4.3 Layer 3: Cognitive Isolation
 
 The agent's ability to analyze, plan, and recommend is completely decoupled from its ability to act. The reasoning process runs in an isolated environment with a restricted syscall profile (seccomp), no shell execution, no outbound network access except to Layer 4, and no access to credentials or tool endpoints. It can only emit structured requests.
 
@@ -530,7 +528,7 @@ This contains **reasoning chain attacks** where an attacker constructs individua
 
 The gap between thought and action is where safety lives. A compromised agent that can think dangerous thoughts but cannot act on them is contained by architecture, not by trust.
 
-## Layer 4: Request Validation — The AI Certificate Authority
+## 4.4 Layer 4: Request Validation — The AI Certificate Authority
 
 This is the architectural centerpiece. Every request passes through an independent Certificate Authority that the agent cannot influence, manipulate, or bypass. The CA evaluates each request against:
 
@@ -578,8 +576,6 @@ In multi-agent systems, the CA validates entire **request chains**, not just ind
 
 **CA Compromise Containment:** Implementations MUST support external revocation of CA signing authority, immediate halt of token issuance, and independent verification that revocation has propagated. The blast radius of CA failure is halt, not exfiltration. CA unavailability is a recoverable operational event; CA compromise is a security incident requiring forensic response.
 
-
-
 ### Performance and Availability Considerations
 
 **Latency:** The CA validation process introduces latency (typically 10-50ms for policy evaluation, up to 200ms for semantic analysis with ML classifiers). This is acceptable for most agentic workflows where decision quality matters more than millisecond-level response time. For latency-sensitive operations, policy can specify fast-path validation for low-risk actions.
@@ -593,8 +589,6 @@ In multi-agent systems, the CA validates entire **request chains**, not just ind
 **Throughput:** Policy evaluation is designed to scale horizontally. Semantic analysis (when required) uses model serving infrastructure with auto-scaling based on request volume.
 
 **Degraded Operation:** If the CA becomes unavailable, the system can operate in degraded mode using cached policies and conservative defaults (deny-by-default for privileged actions, allow for pre-approved low-risk operations). All degraded-mode operations are flagged for post-hoc review.
-
-
 
 ### CA as Tier-0 Infrastructure
 
@@ -614,8 +608,6 @@ The ZoD CA occupies the same trust tier. The architectural improvement is:
 
 Organizations already accept Tier-0 risk in KMS/HSM/IAM. ZoD consolidates agent-specific validation into a comparable, manageable, auditable surface.
 
-
-
 ### Request Canonicalization Requirements
 
 **Implementation Risk:** This architecture depends on semantic policy determinism and structured request normalization. A critical implementation requirement is consistent request canonicalization.
@@ -633,7 +625,7 @@ If request normalization is inconsistent:
 
 Failure to enforce canonicalization undermines the entire token-binding security model.
 
-## Layer 5: Execution
+## 4.5 Layer 5: Execution
 
 A separate execution layer---completely outside the agent's control---receives the validated token and performs the action. The agent does not know how the action was executed. It does not have access to the infrastructure that made it happen.
 
@@ -643,7 +635,7 @@ Three automatic compromise indicators: **orphaned actions** (no valid token), **
 
 **Execution semantics:** Real-world execution is messy---retries, partial failures, timeouts, side effects. The executor must enforce: (1) idempotency per token_id (same token cannot cause duplicate effects), (2) retries require re-authorization or operate within a constrained replay window, (3) partial execution is logged as incomplete and cannot be silently resumed, (4) compensating actions (rollbacks, reversals) require their own tokens. The architecture does not assume clean one-shot execution---it assumes attackers exploit ambiguity.
 
-## Layer 6: Continuous Monitoring
+## 4.6 Layer 6: Continuous Monitoring
 
 An external system watches Layers 3, 4, and 5 from the outside, performing four distinct functions:
 
@@ -671,7 +663,7 @@ An external system watches Layers 3, 4, and 5 from the outside, performing four 
 
 The agent cannot monitor itself. This layer does not trust the agent's self-reporting at all.
 
-## Layer 7: Human Governance
+## 4.7 Layer 7: Human Governance
 
 Human oversight that is calibrated, not blanket. Requiring human confirmation for every action leads to approval fatigue and gets disabled within weeks.
 
@@ -687,7 +679,7 @@ The risk thresholds are set by external policy, not by the agent's self-assessme
 
 **Human override authority is always:** scope-limited (cannot exceed the action categories defined in policy), time-bound (emergency authorizations expire), identity-bound (tied to specific authorized roles), and fully logged to the integrity channel. Humans are not an unbounded escape hatch.
 
-# Directional Logic: How the Layers Interact
+# 5.0 Directional Logic: How the Layers Interact
 
 **Data flows up.** External content enters at Layer 2, passes through screening, reaches the agent's reasoning at Layer 3, exits as structured requests into Layer 4, and if approved, is executed at Layer 5.
 
@@ -695,7 +687,7 @@ The risk thresholds are set by external policy, not by the agent's self-assessme
 
 **Policy flows down.** Layer 7 sets policies that propagate downward: screening rules for Layer 2, authorization scopes for Layer 4, behavioral thresholds for Layer 6, and risk criteria for the entire stack.
 
-## The Failure Cascade
+## 5.1 The Failure Cascade
 
 Each layer assumes every layer above it has failed:
 
@@ -713,7 +705,7 @@ Each layer assumes every layer above it has failed:
 
 > *The question is not whether any single layer will hold. It is: how many layers does an attacker have to defeat simultaneously to cause harm?*
 
-## Attack Walkthrough: Wire Transfer Fraud
+## 5.2 Attack Walkthrough: Wire Transfer Fraud
 
 A concrete example of how the layers interact:
 
@@ -729,7 +721,7 @@ A concrete example of how the layers interact:
 
 **Attacker must defeat:** L2 screening AND L4 policy AND L6 correlation AND L7 review. Each layer operates independently. No single bypass enables the attack.
 
-## Why This Isn't Just SIEM + Token Proxy
+## 5.3 Why This Isn't Just SIEM + Token Proxy
 
 Existing Pattern What It Does What ZoD Adds
 
@@ -757,15 +749,15 @@ Skeptics may observe that monitoring, logging, and token-gated execution exist i
 
 **The one-line version:** SIEM is forensic. ZoD is pre-execution enforcement.
 
-# Zero Trust and Beyond
+# 6.0 Zero Trust and Beyond
 
-## What Zero Trust Provides
+## 6.1 What Zero Trust Provides
 
 Zero Trust is a proven foundation. Its core principles apply directly to agent security: never trust by default, least privilege, assume breach, microsegmentation, continuous monitoring.
 
 Enterprise security teams already understand Zero Trust. The Zones of Distrust incorporate these principles.
 
-## Where Zero Trust Wasn't Designed to Go
+## 6.2 Where Zero Trust Wasn't Designed to Go
 
 Zero Trust is necessary but insufficient. It focuses on identity verification and device posture---not on action correctness under compromised reasoning. Three assumptions break down with AI agents:
 
@@ -777,10 +769,9 @@ Zero Trust is necessary but insufficient. It focuses on identity verification an
 
 Zero Trust was not designed to reason about reasoning integrity. ZoD extends it into that domain.
 
-## The ZoD Approach
+## 6.3 The ZoD Approach
 
 The Cloud Security Alliance's Agentic Trust Framework [^13] establishes zero trust governance principles specifically for AI agents, providing industry foundation for this architectural approach.
-
 
 **Zero Trust says:** *Don't trust the network. Verify every request.*
 
@@ -792,9 +783,9 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 **On positioning:** ZoD is not a framework for hobbyist agents or experimental deployments. It is a framework for production systems with platform ownership and security accountability. Organizations without the operational maturity to run Tier-0 systems (KMS, HSM, IAM) should not attempt full ZoD deployment.
 
-# Current Landscape Analysis
+# 7.0 Current Landscape Analysis
 
-## What Industry Is Already Doing
+## 7.1 What Industry Is Already Doing
 
 -   **Agent identity:** Industry frameworks provide first-class identity constructs for AI agents with conditional access and lifecycle management [^8].
 
@@ -818,7 +809,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 -   **Insider/policy-author as explicit attacker position.** Most frameworks assume policy is trustworthy; ZoD treats misconfiguration and insider threat as primary attack vectors.
 
-## Capability Comparison
+## 7.2 Capability Comparison
 
 | Capability | Traditional Zero Trust | Prompt Filters | Credential Proxy | Agent Identity | Zones of Distrust |
 |-----------|----------------------|----------------|-----------------|----------------|-------------------|
@@ -835,7 +826,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 **✓ = core capability ~ = partial --- = absent\***
 
-## Regulatory and Compliance Alignment
+## 7.3 Regulatory and Compliance Alignment
 
 Industry frameworks are converging on unified governance approaches. IBM watsonx.governance [^12] represents this trend toward integrated agentic oversight.
 
@@ -855,14 +846,13 @@ The CSA STAR for AI Assurance Program [^14] provides third-party attestation for
 
 **For detailed compliance mappings, see the Zones of Distrust [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) directory.**
 
-
 ---
 
-# Interoperability Goals
+# 8.0 Interoperability Goals
 
 ZoD is designed as a **reference architecture**, not a vendor-specific implementation. The goal is ecosystem compatibility across implementations.
 
-## Conformance Requirements
+## 8.1 Conformance Requirements
 
 Conforming systems MUST demonstrate enforcement of security properties P1–P12 (see Threat Model Summary). Implementations may vary in:
 -   Programming languages and runtime environments
@@ -870,7 +860,7 @@ Conforming systems MUST demonstrate enforcement of security properties P1–P12 
 -   Executor design (containerized, serverless, VM-based)
 -   Monitoring infrastructure (SIEM integration, custom analytics, ML-based anomaly detection)
 
-## Interoperability Mechanisms
+## 8.2 Interoperability Mechanisms
 
 Interoperability between ZoD implementations is achieved through:
 
@@ -890,7 +880,7 @@ Interoperability between ZoD implementations is achieved through:
 -   Standardized interfaces between layers (L3→L4 request format, L4→L5 token format)
 -   Protocol buffer or JSON schema definitions (planned in `/specs`)
 
-## Ecosystem Compatibility
+## 8.3 Ecosystem Compatibility
 
 ZoD aims to enable:
 -   **Multi-vendor deployments** where different vendors implement different layers
@@ -901,9 +891,9 @@ Detailed interoperability specifications are under development in the `/specs` d
 
 ---
 
-# Implementation Path
+# 9.0 Implementation Path
 
-## What You Can Build Today
+## 9.1 What You Can Build Today
 
 The OS-native capabilities described in Layer 1 represent a multi-year evolution. Organizations deploying AI agents today need implementations that run on current infrastructure.
 
@@ -923,9 +913,7 @@ This implements core ZoD properties on infrastructure available today.
 
 -   Integrity channel: S3 Object Lock, QLDB, or Immudb
 
-
-
-## Minimum Safe Configuration
+## 9.2 Minimum Safe Configuration
 
 > **ZoD Minimum Viable Enforcement Boundary (MVE):**
 >
@@ -947,8 +935,7 @@ Partial deployments will happen. To prevent the framework from being blamed for 
 
 **Availability Posture:** ZoD is designed to fail closed on authorization failures. Implementations SHOULD provide redundancy and graceful degradation to meet organizational availability objectives, but availability guarantees are explicitly subordinate to prevention of unauthorized execution. An agent that cannot act is preferable to an agent that acts without authorization.
 
-
-## Control Evidence (Illustrative)
+## 9.3 Control Evidence (Illustrative)
 
 ZoD produces auditable evidence at each layer:
 
@@ -963,7 +950,7 @@ ZoD produces auditable evidence at each layer:
 
 This evidence maps directly to audit requirements under SOC 2, ISO 27001, and EU AI Act logging obligations.
 
-## Post-Compromise Recovery
+## 9.4 Post-Compromise Recovery
 
 Detection without recovery is incomplete. When compromise is confirmed:
 
@@ -977,11 +964,11 @@ Detection without recovery is incomplete. When compromise is confirmed:
 
 Recovery is not automatic. It requires human judgment (Layer 7) informed by forensic evidence from the integrity channel.
 
-## What Requires OS Evolution
+## 9.5 What Requires OS Evolution
 
 Agent identity as a first-class OS concept, native credential brokering at the kernel level, scoped permission APIs, and model provenance attestation require platform vendor investment.
 
-## Why the CA Is Not a New Class of Operational Risk
+## 9.6 Why the CA Is Not a New Class of Operational Risk
 
 CISOs will ask: \"Am I adding a new KMS-sized liability to my stack?\"
 
@@ -998,7 +985,7 @@ The answer: organizations already operate Tier-0 authorization systems. The CA i
 
 For detailed implementation guidance, see the Zones of Distrust [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md).
 
-# Conclusion
+# 10.0 Conclusion
 
 AI agents represent a genuinely new entity class in computing. They are not users. They are not devices. They are not traditional software applications. They reason autonomously, accumulate state across sessions, operate in multi-agent networks, and can be compromised in ways that are structurally invisible to them.
 
