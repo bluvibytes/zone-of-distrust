@@ -288,14 +288,21 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
 &emsp;[9.5 What Requires OS Evolution](#95-what-requires-os-evolution)  
 &emsp;[9.6 Why the CA Is Not a New Class of Operational Risk](#96-why-the-ca-is-not-a-new-class-of-operational-risk)  
 
-**[10. Conclusion](#10-conclusion)
+**[10. Conclusion](#10-conclusion)**  
 
-- 
-- [Getting Involved](#getting-involved)
-- [References](#references)
-- [Appendix A: Terminology](#appendix-a-terminology)
-- [Appendix B: Normative Language](#appendix-b-normative-language)
-- 
+**[11. Getting Involved](#11-getting-involved)**  
+&emsp;[11.1 Documentation](#111-documentation)  
+&emsp;[11.2 Specification Status](#112-specification-status)  
+&emsp;[11.3 Contributing](#113-contributing)  
+
+**[12. References](#12-references)**  
+
+**[Appendix A: Terminology](#appendix-a-terminology)**  
+
+**[Appendix B: Normative Language (RFC 2119)](#appendix-b-normative-language-rfc-2119)**  
+
+**[Appendix C: Versioning and Change Process](#appendix-c-versioning-and-change-process)**
+
 ---
 
 # 1. The Problem: Why Current Approaches Fail
