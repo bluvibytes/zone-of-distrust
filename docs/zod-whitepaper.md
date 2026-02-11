@@ -227,7 +227,7 @@ The architecture explicitly does not attempt to defend against full OS compromis
 
 **Multi-tenant scope:** In multi-tenant environments, ZoD assumes tenant isolation is enforced at the execution and policy layers. CA policies, tokens, and integrity signals MUST be tenant-scoped. Cross-tenant contamination is a platform security concern, not an agent security concern.
 
-*For complete threat model details, see Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) document.*
+*For complete threat model details, see Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md).*
 
 # Security Properties
 
@@ -241,7 +241,7 @@ The architecture claims twelve testable properties:
 
 **Governance (P11-P12):** Risk-weighted human escalation with externally-defined thresholds. Policy provenance and audit for all configuration changes.
 
-*For complete specifications, see Zones of Distrust [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md) document.*
+*For complete specifications, see Zones of Distrust [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md).*
 
 # The Zones of Distrust: A Seven-Layer Model
 
