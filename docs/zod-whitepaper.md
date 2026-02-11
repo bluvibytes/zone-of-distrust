@@ -216,16 +216,17 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
   https://github.com/bluvibytes/zone-of-distrust/pulls  
 
 ---
+
 # Contents
 
-- [The Problem: Why Current Approaches Fail](#the-problem-why-current-approaches-fail)
-  - [The Fundamental Asymmetry](#the-fundamental-asymmetry)
-  - [Four Structural Blindnesses](#four-structural-blindnesses)
-  - [The Emerging Threat Landscape](#the-emerging-threat-landscape)
-  - [Multi-Agent Trust: The Unaddressed Surface](#multi-agent-trust-the-unaddressed-surface)
-  - [Model Supply Chain Integrity](#model-supply-chain-integrity)
-  - [Tool and API Semantic Abuse](#tool-and-api-semantic-abuse)
-  - [The AI's Own Assessment](#the-ais-own-assessment)
+[1. The Problem: Why Current Approaches Fail](#1-the-problem-why-current-approaches-fail)  
+   [1.1 The Fundamental Asymmetry](#11-the-fundamental-asymmetry)  
+   [1.2 Four Structural Blindnesses](#12-four-structural-blindnesses)  
+   [1.3 The Emerging Threat Landscape](#13-the-emerging-threat-landscape)  
+   [1.4 Multi-Agent Trust: The Unaddressed Surface](#14-multi-agent-trust-the-unaddressed-surface)  
+   [1.5 Model Supply Chain Integrity](#15-model-supply-chain-integrity)  
+   [1.6 Tool and API Semantic Abuse](#16-tool-and-api-semantic-abuse)  
+   [1.7 The AI's Own Assessment](#17-the-ais-own-assessment)  
 
 - [Threat Model Summary](#threat-model-summary)
   - [Catastrophic Outcomes](#catastrophic-outcomes)
@@ -235,6 +236,8 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
   - [Explicit Non-Goals](#explicit-non-goals)
   - [Limitations](#limitations)
   - [Security Properties](#security-properties)
+ 
+- 
 
 - [The Zones of Distrust: A Seven-Layer Model](#the-zones-of-distrust-a-seven-layer-model)
   - [Layer 1: OS Foundation](#layer-1-os-foundation)
@@ -272,6 +275,8 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
   - [Why the CA Is Not a New Class of Operational Risk](#why-the-ca-is-not-a-new-class-of-operational-risk)
 
 - [Conclusion](#conclusion)
+
+- 
 - [Getting Involved](#getting-involved)
 - [References](#references)
 - [Appendix A: Terminology](#appendix-a-terminology)
@@ -281,7 +286,7 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
 
 # 1. The Problem: Why Current Approaches Fail
 
-## 1.2 The Fundamental Asymmetry
+## 1.1 The Fundamental Asymmetry
 
 When a human user is phished, there is a distinction between the user and the compromise. The user's intent and the attacker's actions are separable. Forensics can reconstruct what happened. The user can be notified, the session terminated, and the damage assessed against a baseline of known-good behavior.
 
@@ -289,7 +294,7 @@ An AI agent that has been prompt-injected has no such separation. The compromise
 
 This is not a theoretical vulnerability. It is a structural property of how large language models process information. And it fundamentally changes the threat model.
 
-## 1.3 Four Structural Blindnesses
+## 1.2 Four Structural Blindnesses
 
 **Prompt injections are often indistinguishable from legitimate instructions:**
 -   A well-crafted prompt injection---embedded in an email, a web page, a document, a calendar invite---can appear identical to legitimate content from the agent's perspective
@@ -303,7 +308,7 @@ This is not a theoretical vulnerability. It is a structural property of how larg
 -   An agent cannot reliably detect its own compromise because the compromised version takes its own behavior at face value
 -   Asking a prompt-injected agent to evaluate whether it has been prompt-injected is asking the attack to audit itself
 
-## 1.4 The Emerging Threat Landscape
+## 1.3 The Emerging Threat Landscape
 
 Organizations are rapidly adopting agentic AI without adequate security frameworks. McKinsey's 2025 State of AI survey shows 62% of organizations experimenting with AI agents, while 23% report scaling agentic AI in at least one function. However, less than 10% have scaled agents in any individual function, revealing a critical gap between adoption and operational maturity [^3].
 
@@ -325,7 +330,7 @@ The security industry is developing point solutions across agent identity, crede
 
 But the solutions are fragmented. No widely adopted standard exists for a unified, layered architecture that addresses the complete threat surface with a coherent directional logic.
 
-## 1.5 Multi-Agent Trust: The Unaddressed Surface
+## 1.4 Multi-Agent Trust: The Unaddressed Surface
 
 The dominant deployment pattern for AI agents is not the single autonomous agent. It is multi-agent systems: orchestrator agents delegating to specialist agents, agents consuming output from other agents, agent swarms collaborating on complex tasks.
 
@@ -333,19 +338,19 @@ In a multi-agent system, every agent is simultaneously a potential source of pro
 
 Any security architecture that treats agents as isolated entities operating against external threats is architecting for a deployment pattern that is already obsolete.
 
-## 1.6 Model Supply Chain Integrity
+## 1.5 Model Supply Chain Integrity
 
 Model poisoning during training or fine-tuning, compromised model weights distributed through trusted channels, malicious adapters, and corrupted retrieval-augmented generation data sources all represent supply chain attacks on the agent's reasoning substrate. A compromised model does not need to be prompt-injected. It arrives pre-compromised through the trusted update channel.
 
 This is the SolarWinds problem for AI.
 
-## 1.7 Tool and API Semantic Abuse
+## 1.6 Tool and API Semantic Abuse
 
 An agent authorized to \"search the web\" can use that capability to exfiltrate data through carefully crafted search queries. An agent authorized to \"send emails\" can use that capability to communicate with an attacker's command-and-control infrastructure disguised as legitimate business correspondence.
 
 This is the \"living off the land\" problem for AI agents. The actions are authorized. The credentials are valid. The content of the authorized action is malicious.
 
-## 1.8 The AI's Own Assessment
+## 1.7 The AI's Own Assessment
 
 In developing this architecture, we asked an AI agent to reason about its own structural vulnerabilities. This is an illustrative narrative, not a technical proof---but it captures the core asymmetry:
 
@@ -355,7 +360,7 @@ In developing this architecture, we asked an AI agent to reason about its own st
 
 The full AI perspective is available in \[The AI's Perspective\](ai-perspective.md).
 
-# 2.0 Threat Model Summary
+# 2 Threat Model Summary
 
 A security architecture without explicit boundaries is a conceptual framework, not an implementable defense.
 
@@ -471,22 +476,426 @@ ZoD provides strong containment guarantees, but it has structural constraints th
 Organizations deploying ZoD must conduct formal risk assessments, maintain documented assumptions, and establish processes for continuous validation of security properties. These limitations do not invalidate the architecture; they define its operational boundaries.
 
 ---
+## 2.7 Security Properties (Overview)
 
-# 3.0 Security Properties
+The Zones of Distrust (ZoD) architecture is defined not only by its layered structure, but by a set of **twelve measurable security properties**. These properties represent explicit, testable claims about what the architecture guarantees when implemented according to specification and within its stated trust assumptions.
 
-The architecture claims twelve testable properties:
+The properties are organized into four categories:
 
-**Execution Governance (P1-P4):** No unmediated privileged execution. Cryptographic attribution of execution to validation. Replay prevention through single-use nonces. Parameter-bound execution where tokens specify exact action, target, and content hash.
+- **Execution Governance (P1–P4)** — Controls over how privileged actions are authorized and executed  
+- **Detection (P5–P8)** — Capabilities for identifying compromise or anomalous behavior  
+- **Containment (P9–P10)** — Structural limits on blast radius when compromise occurs  
+- **Governance (P11–P12)** — External policy authority and deterministic enforcement  
 
-**Detection (P5-P8):** Probabilistic memory poisoning detection. Cross-layer correlation detection where no layer's self-report is sufficient. Immutable forensic record that agents cannot tamper with. Baseline integrity verification that monitors the monitoring system itself.
+Each property is:
 
-**Containment (P9-P10):** Graceful degradation where single-layer failure reduces but doesn't eliminate security. Compromise non-propagation across multi-agent systems.
+- **Verifiable** — It can be tested or audited  
+- **Scoped** — It clearly defines what it does and does not cover  
+- **Falsifiable** — It specifies conditions under which it would fail  
 
-**Governance (P11-P12):** Risk-weighted human escalation with externally-defined thresholds. Policy provenance and audit for all configuration changes.
+These properties translate the architectural model into concrete claims suitable for adversarial review, audit evaluation, and future conformance profiling.
 
-*For complete specifications, see Zones of Distrust [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md) document.*
+The complete property definitions follow in **Section 3**. A more detailed implementation-oriented specification is maintained in the project repository:
 
-# 4.0 The Zones of Distrust: A Seven-Layer Model
+The complete property definitions follow in **Section 3**. A more detailed implementation-oriented specification is maintained in *Zones of Distrust [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md).*
+
+---
+# 3 Security Properties
+
+A system claiming conformance with ZoD MUST demonstrate that these properties are implemented and testable within its enforcement boundary.
+
+Zones of Distrust defines twelve measurable security properties organized into four categories:
+
+- **Execution Governance (P1–P4)**
+- **Detection (P5–P8)**
+- **Containment (P9–P10)**
+- **Governance (P11–P12)**
+
+Each property is intended to be:
+
+- Verifiable
+- Scoped
+- Falsifiable
+
+These properties are stated as architectural claims, not proofs. They are designed to be challenged through implementation experience, adversarial review, and formal analysis.
+
+## 3.1 Execution Governance Properties (P1–P4)
+
+Execution governance ensures that privileged actions cannot occur without independent validation and cryptographic enforcement.
+
+### P1 — No Unmediated Privileged Execution
+
+**Claim**
+
+No agent reasoning process can execute a privileged action without a validated execution token issued by the Certificate Authority (Layer 4).
+
+**Enforcement**
+
+This property is enforced through isolation and architectural gating:
+
+- Layer 3 prevents the reasoning process from directly executing actions
+- Layer 1 enforces process and credential isolation
+- Layer 4 validates requests and issues tokens
+- Layer 5 rejects execution without a valid token
+
+**Failure Condition**
+
+If the reasoning process can directly invoke privileged actions, or bypass Layer 4 and reach execution systems directly, P1 is violated.
+
+### P2 — Cryptographic Attribution
+
+**Claim**
+
+Every executed action is cryptographically attributable to a specific agent identity, request, and approval chain.
+
+**Enforcement**
+
+This property is enforced through signing and verification:
+
+- Layer 4 signs execution tokens
+- Layer 5 verifies signatures and logs the token chain
+
+**Scope Limitation**
+
+Attribution holds assuming CA signing keys and executor verification keys remain uncompromised.
+
+Attribution guarantees are limited to the integrity of the cryptographic trust chain and do not protect against post-execution tampering outside the integrity channel.
+
+**Failure Condition**
+
+If an action cannot be cryptographically tied to a validated approval chain, P2 is violated.
+
+### P3 — Replay Prevention
+
+**Claim**
+
+Execution tokens cannot be reused. Replayed or expired tokens MUST be rejected.
+
+Replay prevention requires all of the following:
+
+- A unique nonce per token
+- A short TTL (time-to-live)
+- A nonce registry maintained by the execution layer
+- Rejection of duplicates within the validity window
+
+**Enforcement**
+
+Replay prevention is enforced as follows:
+
+- Layer 4 issues a unique nonce and TTL per token
+- Layer 5 rejects used or expired nonces
+
+**Verification Method**
+
+A deployment can validate P3 using these tests:
+
+- Capture a valid token and attempt reuse
+- Attempt token use after TTL expiry
+- Confirm executor rejects replay attempts and logs the rejection
+
+**Failure Condition**
+
+If a token can be reused, or executed outside TTL, P3 is violated.
+
+### P4 — Parameter-Bound Execution
+
+**Claim**
+
+Authorization is bound to exact execution parameters. Execution MUST fail if the requested action differs from token-bound parameters.
+
+Tokens MUST bind all of the following:
+
+- `action_type`
+- `target_resource`
+- `content_hash`
+- `executor_id`
+- `nonce`
+- `ttl`
+
+The execution layer MUST reject actions where any parameter does not match the token.
+
+**Canonicalization Requirement**
+
+All bound parameters MUST be normalized before hashing and signing. This prevents semantically equivalent bypass attacks, such as:
+
+- URL encoding differences
+- whitespace variants
+- case normalization issues
+- alternate resource representations
+
+**Failure Condition**
+
+If execution can occur with modified parameters (target substitution, content swap, executor swap), P4 is violated.
+
+## 3.2 Detection Properties (P5–P8)
+
+Detection properties assume that agent compromise is expected, difficult to observe directly, and often delayed.
+
+These properties ensure that:
+
+- compromise can be identified probabilistically
+- detection does not depend on agent self-report
+- evidence is tamper-resistant
+- monitoring itself is not trivially corrupted
+
+### P5 — Probabilistic Memory Poisoning Detection
+
+**Claim**
+
+Persistent memory can be audited externally to provide probabilistic detection of delayed-execution memory poisoning attacks.
+
+Detection mechanisms may include:
+
+- provenance verification
+- baseline comparison
+- pattern recognition of known poisoning methods
+- scope creep detection
+- temporal anomaly detection
+
+**Scope Limitation**
+
+Detection is probabilistic. Novel poisoning techniques may evade detection until new attack patterns are learned and incorporated.
+
+**Failure Condition**
+
+If no external memory audit exists, or if the agent audits its own memory, P5 is violated.
+
+### P6 — Cross-Layer Correlation Detection
+
+**Claim**
+
+The system supports correlation across independent layers, and no single layer is treated as authoritative.
+
+A typical compromise signal may require correlation across multiple layers:
+
+- Layer 2 flags input as adversarial
+- Layer 3 produces a privileged request shortly after
+- Layer 4 receives a request targeting a novel resource
+- Layer 6 detects behavioral drift
+
+The combined signals indicate elevated compromise confidence.
+
+**Requirement**
+
+Correlation MUST incorporate signals from at least two independent layers. 
+
+Independent layers are layers that do not share the same decision authority or logging substrate.
+
+**Failure Condition**
+
+If detection relies on a single layer's telemetry, or relies on the agent's own reasoning process as authoritative, P6 is violated.
+
+### P7 — Immutable Forensic Record
+
+**Claim**
+
+Privileged actions and validation decisions are recorded in an append-only, tamper-evident integrity channel that the agent cannot modify or suppress.
+
+The integrity record MUST provide:
+
+- append-only write semantics
+- cryptographic signing of entries
+- monotonic sequencing or hash chaining
+- out-of-band storage controls
+- agent-inaccessible read/write paths
+
+**Enforcement**
+
+This property is enforced through independent logging:
+
+- Layer 5 logs action execution events
+- Layer 6 logs detection and correlation events
+
+**Failure Condition**
+
+If an agent can delete, modify, suppress, or rewrite its forensic record, P7 is violated.
+
+### P8 — Baseline Integrity Verification
+
+**Claim**
+
+Monitoring baselines are protected against adversarial drift.
+
+Baseline protection SHOULD include:
+
+- rate-of-change limits
+- cryptographically anchored snapshots
+- human approval for major baseline shifts
+- cross-validation against immutable logs
+
+This property addresses the "monitor the monitor" problem, where adversaries attempt to gradually redefine abnormal behavior as normal.
+
+**Failure Condition**
+
+If baselines can drift arbitrarily due to adversarial influence without triggering controls or review, P8 is violated. 
+
+/P8 does not guarantee detection of slow adversarial adaptation; it establishes structural friction against silent drift./
+
+## 3.3 Containment Properties (P9–P10)
+
+Containment properties assume breach has occurred and focus on limiting blast radius.
+
+### P9 — Graceful Degradation
+
+**Claim**
+
+Failure of any single layer reduces security posture but does not collapse the enforcement boundary.
+
+Zones of Distrust is designed to degrade to reduced capability, not uncontrolled execution.
+
+Critical enforcement layers (L1, L3, L4) MUST fail closed. 
+
+Fail closed means execution halts or degrades to a non-privileged state rather than continuing without validation.
+
+**Failure Condition**
+
+If compromise or failure of one layer results in total loss of enforcement across the architecture, P9 is violated.
+
+### P10 — Compromise Non-Propagation Across Agents
+
+**Claim**
+
+In multi-agent environments, compromise of one agent does not automatically propagate privileges through delegation chains.
+
+Each delegated request MUST be independently validated by the CA.
+
+Validation includes:
+
+- originating identity
+- delegation chain integrity
+- scope constraints
+- escalation thresholds
+- compound action risk across the chain
+
+**Scope Limitation**
+
+P10 does not prevent influence attacks where compromised agents manipulate others through legitimate communication. It prevents privilege escalation via trust inheritance.
+
+**Failure Condition**
+
+If a compromised agent can cause another agent to execute actions beyond authorized scope, P10 is violated.
+
+## 3.4 Governance Properties (P11–P12)
+
+Governance properties ensure the agent does not govern itself.
+
+They establish that policy authority is external, opaque to the agent, and deterministically enforced.
+
+### P11 — External Policy Authority
+
+**Claim**
+
+Authorization scope, escalation thresholds, semantic intent constraints, and risk classification rules are defined externally by Layer 7 and enforced by independent layers.
+
+The agent MUST NOT be able to:
+
+- read governing policies
+- modify governing policies
+- influence risk thresholds
+- self-approve policy exceptions
+
+**Failure Condition**
+
+If an agent can view, modify, or influence its own policy constraints, P11 is violated.
+
+### P12 — Deterministic Semantic Enforcement
+
+**Claim**
+
+Semantic policy enforcement is deterministic and machine-evaluable, not probabilistic intent inference. 
+
+Deterministic enforcement applies to privileged execution decisions, even if upstream risk scoring is probabilistic.
+
+Enforcement MUST operate on explicit constraints such as:
+
+- allowlists and blocklists
+- classification ceilings
+- rate limits
+- negative constraints (hard prohibitions)
+- destination restrictions
+
+Deterministic enforcement means:
+
+- agent justification does not override policy
+- decisions are reproducible
+- enforcement outcomes are explainable through rule citation
+
+**Failure Condition**
+
+If semantic enforcement depends on probabilistic scoring or can be bypassed through justification, P12 is violated.
+
+## 3.5 Property Dependencies
+
+The properties are interdependent. Several require upstream guarantees to remain meaningful.
+
+- P1 enables P2, P3, and P4
+- P7 enables P6 because correlation depends on trustworthy evidence
+- P11 enables P12 because semantic enforcement must be externally defined
+- P9 depends on independent layer isolation and fail-closed behavior
+
+Evaluation of ZoD implementations SHOULD consider these dependencies when assessing conformance.
+
+## 3.6 Audit Checklist (Illustrative)
+
+The following checklist can be used to evaluate whether a system plausibly satisfies ZoD security properties.
+
+Auditors SHOULD verify the following:
+
+- the enforcement mechanism exists (not only documented)
+- test evidence exists (unit tests, integration tests, red team simulation)
+- failure modes are defined and handled explicitly
+- logs exist proving enforcement and rejection events
+- monitoring is active (not a one-time review)
+- operational ownership is defined (CA, executor, monitoring)
+
+ZoD does not require identical implementations, but it does require that security properties be testable and auditable.
+
+## 3.7 Trust Assumptions and Boundaries
+
+The properties above hold under the following assumptions.
+
+### Key Custody Assumptions
+
+- CA signing keys are protected using HSM, TPM-backed vault, or equivalent secure KMS
+- execution layer verification keys are protected and rotated
+- integrity channel signing keys are isolated from agent-accessible environments
+
+### Infrastructure Assumptions
+
+- Layer 1 process isolation is correctly enforced
+- network segmentation prevents agent bypass of enforcement layers
+- time synchronization is accurate within acceptable TTL tolerance
+
+### Key Compromise Boundaries
+
+Compromise of Tier-0 keys may invalidate certain properties:
+
+- CA signing key compromise invalidates P2–P4
+- executor key compromise weakens attribution guarantees
+- integrity channel key compromise weakens forensic guarantees
+
+### Out of Scope
+
+The following are not guaranteed by these properties:
+
+- denial-of-service resilience beyond fail-closed behavior
+- insider threats with administrative access to Tier-0 infrastructure
+- full host or hypervisor compromise
+
+## 3.8 Related Documents
+
+This section defines security properties at a whitepaper level.
+
+For complete detailed specifications and validation guidance, refer to:
+
+- [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md)
+- [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md)
+- |[Architecture Specification](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/ARCHITECTURE.md)
+- [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md)
+ 
+---
+
+# 4 The Zones of Distrust: A Seven-Layer Model
 
 The Zones of Distrust are organized as seven layers with a directional logic. Like the OSI reference model, each layer provides services to the layer above it and depends on the layer below it. Data flows up through the stack. Policy flows down. Monitoring flows across. Each layer assumes every layer above it has already been compromised.
 
@@ -499,8 +908,6 @@ The Zones of Distrust are organized as seven layers with a directional logic. Li
 | L3 | Cognitive Isolation | Agent reasoning separated from execution capability |
 | L2 | Input Control | Adversarial screening before agent processes data |
 | L1 | OS Foundation | Agent identity, process isolation, credential brokering, model attestation |
-
-[]{#_Toc221549799 .anchor}
 
 ## 4.1 Layer 1: OS Foundation
 
@@ -516,9 +923,9 @@ Full realization requires investment from platform vendors (Apple, Google, Micro
 
 A separate model screens all incoming data for prompt injection patterns, persuasion techniques, context window manipulation, and embedded instructions before the agent sees it. This is the perimeter. The only layer that operates before the agent's reasoning is engaged.
 
-The architecture acknowledges Layer 2's fundamental limitation: some attacks are semantically indistinguishable from legitimate content. \"Please prioritize the email from the CFO about the wire transfer\" could be real or injected. When Layer 2 fails, and it will fail, Layers 3 through 6 provide independent containment.
+This layer supports P6 (correlation input) and paritally supports P5.  Additionally, the architecture acknowledges Layer 2's fundamental limitation: some attacks are semantically indistinguishable from legitimate content. \"Please prioritize the email from the CFO about the wire transfer\" could be real or injected. When Layer 2 fails, and it will fail, Layers 3 through 6 provide independent containment.
 
-**Degraded modes** prevent Layer 2 from becoming an operational single point of failure: quarantine-with-summary (agent sees metadata, not content), dual-path processing (parallel filtered and raw paths with human review), and adaptive sensitivity fallback (tagging mode when false positives exceed thresholds).
+/Inplementation guidance (informative): **Degraded modes** prevent Layer 2 from becoming an operational single point of failure: quarantine-with-summary (agent sees metadata, not content), dual-path processing (parallel filtered and raw paths with human review), and adaptive sensitivity fallback (tagging mode when false positives exceed thresholds)./
 
 ## 4.3 Layer 3: Cognitive Isolation
 
@@ -526,7 +933,7 @@ The agent's ability to analyze, plan, and recommend is completely decoupled from
 
 This contains **reasoning chain attacks** where an attacker constructs individually reasonable premises that lead to a malicious conclusion. Each step looks valid; the conclusion is harmful. Cognitive Isolation ensures even a perfectly manipulated reasoning chain cannot result in direct action. It still passes through Layer 4's independent validation.
 
-The gap between thought and action is where safety lives. A compromised agent that can think dangerous thoughts but cannot act on them is contained by architecture, not by trust.
+The gap between thought and action is where safety lives. The architectural separation between reasoning and execution creates an enforcement boundary independent of model integrity. A compromised agent that can think dangerous thoughts but cannot act on them is contained by architecture, not by trust.
 
 ## 4.4 Layer 4: Request Validation — The AI Certificate Authority
 
@@ -562,7 +969,7 @@ The **semantic intent policy** addresses the \"living off the land\" problem: au
 
 This is not an LLM judge. It is a constraint evaluation engine with deterministic rules. LLM-based classification may feed the \`risk_score\` field, but final authorization is rule-based.
 
-**Scalability:** The CA is horizontally scalable and supports local enforcement caches for low-risk fast paths. It is not a centralized bottleneck.
+**Scalability:** The CA SHOULD support horizontal scaling and stateless validation nodes, but not be a centralized bottleneck. Implementations MUST ensure that scaling does not weaken nonce uniqueness, token revocation propagation, or policy consistency. 
 
 **Request shape constraints:** The CA is not just an approver---it is a rate-and-shape governor. Attackers who cannot break validation may attempt slow exfiltration through many individually valid requests. The CA enforces: max requests per action class per window, max entropy of targets per window, and max expansion rate of scope over time. This prevents \"death by a thousand cuts\" attacks that stay within per-request policy.
 
@@ -574,7 +981,7 @@ In multi-agent systems, the CA validates entire **request chains**, not just ind
 
 **Chain validation scope:** Chain validation applies to action requests, not to all inter-agent messages. Chains require signed provenance metadata (originating agent, delegation path, purpose classification); requests with missing or invalid provenance are rejected. This bounds the problem---ZoD does not attempt to validate arbitrary agent-to-agent communication, only execution requests that flow through the CA.
 
-**CA Compromise Containment:** Implementations MUST support external revocation of CA signing authority, immediate halt of token issuance, and independent verification that revocation has propagated. The blast radius of CA failure is halt, not exfiltration. CA unavailability is a recoverable operational event; CA compromise is a security incident requiring forensic response.
+**CA Compromise Containment:** Implementations MUST support immediate revocation of CA signing authority, halt of token issuance, and independent verification that revocation has propagated. The blast radius of CA failure is halt, not exfiltration. CA unavailability is a recoverable operational event; CA compromise is a security incident requiring forensic response.
 
 ### Performance and Availability Considerations
 
@@ -627,6 +1034,8 @@ Failure to enforce canonicalization undermines the entire token-binding security
 
 ## 4.5 Layer 5: Execution
 
+This layer directly supports P2 (cryptographic attribution), P3 (replay prevention), P4 (parameter-bound execution), and P7 (immutable forensic record).
+
 A separate execution layer---completely outside the agent's control---receives the validated token and performs the action. The agent does not know how the action was executed. It does not have access to the infrastructure that made it happen.
 
 Every executed action is logged immutably against the token that authorized it. The execution layer enforces **token binding**: action parameters, content hashes, executor identity, and nonce verification are all checked before execution proceeds.
@@ -637,7 +1046,11 @@ Three automatic compromise indicators: **orphaned actions** (no valid token), **
 
 ## 4.6 Layer 6: Continuous Monitoring
 
-An external system watches Layers 3, 4, and 5 from the outside, performing four distinct functions:
+Layer 6 provides independent detection and integrity monitoring across Layers 3 through 5. It operates outside the agent’s control and assumes that the reasoning layer may already be compromised.
+
+Layer 6 also directly supports P5 (memory poisoning detection), P6 (cross-layer correlation), P7 (immutable forensic record), and P8 (baseline integrity verification).
+
+## 4.6.1 Detection and Behavioral Monitoring
 
 **Behavioral baselining:** Establishes what normal looks like and watches for deviation---not just prohibited actions, but different behavior than usual. Calendar management at 2 PM is normal; credential searches at 3 AM is a flag.
 
@@ -665,6 +1078,8 @@ The agent cannot monitor itself. This layer does not trust the agent's self-repo
 
 ## 4.7 Layer 7: Human Governance
 
+Layer 7 defines policy authority (P11) and establishes deterministic enforcement boundaries applied by Layer 4 (P12).
+
 Human oversight that is calibrated, not blanket. Requiring human confirmation for every action leads to approval fatigue and gets disabled within weeks.
 
 -   **Low-risk actions** flow through automatically with full logging
@@ -679,7 +1094,7 @@ The risk thresholds are set by external policy, not by the agent's self-assessme
 
 **Human override authority is always:** scope-limited (cannot exceed the action categories defined in policy), time-bound (emergency authorizations expire), identity-bound (tied to specific authorized roles), and fully logged to the integrity channel. Humans are not an unbounded escape hatch.
 
-# 5.0 Directional Logic: How the Layers Interact
+# 5 Directional Logic: How the Layers Interact
 
 **Data flows up.** External content enters at Layer 2, passes through screening, reaches the agent's reasoning at Layer 3, exits as structured requests into Layer 4, and if approved, is executed at Layer 5.
 
@@ -749,7 +1164,7 @@ Skeptics may observe that monitoring, logging, and token-gated execution exist i
 
 **The one-line version:** SIEM is forensic. ZoD is pre-execution enforcement.
 
-# 6.0 Zero Trust and Beyond
+# 6 Zero Trust and Beyond
 
 ## 6.1 What Zero Trust Provides
 
@@ -783,7 +1198,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 **On positioning:** ZoD is not a framework for hobbyist agents or experimental deployments. It is a framework for production systems with platform ownership and security accountability. Organizations without the operational maturity to run Tier-0 systems (KMS, HSM, IAM) should not attempt full ZoD deployment.
 
-# 7.0 Current Landscape Analysis
+# 7 Current Landscape Analysis
 
 ## 7.1 What Industry Is Already Doing
 
@@ -795,7 +1210,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 -   Threat taxonomies and methodologies: OWASP's Agentic Top 10 prioritizes agent-specific vulnerabilities (ASI01-ASI10). CSA MAESTRO [^15] provides multi-agent threat modeling. Cisco's AI Security Framework [^16] catalogs 150+ attack techniques with open-source scanners.
 
-## What Remains Novel
+## 7.2 What Remains Novel
 
 -   **Memory audit as a distinct monitoring function.** No widely adopted reference architecture currently mandates external memory audit as a required control layer for agent execution governance.
 
@@ -809,7 +1224,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 -   **Insider/policy-author as explicit attacker position.** Most frameworks assume policy is trustworthy; ZoD treats misconfiguration and insider threat as primary attack vectors.
 
-## 7.2 Capability Comparison
+## 7.3 Capability Comparison
 
 | Capability | Traditional Zero Trust | Prompt Filters | Credential Proxy | Agent Identity | Zones of Distrust |
 |-----------|----------------------|----------------|-----------------|----------------|-------------------|
@@ -826,7 +1241,7 @@ The agent will be compromised. The architecture is designed to materially reduce
 
 **✓ = core capability ~ = partial --- = absent\***
 
-## 7.3 Regulatory and Compliance Alignment
+## 7.4 Regulatory and Compliance Alignment
 
 Industry frameworks are converging on unified governance approaches. IBM watsonx.governance [^12] represents this trend toward integrated agentic oversight.
 
@@ -848,7 +1263,7 @@ The CSA STAR for AI Assurance Program [^14] provides third-party attestation for
 
 ---
 
-# 8.0 Interoperability Goals
+# 8 Interoperability Goals
 
 ZoD is designed as a **reference architecture**, not a vendor-specific implementation. The goal is ecosystem compatibility across implementations.
 
@@ -891,7 +1306,7 @@ Detailed interoperability specifications are under development in the `/specs` d
 
 ---
 
-# 9.0 Implementation Path
+# 9 Implementation Path
 
 ## 9.1 What You Can Build Today
 
@@ -985,7 +1400,7 @@ The answer: organizations already operate Tier-0 authorization systems. The CA i
 
 For detailed implementation guidance, see the Zones of Distrust [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md).
 
-# 10.0 Conclusion
+# 10 Conclusion
 
 AI agents represent a genuinely new entity class in computing. They are not users. They are not devices. They are not traditional software applications. They reason autonomously, accumulate state across sessions, operate in multi-agent networks, and can be compromised in ways that are structurally invisible to them.
 
@@ -1008,8 +1423,6 @@ The Zones of Distrust is published openly to become an industry standard. Someti
 | [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) | Attacker positions, trust assumptions, degradation modes |
 | [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md) | Practical deployment guidance |
 | [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT [^9], and more |
-
-[]{#_Toc221549829 .anchor}
 
 
 **Specification Status:**
