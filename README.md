@@ -126,7 +126,7 @@ Zones of Distrust is our open contribution to help raise the bar for agentic AI 
 
 We need new solutions. Let's build what works.
 
-**Learn more:** [Zone of Distrust](https://bluvi.ai/zones-of-distrust)  
+**Learn more:** [Zone of Distrust](https://bluvi.ai/zod)  
 
 **GitHub:** [@bluvibytes](https://github.com/bluvibytes/zone-of-distrust)
 
