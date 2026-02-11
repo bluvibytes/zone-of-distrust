@@ -423,8 +423,6 @@ Where ZoD breaks the attack chain:
 | Exfiltration | Extract sensitive data | L4 egress controls; semantic policy blocks bulk export |
 | Cover tracks | Hide evidence of compromise | Integrity channel is immutable and out-of-band |
 
-[]{#_Toc221549795 .anchor}
-
 ## 2.4 Trust Assumptions
 
 The architecture makes explicit trust assumptions: Layer 1 OS integrity, CA operational correctness (treated as Tier-0 infrastructure like KMS/HSM), and executor fidelity.
@@ -439,7 +437,7 @@ The architecture explicitly does not attempt to defend against full OS compromis
 
 **Multi-tenant scope:** In multi-tenant environments, ZoD assumes tenant isolation is enforced at the execution and policy layers. CA policies, tokens, and integrity signals MUST be tenant-scoped. Cross-tenant contamination is a platform security concern, not an agent security concern.
 
-*For complete threat model details, see Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) document.*
+For complete threat model details, see *Zones of Distrust [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) document.*
 
 ## 2.6 Limitations
 
@@ -497,6 +495,7 @@ ZoD provides strong containment guarantees, but it has structural constraints th
 Organizations deploying ZoD must conduct formal risk assessments, maintain documented assumptions, and establish processes for continuous validation of security properties. These limitations do not invalidate the architecture; they define its operational boundaries.
 
 ---
+
 ## 2.7 Security Properties (Overview)
 
 The Zones of Distrust (ZoD) architecture is defined not only by its layered structure, but by a set of **twelve measurable security properties**. These properties represent explicit, testable claims about what the architecture guarantees when implemented according to specification and within its stated trust assumptions.
@@ -911,7 +910,7 @@ For complete detailed specifications and validation guidance, refer to:
 
 - [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md)
 - [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md)
-- |[Architecture Specification](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/ARCHITECTURE.md)
+- [Architecture Specification](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/ARCHITECTURE.md)
 - [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md)
  
 ---
@@ -1280,7 +1279,7 @@ The architecture maps directly to existing frameworks:
 
 The CSA STAR for AI Assurance Program [^14] provides third-party attestation for AI security controls.
 
-**For detailed compliance mappings, see the Zones of Distrust [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) directory.**
+For detailed compliance mappings, see the *Zones of Distrust [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) directory.*
 
 ---
 
@@ -1419,7 +1418,7 @@ The answer: organizations already operate Tier-0 authorization systems. The CA i
 
 **The key difference:** The blast radius of CA \*failure\* is halt, not exfiltration. A crashed CA stops operations; it does not authorize malicious actions. This is safer than implicit trust, where failure is invisible.
 
-For detailed implementation guidance, see the Zones of Distrust [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md).
+For detailed implementation guidance, see the *Zones of Distrust [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md).*
 
 # 10 Conclusion
 
@@ -1447,8 +1446,7 @@ The primary project documents are maintained in the public repository:
 | [Security Properties](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/security-properties.md) | 12 measurable properties (P1-P12) with verification criteria |
 | [Threat Model](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/threat-model.md) | Attacker positions, trust assumptions, degradation modes |
 | [Implementation Guide](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/implementation-guide.md) | Practical deployment guidance |
-| [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT [^9], and more |
-
+| [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT, and more |
 
 ## 11.2 Specification Status
 
@@ -1516,7 +1514,6 @@ Repository:
 [^17]: OWASP, "OWASP Top 10 for Agentic Applications" (December 2025). https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
 ---
-
 
 # Appendix A: Terminology
 
