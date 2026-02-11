@@ -682,7 +682,7 @@ This architecture will improve through real-world implementation and community f
 
 **GitHub:** [github.com/bluvibytes/zone-of-distrust](https://github.com/bluvibytes/zone-of-distrust/)
 
-See Zones of Distrust [CONTRIBUTING](https://github.com/bluvibytes/zone-of-distrust/blob/main/CONTRIBUTING.md) for guidelines.
+See Zones of Distrust [CONTRIBUTING](https://github.com/bluvibytes/zone-of-distrust/blob/main/CONTRIBUTING.md) for full guidelines.
 
 \*Zones of Distrust v0.9 RFC --- February 2026 --- BluVi\*
 
