@@ -219,73 +219,76 @@ These items are targeted for v1.0+ based on feedback volume and implementation m
 
 # Contents
 
-[1. The Problem: Why Current Approaches Fail](#1-the-problem-why-current-approaches-fail) 
-    [1.1 The Fundamental Asymmetry](#11-the-fundamental-asymmetry)  
-   [1.2 Four Structural Blindnesses](#12-four-structural-blindnesses)  
-   [1.3 The Emerging Threat Landscape](#13-the-emerging-threat-landscape)  
-   [1.4 Multi-Agent Trust: The Unaddressed Surface](#14-multi-agent-trust-the-unaddressed-surface)  
-   [1.5 Model Supply Chain Integrity](#15-model-supply-chain-integrity)  
-   [1.6 Tool and API Semantic Abuse](#16-tool-and-api-semantic-abuse)  
-   [1.7 The AI's Own Assessment](#17-the-ais-own-assessment)  
 
-[2. Threat Model Summary](#2-threat-model-summary)  
-   [2.1 Catastrophic Outcomes](#21-catastrophic-outcomes)  
-   [2.2 Attacker Positions](#22-attacker-positions)  
-   [2.3 Kill Chain Mapping](#23-kill-chain-mapping)  
-   [2.4 Trust Assumptions](#24-trust-assumptions)  
-   [2.5 Explicit Non-Goals](#25-explicit-non-goals)  
-   [2.6 Limitations](#26-limitations)  
-   [2.7 Security Properties (Overview)](#27-security-properties-overview)  
+# Contents
 
-[3. Security Properties](#3-security-properties)  
-   [3.1 Execution Governance Properties (P1–P4)](#31-execution-governance-properties-p1p4)  
-   [3.2 Detection Properties (P5–P8)](#32-detection-properties-p5p8)  
-   [3.3 Containment Properties (P9–P10)](#33-containment-properties-p9p10)  
-   [3.4 Governance Properties (P11–P12)](#34-governance-properties-p11p12)  
-   [3.5 Property Dependencies](#35-property-dependencies)  
-   [3.6 Audit Checklist (Illustrative)](#36-audit-checklist-illustrative)  
-   [3.7 Trust Assumptions and Boundaries](#37-trust-assumptions-and-boundaries)  
-   [3.8 Related Documents](#38-related-documents)  
+**[1. The Problem: Why Current Approaches Fail](#1-the-problem-why-current-approaches-fail)**  
+&emsp;[1.1 The Fundamental Asymmetry](#11-the-fundamental-asymmetry)  
+&emsp;[1.2 Four Structural Blindnesses](#12-four-structural-blindnesses)  
+&emsp;[1.3 The Emerging Threat Landscape](#13-the-emerging-threat-landscape)  
+&emsp;[1.4 Multi-Agent Trust: The Unaddressed Surface](#14-multi-agent-trust-the-unaddressed-surface)  
+&emsp;[1.5 Model Supply Chain Integrity](#15-model-supply-chain-integrity)  
+&emsp;[1.6 Tool and API Semantic Abuse](#16-tool-and-api-semantic-abuse)  
+&emsp;[1.7 The AI's Own Assessment](#17-the-ais-own-assessment)  
 
-[4. The Zones of Distrust: A Seven-Layer Model](#4-the-zones-of-distrust-a-seven-layer-model)  
-   [4.1 Layer 1: OS Foundation](#41-layer-1-os-foundation)  
-   [4.2 Layer 2: Input Control](#42-layer-2-input-control)  
-   [4.3 Layer 3: Cognitive Isolation](#43-layer-3-cognitive-isolation)  
-   [4.4 Layer 4: Request Validation — The AI Certificate Authority](#44-layer-4-request-validation--the-ai-certificate-authority)  
-   [4.5 Layer 5: Execution](#45-layer-5-execution)  
-   [4.6 Layer 6: Continuous Monitoring](#46-layer-6-continuous-monitoring)  
-   [4.7 Layer 7: Human Governance](#47-layer-7-human-governance)  
+**[2. Threat Model Summary](#2-threat-model-summary)**  
+&emsp;[2.1 Catastrophic Outcomes](#21-catastrophic-outcomes)  
+&emsp;[2.2 Attacker Positions](#22-attacker-positions)  
+&emsp;[2.3 Kill Chain Mapping](#23-kill-chain-mapping)  
+&emsp;[2.4 Trust Assumptions](#24-trust-assumptions)  
+&emsp;[2.5 Explicit Non-Goals](#25-explicit-non-goals)  
+&emsp;[2.6 Limitations](#26-limitations)  
+&emsp;[2.7 Security Properties (Overview)](#27-security-properties-overview)  
 
-[5. Directional Logic: How the Layers Interact](#5-directional-logic-how-the-layers-interact)  
-   [5.1 The Failure Cascade](#51-the-failure-cascade)  
-   [5.2 Attack Walkthrough: Wire Transfer Fraud](#52-attack-walkthrough-wire-transfer-fraud)  
-   [5.3 Why This Isn't Just SIEM + Token Proxy](#53-why-this-isnt-just-siem--token-proxy)  
+**[3. Security Properties](#3-security-properties)**  
+&emsp;[3.1 Execution Governance Properties (P1–P4)](#31-execution-governance-properties-p1p4)  
+&emsp;[3.2 Detection Properties (P5–P8)](#32-detection-properties-p5p8)  
+&emsp;[3.3 Containment Properties (P9–P10)](#33-containment-properties-p9p10)  
+&emsp;[3.4 Governance Properties (P11–P12)](#34-governance-properties-p11p12)  
+&emsp;[3.5 Property Dependencies](#35-property-dependencies)  
+&emsp;[3.6 Audit Checklist (Illustrative)](#36-audit-checklist-illustrative)  
+&emsp;[3.7 Trust Assumptions and Boundaries](#37-trust-assumptions-and-boundaries)  
+&emsp;[3.8 Related Documents](#38-related-documents)  
 
-[6. Zero Trust and Beyond](#6-zero-trust-and-beyond)  
-   [6.1 What Zero Trust Provides](#61-what-zero-trust-provides)  
-   [6.2 Where Zero Trust Wasn't Designed to Go](#62-where-zero-trust-wasnt-designed-to-go)  
-   [6.3 The ZoD Approach](#63-the-zod-approach)  
+**[4. The Zones of Distrust: A Seven-Layer Model](#4-the-zones-of-distrust-a-seven-layer-model)**  
+&emsp;[4.1 Layer 1: OS Foundation](#41-layer-1-os-foundation)  
+&emsp;[4.2 Layer 2: Input Control](#42-layer-2-input-control)  
+&emsp;[4.3 Layer 3: Cognitive Isolation](#43-layer-3-cognitive-isolation)  
+&emsp;[4.4 Layer 4: Request Validation — The AI Certificate Authority](#44-layer-4-request-validation--the-ai-certificate-authority)  
+&emsp;[4.5 Layer 5: Execution](#45-layer-5-execution)  
+&emsp;[4.6 Layer 6: Continuous Monitoring](#46-layer-6-continuous-monitoring)  
+&emsp;[4.7 Layer 7: Human Governance](#47-layer-7-human-governance)  
 
-[7. Current Landscape Analysis](#7-current-landscape-analysis)  
-   [7.1 What Industry Is Already Doing](#71-what-industry-is-already-doing)  
-   [7.2 What Remains Novel](#72-what-remains-novel)  
-   [7.3 Capability Comparison](#73-capability-comparison)  
-   [7.4 Regulatory and Compliance Alignment](#74-regulatory-and-compliance-alignment)  
+**[5. Directional Logic: How the Layers Interact](#5-directional-logic-how-the-layers-interact)**  
+&emsp;[5.1 The Failure Cascade](#51-the-failure-cascade)  
+&emsp;[5.2 Attack Walkthrough: Wire Transfer Fraud](#52-attack-walkthrough-wire-transfer-fraud)  
+&emsp;[5.3 Why This Isn't Just SIEM + Token Proxy](#53-why-this-isnt-just-siem--token-proxy)  
 
-[8. Interoperability Goals](#8-interoperability-goals)  
-   [8.1 Conformance Requirements](#81-conformance-requirements)  
-   [8.2 Interoperability Mechanisms](#82-interoperability-mechanisms)  
-   [8.3 Ecosystem Compatibility](#83-ecosystem-compatibility)  
+**[6. Zero Trust and Beyond](#6-zero-trust-and-beyond)**  
+&emsp;[6.1 What Zero Trust Provides](#61-what-zero-trust-provides)  
+&emsp;[6.2 Where Zero Trust Wasn't Designed to Go](#62-where-zero-trust-wasnt-designed-to-go)  
+&emsp;[6.3 The ZoD Approach](#63-the-zod-approach)  
 
-[9. Implementation Path](#9-implementation-path)  
-   [9.1 What You Can Build Today](#91-what-you-can-build-today)  
-   [9.2 Minimum Safe Configuration](#92-minimum-safe-configuration)  
-   [9.3 Control Evidence (Illustrative)](#93-control-evidence-illustrative)  
-   [9.4 Post-Compromise Recovery](#94-post-compromise-recovery)  
-   [9.5 What Requires OS Evolution](#95-what-requires-os-evolution)  
-   [9.6 Why the CA Is Not a New Class of Operational Risk](#96-why-the-ca-is-not-a-new-class-of-operational-risk)  
+**[7. Current Landscape Analysis](#7-current-landscape-analysis)**  
+&emsp;[7.1 What Industry Is Already Doing](#71-what-industry-is-already-doing)  
+&emsp;[7.2 What Remains Novel](#72-what-remains-novel)  
+&emsp;[7.3 Capability Comparison](#73-capability-comparison)  
+&emsp;[7.4 Regulatory and Compliance Alignment](#74-regulatory-and-compliance-alignment)  
 
-[10. Conclusion](#10-conclusion)
+**[8. Interoperability Goals](#8-interoperability-goals)**  
+&emsp;[8.1 Conformance Requirements](#81-conformance-requirements)  
+&emsp;[8.2 Interoperability Mechanisms](#82-interoperability-mechanisms)  
+&emsp;[8.3 Ecosystem Compatibility](#83-ecosystem-compatibility)  
+
+**[9. Implementation Path](#9-implementation-path)**  
+&emsp;[9.1 What You Can Build Today](#91-what-you-can-build-today)  
+&emsp;[9.2 Minimum Safe Configuration](#92-minimum-safe-configuration)  
+&emsp;[9.3 Control Evidence (Illustrative)](#93-control-evidence-illustrative)  
+&emsp;[9.4 Post-Compromise Recovery](#94-post-compromise-recovery)  
+&emsp;[9.5 What Requires OS Evolution](#95-what-requires-os-evolution)  
+&emsp;[9.6 Why the CA Is Not a New Class of Operational Risk](#96-why-the-ca-is-not-a-new-class-of-operational-risk)  
+
+**[10. Conclusion](#10-conclusion)
 
 - 
 - [Getting Involved](#getting-involved)
@@ -1421,11 +1424,15 @@ The architecture is incremental. You can deploy Layers 3--5 in weeks. Full imple
 
 > *The agent will be compromised. The architecture limits the blast radius.*
 
-# Getting Involved
+# 11 Getting Involved
 
-The Zones of Distrust is published openly to become an industry standard. Sometimes, it takes a village, and we welcome contributions from the community.
+Zones of Distrust is published openly to encourage adversarial review, real-world implementation feedback, and iterative refinement toward a future vendor-neutral industry reference architecture.
 
-## Documentation
+This RFC is intended to evolve through public critique and deployment experience. Contributions are welcomed from researchers, security architects, platform vendors, compliance practitioners, and implementers.
+
+## 11.1 Documentation
+
+The primary project documents are maintained in the public repository:
 
 | Document | Description |
 |----------|-------------|
@@ -1436,46 +1443,40 @@ The Zones of Distrust is published openly to become an industry standard. Someti
 | [Framework Mappings](https://github.com/bluvibytes/zone-of-distrust/blob/main/docs/framework-mappings.md) | OWASP, NIST, MITRE ATLAS, Microsoft AIRT [^9], and more |
 
 
-**Specification Status:**
+## 11.2 Specification Status
 
-The `/specs` directory contains detailed specifications for implementers. Some specifications are in draft status:
+The `/specs` directory contains implementation-oriented specifications intended for interoperability.
 
--   **token-format.md** - DRAFT (not yet published)
--   **policy-language.md** - RFC requested
--   **integrity-channel-schema.md** - Planned
+Some specifications are currently in draft status:
 
-This signals an intentional roadmap, not incomplete work. Community contributions to specification development are welcome.
+- `token-format.md` — Draft (not yet finalized)
+- `policy-language.md` — RFC feedback requested
+- `integrity-channel-schema.md` — Planned
 
-## Contribute
+This roadmap is intentional. ZoD is being published first as a defensible architectural framework, with schemas and conformance artifacts expected to mature through community input and implementation experience.
 
-This architecture will improve through real-world implementation and community feedback. We welcome:
+## 11.3 Contributing
 
--   Technical feedback and improvements
+ZoD is intended to improve through real-world validation and adversarial critique. Contributions are welcome, including:
 
--   Implementation examples and case studies
+- technical feedback and corrections  
+- implementation examples and deployment patterns  
+- integration guides for agent frameworks  
+- security research and vulnerability analysis  
+- mapping improvements to standards and regulatory controls  
 
--   Integration patterns for agent frameworks
+Repository:
 
--   Security research and vulnerability analysis
-
-**GitHub:** [github.com/bluvibytes/zone-of-distrust](https://github.com/bluvibytes/zone-of-distrust/)
-
-See Zones of Distrust [CONTRIBUTING](https://github.com/bluvibytes/zone-of-distrust/blob/main/CONTRIBUTING.md) for guidelines.
-
-\*Zones of Distrust v0.9 RFC --- February 2026 --- BluVi\*
+- **GitHub:** https://github.com/bluvibytes/zone-of-distrust  
+- **Contribution Guide:** https://github.com/bluvibytes/zone-of-distrust/blob/main/CONTRIBUTING.md  
 
 ---
 
-## References
+# 12 References
 
 [^1]: Cloud Security Alliance and Strata Identity, "Securing Autonomous AI Agents Survey Report" (Feb 2026). https://cloudsecurityalliance.org/artifacts/securing-autonomous-ai-agents-survey-report
 
 [^2]: Gartner, Inc., "Gartner Predicts Over 40% of Agentic AI Projects Will Be Canceled by End of 2027" (June 25, 2025). https://www.gartner.com/en-us/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027
-
-
-
-
-
 
 [^3]: McKinsey & Company, "The State of AI in 2025: Agents, Innovation, and Transformation" (November 2025). https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai
 
@@ -1508,58 +1509,75 @@ See Zones of Distrust [CONTRIBUTING](https://github.com/bluvibytes/zone-of-distr
 [^17]: OWASP, "OWASP Top 10 for Agentic Applications" (December 2025). https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
 ---
-# Terminology
 
-This section provides formal definitions for key terms used throughout this document.
+
+# Appendix A: Terminology
+
+This appendix provides formal definitions for key terms used throughout this document.
 
 ## AI Agent
+
 An autonomous software system powered by a foundation model that can perceive its environment, reason about tasks, make decisions, and take actions to achieve specified goals — including invoking tools, accessing data, and interacting with external systems — with varying degrees of human oversight.
 
 ## Autonomous
+
 Operating with the ability to make decisions and take actions without requiring explicit human approval for each individual step, while still subject to policy constraints and governance frameworks.
 
 ## Privileged Action
+
 Any operation that modifies state, accesses sensitive data, crosses trust boundaries, or has irreversible consequences — including but not limited to: financial transactions, data modifications, credential usage, system configurations, external communications, and resource provisioning.
 
 ## Execution Token
+
 A cryptographic attestation binding a validated request to its authorized execution context. Tokens are unforgeable, non-transferable, short-lived, and content-bound through cryptographic hashing.
 
 ## Integrity Channel
+
 A tamper-evident, append-only logging mechanism that records all privileged actions and validation decisions. Implemented using signed events, monotonic sequence numbers, and write-once storage.
 
 ## Baseline Drift
+
 The phenomenon where an agent’s behavior deviates from expected patterns over time due to prompt injection, model drift, or environmental manipulation.
 
 ## Compromise Non-Propagation
+
 A security property ensuring that compromise of one architectural layer does not automatically grant control over other layers. Achieved through isolation and independent validation.
 
 ## MVE (Minimum Viable Enforcement Boundary)
+
 The minimum architectural controls required for ZoD compliance: Layer 3–5 separation, token binding, and immutable logging.
 
 ## Policy Probing
+
 An attack technique where an adversary systematically tests policy boundaries to identify permissible actions and construct exploit chains.
 
 ## Tier-0 System
+
 Critical infrastructure components that occupy the highest trust tier in an architecture (e.g., KMS, HSM, IAM, CA). Compromise of Tier-0 systems has cascading impact across the entire environment.
 
 ## Request Canonicalization
+
 The process of normalizing structured requests into a consistent, deterministic format before cryptographic hashing or policy evaluation to prevent semantically equivalent but syntactically different bypass attacks.
 
 ## Token Binding
+
 The cryptographic linkage between a validated request’s content hash and the execution token that authorizes its performance, preventing token reuse or parameter substitution attacks.
 
 ## Cognitive Isolation
+
 Architectural separation between the reasoning engine (Layer 3) and execution capability (Layer 5), such that compromise of reasoning does not directly grant execution authority.
 
 ## Attestation Surface
+
 The explicit boundary where privileged actions are validated against policy before execution. In ZoD, this is the Certificate Authority (Layer 4).
 
 ## Immutable Audit Log
+
 A tamper-evident record of all privileged actions that cannot be retroactively modified, enabling forensic analysis and compromise detection.
 
 ---
 
-# Normative Language
+# Appendix B: Normative Language (RFC 2119)
 
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **MAY**, and **OPTIONAL** in this document are to be interpreted as described in **RFC 2119**.
 
@@ -1567,6 +1585,41 @@ The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **
 - **SHOULD / RECOMMENDED:** Indicates a strong recommendation; alternative approaches may be acceptable in specific circumstances with documented justification.
 - **MAY / OPTIONAL:** Indicates a truly optional feature or approach.
 
+---
+
+# Appendix C: Versioning and Change Process
+
+This document is published as an open RFC and is expected to evolve based on community feedback and implementation experience.
+
+## Versioning
+
+ZoD uses semantic versioning conventions aligned to RFC-style publication:
+
+- **v0.x RFC:** Draft architecture published for public review
+- **v1.0:** First stable release suitable for use as an industry reference baseline
+- **v1.x:** Backwards-compatible refinements, clarifications, and mapping updates
+- **v2.0+:** Major structural changes that may introduce incompatibilities
+
+## Change Process
+
+Changes to ZoD are managed through the public repository:
+
+- Substantive architectural changes SHOULD be proposed through GitHub Discussions before PR submission.
+- Minor edits, clarifications, typo fixes, and mapping updates MAY be submitted directly via pull request.
+- Security-related issues SHOULD follow the responsible disclosure policy in `SECURITY.md`.
+
+All accepted changes MUST be traceable through Git history and review artifacts.
+
+## RFC Closure and Promotion Criteria
+
+Promotion from RFC v0.9 to v1.0 is expected to require:
+
+- community review of attacker positions and threat model completeness  
+- validation that security properties remain implementable and testable  
+- at least one reference implementation or partial enforcement prototype  
+- review of interoperability goals and minimum viable enforcement boundary  
+
+ZoD maintainers may publish intermediate RFC versions (e.g., v0.10, v0.11) prior to v1.0 based on feedback volume.
 
 ---
 
