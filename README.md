@@ -8,15 +8,30 @@
 
 Zero Trust gave us the philosophy: *never trust, always verify*. But Zero Trust was built for users and devices—entities that know when they've been compromised.
 
-AI agents break that assumption. A prompt-injected agent doesn't know it's been compromised. The manipulation becomes its genuine reasoning.
+Autonomous AI agents break that assumption. A prompt-injected agent doesn't know it's been compromised. The manipulation becomes its genuine reasoning.
 
 **Zones of Distrust** extends Zero Trust principles for autonomous entities that can be compromised without knowing it.
+
+**Core Thesis:** *Security is not about making the agent trustworthy. It's about building a system that remains safe even when the agent is not.*
+
+---
+
+## 🔎 Start Here
+
+If you're new to ZoD, start with:
+
+1. **[Architecture Specification](/docs/ARCHITECTURE.md)**
+2. **[Threat Model](/docs/threat-model.md)**
+3. **[Security Properties (P1–P12)](/docs/security-properties.md)**
+4. **[Implementation Guide](/docs/implementation-guide.md)**
+
+Full documentation index: **[docs/README.md](/docs/README.md)**
 
 ---
 
 ## 🏗️ Architecture Overview
 
-The architecture consists of seven interdependent layers:
+ZoD defines seven interdependent layers:
 
 | Layer | Name | Function |
 |-------|------|----------|
@@ -32,48 +47,75 @@ The architecture consists of seven interdependent layers:
 
 ---
 
-## 🧭 Repository Map
+## 🎯 What We Want Reviewed (Attack This)
 
-- `docs/` — Whitepaper, architecture, threat model, implementation guide, security properties
-- `specs/` — Schemas and normative specs (RFC; evolving)
-- `docs/mappings/` — Crosswalks to OWASP/NIST/CSA, compliance mappings, and indexes
-- `.github/` — Issue/PR templates (coming)
-  
+ZoD is published as an RFC to invite adversarial critique. We are actively seeking review on:
+
+- Cross-layer bypass scenarios (L2→L5, L3→L5, etc.)
+- Prompt injection containment limits and failure modes
+- Token binding flaws and replay/exfiltration risks
+- Multi-agent boundary failures and delegated-agent abuse
+- Drift detection evasion techniques
+- Break-glass / human override abuse paths
+- Logging integrity assumptions and tamper resistance
+
+If you find a weakness, eevn if it's outside these areas, open an issue describing the attack path and impacted layers.
+
 ---
 
-## 📚 Documentation
+## 🧩 Security Properties
 
-| Document | Description |
-|----------|-------------|
-| [Architecture Specification](docs/ARCHITECTURE.md) | Complete seven-layer technical specification |
-| [Executive Brief](docs/executive-brief.md) | High-level summary for leadership |
-| [Security Properties](docs/security-properties.md) | 12 measurable properties (P1-P12) |
-| [Threat Model](docs/threat-model.md) | Attacker positions and trust assumptions |
-| [Implementation Guide](docs/implementation-guide.md) | Practical deployment guidance |
-| [Full Documentation Index](docs/README.md) | Complete documentation directory |
+ZoD defines **12 measurable security properties (P1–P12)** intended to serve as a baseline for agentic system security evaluation.
 
+See: **[Security Properties](/docs/security-properties.md)**
 
 ---
 
 ## 🗺️ Framework Mappings
 
-ZoD maps to major AI security frameworks, demonstrating alignment and coverage:
+ZoD includes crosswalks to major AI security and governance frameworks:
 
-| Category | Frameworks |
-|----------|------------|
-| **Threat Taxonomies** | [OWASP Agentic](docs/mappings/owasp-agentic-mapping.md), [Cisco](docs/mappings/cisco-mapping.md), [Microsoft AIRT](docs/mappings/microsoft-airt-mapping.md), [MITRE ATLAS](docs/mappings/mitre-atlas-mapping.md) |
-| **Methodology** | [MAESTRO](docs/mappings/maestro-mapping.md), [NIST AI RMF](docs/mappings/nist-ai-rmf-mapping.md), [Google SAIF](docs/mappings/google-saif-mapping.md), [AWS Scoping](docs/mappings/aws-scoping-mapping.md) |
-| **Compliance** | [EU AI Act](docs/mappings/compliance-mapping.md#eu-ai-act), [SOC 2](docs/mappings/compliance-mapping.md#soc-2-trust-service-criteria), [ISO 27001](docs/mappings/compliance-mapping.md#isoiec-270012022), [ISO 42001](docs/mappings/compliance-mapping.md#isoiec-420012023), [HIPAA](docs/mappings/industry-mapping.md#healthcare-hipaa-hitrust-fda), [PCI DSS](docs/mappings/industry-mapping.md#pci-dss-v401-for-ai-payment-agents) |
+- OWASP Agentic
+- MITRE ATLAS
+- NIST AI RMF
+- Google SAIF
+- MAESTRO
+- EU AI Act / ISO / SOC 2 mappings
 
-See the [complete mapping index](docs/mappings/README.md) for all framework mappings.
+See: **[Mapping Index](/docs/mappings/README.md)**
+
+---
+
+## 🧩 Road to a Community Standard
+
+ZoD is currently **v0.9 RFC**. Breaking changes are expected.
+
+Target milestones:
+- v0.9 → community critique + issue intake
+- v0.95 → bypass catalog + red-team test corpus
+- v1.0 → stable reference architecture + security property baseline
 
 ---
 
 ## 🚀 Reference Implementation
 
-**Status:** Coming Q2 2026
+**Status:** Planned (Q2 2026)
 
-We're building a vendor-neutral agent runtime that implements this architecture across Windows, macOS, Linux, and Android.
+A vendor-neutral agent runtime implementing ZoD across Windows, macOS, Linux, and Android is in development.
+
+---
+
+## 🤝 Contributing
+
+ZoD is published openly to evolve into an industry reference architecture.
+
+Contributions are welcome, including:
+- threat model critique and bypass analysis
+- implementation patterns for agent frameworks
+- security property validation and measurable metrics
+- real-world deployment constraints and lessons learned
+
+See: **[CONTRIBUTING](/CONTRIBUTING.md)**
 
 ---
 
@@ -81,25 +123,11 @@ We're building a vendor-neutral agent runtime that implements this architecture 
 
 | Document | Description |
 |----------|-------------|
-| [ROADMAP](ROADMAP.md) | Implementation timeline and milestones |
-| [CONTRIBUTING](CONTRIBUTING.md) | How to contribute |
-| [SECURITY](SECURITY.md) | Security policy and reporting |
-| [GOVERNANCE](GOVERNANCE.md) | Project governance model |
-| [DISCLAIMER](DISCLAIMER.md) | Legal disclaimers |
-| [TRADEMARKS](TRADEMARKS.md) | Trademark notices |
-
----
-
-## 🤝 Contributing
-
-This architecture is published openly to become an industry standard. We welcome:
-
-- Technical feedback and improvements
-- Implementation examples
-- Integration patterns for agent frameworks
-- Real-world use case documentation
-
-See [CONTRIBUTING](CONTRIBUTING.md) for guidelines.
+| [ROADMAP](/ROADMAP.md) | Implementation timeline and milestones |
+| [GOVERNANCE](/GOVERNANCE.md) | Project governance model |
+| [SECURITY](/SECURITY.md) | Security policy and reporting |
+| [DISCLAIMER](/DISCLAIMER.md) | Legal disclaimers |
+| [TRADEMARKS](/TRADEMARKS.md) | Trademark notices |
 
 ---
 
@@ -107,26 +135,20 @@ See [CONTRIBUTING](CONTRIBUTING.md) for guidelines.
 
 | Content | License |
 |---------|---------|
-| Documentation & Specification | [Creative Commons CC-BY 4.0](LICENSE-CC-BY) |
-| Reference Implementation (when released) | [Apache 2.0](LICENSE) |
-
-See [LICENSES](LICENSES.md) for complete licensing details.
+| Documentation & Specification | [Creative Commons CC-BY 4.0](/LICENSE-CC-BY) |
+| Reference Implementation (when released) | [Apache 2.0](/LICENSE) |
 
 ---
 
-## 🏢 About BluVi
+## 🏢 About
 
 Too many solutions are bandaids—security built for humans at the keyboard, retrofitted for AI. We've watched incident after incident unfold like a horror movie, everyone yelling "DON'T OPEN THE DOOR!" while shoving your mouth full of popcorn, unable to tear your eyes away from the actors doing just that.
 
-Most recently example was OpenClaw. Did we really see 22K people fork OpenClaw to run on their own machines within 6 weeks? That's like watching 22K children with keys to the house and no parental supervision.
-
 We decided to do something about it instead.
 
-Zones of Distrust is our open contribution to help raise the bar for agentic AI security. 
+Zones of Distrust is our open contribution to help raise the bar for agentic AI security as an open reference architecture for securing autonomous AI agents. 
 
-We need new solutions. Let's build what works.
-
-**Learn more:** [Zone of Distrust](https://bluvi.ai/zones-of-distrust)  
+We (humans) need new solutions. Let's build what works.
 
 **GitHub:** [@bluvibytes](https://github.com/bluvibytes/zone-of-distrust)
 
