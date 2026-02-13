@@ -10,6 +10,20 @@ Security is hard. We assume good faith, welcome disagreement, and prioritize def
 
 ---
 
+## 🧭 How to Engage
+
+If you're new:
+
+- Read the **Architecture Specification**
+- Review the **Threat Model**
+- Identify an assumption or enforcement boundary
+- Try to break it
+- Open an issue describing the attack path
+
+Adversarial thinking is encouraged.
+
+---
+
 ## Code of Conduct
 
 Participation in this project is governed by the Code of Conduct.
@@ -36,72 +50,77 @@ See: `SECURITY.md`
 
 We welcome contributions across documentation, specifications, schemas, reference implementations, and adversarial testing.
 
-High-value contribution areas include:
-
 ---
 
-### Specification and Architecture Feedback
+### 1. Specification and Architecture Feedback
 
 - Improvements to requirements in `specs/`
 - Tightening normative language (`MUST`, `SHOULD`, `MAY`)
 - Threat model refinements
 - Clarifying trust boundaries and assumptions
 - Identifying ambiguous enforcement behavior or edge cases
+- Proposing measureable security property improvements
 
 ---
 
-### Schemas and Interchange Formats
+### 2. Schemas and Interchange Formats
 
 - JSON schema improvements (execution tokens, integrity events, delegation chains)
-- Schema validation test cases
-- Backward-compatibility and versioning strategies
+- Validation test cases
+- Versioning strategies
+- Backward-compatibility
 
 ---
 
-### Reference and Example Implementations
+### 3. Implementation Patterns
 
 We welcome examples of how ZoD is implemented in real systems, including:
 
 - Agent framework integrations
 - Deployment patterns (Kubernetes, service mesh, sidecars, PEP gateways)
-- Certificate Authority (validator) services
-- Executor services
+- Certificate Authority (validator) service implementations
+- Executor isolation models
 - Policy evaluation integrations
 - Replay prevention and nonce-tracking mechanisms
 - Logging and correlation pipelines
 
 ---
 
-### Adversarial Testing
+### 4. Threat Model and Adversarial Testing
 
-We explicitly welcome adversarial contributions, including:
+We explicitly welcome threat model and adversarial contributions, including:
 
 - Prompt injection test cases
-- Memory and RAG poisoning scenarios
+- RAG poisoning paths scenarios
 - Token replay, substitution, or scope escalation attempts
-- Multi-agent chain manipulation
-- Executor bypass attempts
+- Multi-agent delegation abuse
+- Cross-layer boundary violations
+- Drift detection evasion strategies
 
-Adversarial tests may be **minimal proof-of-concept demonstrations**. They do not need to be production-grade exploits, but they **must be reproducible and clearly scoped**.
+Adversarial tests should be clearly scoped, reproducible, and tied to specific layers or properties (P1–P12). Minimal PoCs are sufficient.
 
 ---
 
-### Documentation Improvements
+### 5. Documentation and Clarity
 
 Help make the architecture more accessible and precise:
 
 - Clarify technical explanations
 - Add diagrams or visualizations
 - Improve examples
-- Improve onboarding documentation
+- Improve onboarding flow
 
 ---
 
-### Mappings and Ecosystem Alignment
+### 6. Mappings and Ecosystem Alignment
 
 - Mappings to OWASP, NIST, MITRE ATLAS, CSA, ISO, SOC 2, etc.
 - Corrections to mapping claims or scope assumptions
 - New framework crosswalks
+
+---
+
+## How to Contribute
 
 ---
 
@@ -203,6 +222,14 @@ Final design and acceptance decisions are made by the ZoD maintainers.
 While rigorous disagreement and adversarial review are encouraged, changes must align with ZoD’s core security assumptions, threat model, and architectural enforcement boundaries. In cases of unresolved disagreement, maintainers prioritize architectural coherence, enforceability, and testability over consensus.
 
 If you are proposing a major change, please open an issue or discussion first.
+
+---
+
+## Community Direction
+
+ZoD is intended to evolve toward a community-reviewed reference architecture.
+
+If you are interested in participating more deeply (working group discussions, red-team workshops, or formal review cycles), open a discussion thread.
 
 ---
 
