@@ -1,0 +1,62 @@
+name: Bug Report
+description: Report a bug or inconsistency in the ZoD framework documentation or reference implementation
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. Every bug report helps strengthen the framework.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of ZoD does this affect?
+      options:
+        - Documentation / Specification
+        - Reference Implementation
+        - Security Policy
+        - Layer 1 - Agent Identity & Authentication
+        - Layer 2 - Command & Control Boundaries
+        - Layer 3 - Execution Sandboxing
+        - Layer 4 - Data Flow Controls
+        - Layer 5 - Monitoring & Audit
+        - Layer 6 - Human Override & Escalation
+        - Layer 7 - Inter-Agent Trust Negotiation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of the bug or inconsistency
+      placeholder: What did you find?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this?
+      placeholder: |
+        1. Go to...
+        2. Look at...
+        3. Notice that...
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any additional context, screenshots, or references
