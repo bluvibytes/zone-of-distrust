@@ -1,0 +1,71 @@
+name: Feature Request
+description: Propose a new capability, layer extension, or improvement to ZoD
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ZoD is intentionally incomplete. Your ideas help shape the framework.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of enhancement is this?
+      options:
+        - New layer capability
+        - Layer modification
+        - Integration pattern
+        - Tooling / Developer experience
+        - Documentation improvement
+        - Governance / Policy
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Related Layer(s)
+      description: Which ZoD layer(s) does this relate to?
+      multiple: true
+      options:
+        - Layer 1 - Agent Identity & Authentication
+        - Layer 2 - Command & Control Boundaries
+        - Layer 3 - Execution Sandboxing
+        - Layer 4 - Data Flow Controls
+        - Layer 5 - Monitoring & Audit
+        - Layer 6 - Human Override & Escalation
+        - Layer 7 - Inter-Agent Trust Negotiation
+        - Cross-layer / Architecture-wide
+        - Not layer-specific
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this solve? What gap does it fill?
+      placeholder: Describe the use case or scenario this addresses
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: How would you solve it? Be as specific or high-level as you like.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any other approaches you thought about?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: References, real-world scenarios, related frameworks, or threat models that inform this request

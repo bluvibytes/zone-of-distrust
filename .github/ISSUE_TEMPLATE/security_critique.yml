@@ -1,0 +1,91 @@
+name: Security Critique / Architecture Review
+description: Challenge an assumption, identify a weakness, or propose a threat model against ZoD
+title: "[Critique]: "
+labels: ["security-review", "architecture", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most important template in this repo.
+        
+        ZoD is an open RFC. We need security researchers, red teamers, and architects to find the edge cases we missed. Don't hold back.
+
+  - type: dropdown
+    id: critique_type
+    attributes:
+      label: Type of Critique
+      description: What kind of challenge are you raising?
+      options:
+        - Architectural weakness / design flaw
+        - Missing threat model
+        - Bypass scenario
+        - Trust boundary violation
+        - Assumption that doesn't hold in production
+        - Gap in coverage
+        - Conflict with existing standards (NIST, ISO, Zero Trust, etc.)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Affected Layer(s)
+      description: Which layer(s) does this critique target?
+      multiple: true
+      options:
+        - Layer 1 - Agent Identity & Authentication
+        - Layer 2 - Command & Control Boundaries
+        - Layer 3 - Execution Sandboxing
+        - Layer 4 - Data Flow Controls
+        - Layer 5 - Monitoring & Audit
+        - Layer 6 - Human Override & Escalation
+        - Layer 7 - Inter-Agent Trust Negotiation
+        - Cross-layer / Architecture-wide
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity Assessment
+      description: How critical is this in your judgment?
+      options:
+        - Critical - Fundamentally undermines the architecture
+        - High - Significant gap that must be addressed
+        - Medium - Weakness that should be considered
+        - Low - Edge case or minor concern
+        - Informational - Observation or suggestion
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Critique
+      description: Describe the weakness, threat, or flaw you've identified
+      placeholder: Be specific. What breaks, under what conditions, and why?
+    validations:
+      required: true
+
+  - type: textarea
+    id: attack_scenario
+    attributes:
+      label: Attack Scenario / Proof of Concept
+      description: If applicable, describe how an adversary would exploit this
+      placeholder: |
+        1. Attacker does X...
+        2. This bypasses Layer N because...
+        3. Result: unauthorized action / data exfiltration / etc.
+
+  - type: textarea
+    id: recommendation
+    attributes:
+      label: Recommended Mitigation
+      description: How would you fix or mitigate this? (Optional — identifying the problem is enough)
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Related CVEs, research papers, real-world incidents, or framework comparisons

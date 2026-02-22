@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Architecture Discussion
+    url: https://github.com/bluvibytes/zone-of-distrust/discussions
+    about: Open-ended questions, architecture debates, and general discussion about ZoD — use Discussions instead of Issues
+  - name: Security Vulnerability (Private)
+    url: https://github.com/bluvibytes/zone-of-distrust/security/advisories/new
+    about: Report a security vulnerability privately through GitHub Security Advisories
