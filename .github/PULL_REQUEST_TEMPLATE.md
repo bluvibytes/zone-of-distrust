@@ -21,13 +21,16 @@
 
 <!-- Which ZoD layers does this touch? -->
 
-- [ ] Layer 1 - Agent Identity & Authentication
-- [ ] Layer 2 - Command & Control Boundaries
-- [ ] Layer 3 - Execution Sandboxing
-- [ ] Layer 4 - Data Flow Controls
-- [ ] Layer 5 - Monitoring & Audit
-- [ ] Layer 6 - Human Override & Escalation
-- [ ] Layer 7 - Inter-Agent Trust Negotiation
+## Layer(s) Affected
+<!-- Which ZoD layers does this touch? -->
+- [ ] L1 - OS Foundation (Infrastructure Integrity)
+- [ ] L2 - Input Control
+- [ ] L3 - Cognitive Isolation
+- [ ] L4 - Contextual Authority (CA / Request Validation)
+- [ ] L5 - Constrained Executor
+- [ ] L6 - Continuous Monitoring (Behavioral + Memory Audit)
+- [ ] L7 - Human Governance
+- [ ] Integrity Channel (cross-layer)
 - [ ] Cross-layer / Architecture-wide
 - [ ] Not layer-specific
 
@@ -51,7 +54,7 @@ ZoD is a security framework. Every change has security implications.
 
 ## Checklist
 
-- [ ] I have read the [Contributing Guide](CONTRIBUTING.md)
+- [ ] I have read the [Contributing Guide](../CONTRIBUTING.md)
 - [ ] My changes follow the existing documentation style
 - [ ] I have considered the security implications of this change
 - [ ] I have updated relevant documentation (if applicable)
