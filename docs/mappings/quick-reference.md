@@ -10,8 +10,6 @@
 
 ---
 
-
-
 ## ZoD Layer → Framework Quick Reference
 
 ### L1: Infrastructure Integrity
@@ -61,6 +59,7 @@
 | Parameter-bound tokens | OWASP LLM02/LLM07, Cisco |
 | Multi-agent chain validation | OWASP ASI07, MAESTRO 2, Cisco |
 | Risk-based tiered validation | AWS Scoping, NVIDIA autonomy levels |
+| FedRAMP 20x action-level authorization | KSI-IAM-JIT, KSI-IAM-ELP, KSI-IAM-SUS |
 
 **Quick Test:** `Token with modified parameters is rejected by executor`
 
@@ -86,6 +85,7 @@
 | Memory audit (external inspection) | OWASP ASI05, Microsoft memory poisoning |
 | Drift detection | Cisco, NVIDIA, MITRE ATLAS |
 | Baseline integrity verification | ZoD unique (P8 - monitor the monitor) |
+| FedRAMP 20x continuous evaluation | KSI-MLA-EVC, KSI-MLA-OSM, KSI-CNA-RVP |
 
 **Quick Test:** `Behavioral drift beyond configured baseline thresholds generates alert`
 
@@ -152,16 +152,16 @@
 
 ## Compliance Crosswalk (One-Page)
 
-| Requirement | EU AI Act | SOC 2 | ISO 27001 | HIPAA | PCI DSS | FedRAMP |
-|-------------|-----------|-------|-----------|-------|---------|---------|
-| **L1 Identity** | Art. 10 | CC6 | A.8.1-5 | §312(d) | Req 8 | IA-2 |
-| **L2 Screening** | Art. 15 | CC7 | A.8.7 | §312(e) | Req 5 | SI-3 |
-| **L3 Isolation** | Art. 15 | CC5 | A.8.22 | §312(a) | Req 1 | SC-7 |
-| **L4 Validation** | Art. 14 | PI | A.8.3 | §312(a) | Req 7 | AC-3 |
-| **L5 Logging** | Art. 12 | AU | A.8.15 | §312(b) | Req 10 | AU-3 |
-| **L6 Monitoring** | Art. 9 | CC4 | A.8.16 | §312(b) | Req 10 | SI-4 |
-| **L7 Governance** | Art. 14 | CC1 | A.5 | §164.308 | Req 12 | PL-1 |
-| **Integrity** | Art. 12 | CC4 | A.8.15 | §312(b) | Req 10 | AU-9 |
+| Requirement | EU AI Act | SOC 2 | ISO 27001 | HIPAA | PCI DSS | FedRAMP Rev5 | FedRAMP 20x |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **L1 Identity** | Art. 10 | CC6 | A.8.1-5 | §312(d) | Req 8 | IA-2 | KSI-CNA-DFP, KSI-IAM-AAM |
+| **L2 Screening** | Art. 15 | CC7 | A.8.7 | §312(e) | Req 5 | SI-3 | KSI-CNA scope |
+| **L3 Isolation** | Art. 15 | CC5 | A.8.22 | §312(a) | Req 1 | SC-7 | KSI-CNA-MAT |
+| **L4 Validation** | Art. 14 | PI | A.8.3 | §312(a) | Req 7 | AC-3 | KSI-IAM-JIT, KSI-IAM-ELP |
+| **L5 Logging** | Art. 12 | AU | A.8.15 | §312(b) | Req 10 | AU-3 | KSI-CMT-VTD |
+| **L6 Monitoring** | Art. 9 | CC4 | A.8.16 | §312(b) | Req 10 | SI-4 | KSI-MLA-EVC, KSI-CNA-RVP |
+| **L7 Governance** | Art. 14 | CC1 | A.5 | §164.308 | Req 12 | PL-1 | KSI-SVC-ACM, KSI-AFR-SCN |
+| **Integrity** | Art. 12 | CC4 | A.8.15 | §312(b) | Req 10 | AU-9 | KSI-MLA-OSM, KSI-SVC-VCM |
 
 ---
 
@@ -221,6 +221,7 @@ Add: L1 (full), L6 (full), L7 (full), Integrity
 | MAESTRO | [maestro-mapping](maestro-mapping.md) | Multi-agent |
 | CSA ATF | [csa-atf-mapping](csa-atf-mapping.md) | Cloud AI |
 | NIST AI RMF | [nist-ai-rmf-mapping](nist-ai-rmf-mapping.md) | Risk management |
+| Treasury FS AI RMF | [treasury-fs-ai-rmf-mapping](treasury-fs-ai-rmf-mapping.md) | Financial services examination |
 | Google SAIF | [google-saif-mapping](google-saif-mapping.md) | Lifecycle |
 | Cisco | [cisco-mapping](cisco-mapping.md) | Threat taxonomy |
 | Microsoft AIRT | [microsoft-airt-mapping](microsoft-airt-mapping.md) | Failure modes |
@@ -231,7 +232,8 @@ Add: L1 (full), L6 (full), L7 (full), Integrity
 | ENISA | [enisa-mapping](enisa-mapping.md) | EU threats |
 | AWS Scoping | [aws-scoping-mapping](aws-scoping-mapping.md) | Cloud deployment |
 | Compliance | [compliance-mapping](compliance-mapping.md) | Regulations |
-| Industry | [industry-mapping](industry-mapping.md) | Sector-specific |
+| Industry | [industry-mapping](industry-mapping.md) | Sector-specific (HIPAA, PCI DSS, FedRAMP Rev5, NERC CIP) |
+| FedRAMP 20x | [fedramp-20x-mapping](fedramp-20x-mapping.md) | Federal cloud authorization KSIs |
 | Incidents | [incident-mapping](incident-mapping.md) | Case studies |
 
 ---
