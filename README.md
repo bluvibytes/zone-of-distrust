@@ -59,7 +59,7 @@ ZoD is published as an RFC to invite adversarial critique. We are actively seeki
 - Break-glass / human override abuse paths
 - Logging integrity assumptions and tamper resistance
 
-If you find a weakness, eevn if it's outside these areas, open an issue describing the attack path and impacted layers.
+If you find a weakness, even if it's outside these areas, open an issue describing the attack path and impacted layers.
 
 ---
 
