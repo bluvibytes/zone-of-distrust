@@ -200,7 +200,7 @@ ZoD produces machine-checkable evidence directly:
 
 ## Cross-References Within ZoD Repo
 
-- [zero-trust-mapping.md](zero-trust-mapping.md) — KSI-CNA-MAT lateral movement language aligns with ZTA
+- [zero-trust-mapping.md](zero-trust-mapping.md) — KSI-CNA-MAT (formerly KSI-CNA-02) lateral movement language aligns with ZTA
 - [compliance-mapping.md](compliance-mapping.md) — Federal authorization in broader compliance context
 - [industry-mapping.md](industry-mapping.md) — Legacy FedRAMP Rev5 sector-specific coverage
 
