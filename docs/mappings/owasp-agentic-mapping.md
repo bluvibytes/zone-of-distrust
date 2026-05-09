@@ -11,7 +11,6 @@
 ---
 
 
-
 ## Overview
 
 The OWASP Top 10 for Agentic Applications identifies the ten most critical security risks for autonomous AI systems. This document maps each OWASP risk to specific Zones of Distrust controls.
@@ -251,7 +250,7 @@ For each OWASP risk, verify ZoD controls are operational:
 
 ## References
 
-- [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [OWASP Top 10 for Agentic Applications](https://genai.owasp.org/)
 - [ZoD Architecture Specification](../ARCHITECTURE.md)
 - [ZoD Security Properties](../security-properties.md)
 ---
