@@ -40,6 +40,7 @@ This directory contains detailed mappings between the Zones of Distrust architec
 | [MAESTRO](maestro-mapping.md) | CSA MAESTRO | Multi-agent security assessment |
 | [CSA ATF](csa-atf-mapping.md) | CSA AI Technology Framework | Cloud AI control domains |
 | [NIST AI RMF](nist-ai-rmf-mapping.md) | NIST AI Risk Management Framework | Govern/Map/Measure/Manage |
+| [Treasury FS AI RMF](treasury-fs-ai-rmf-mapping.md) | Treasury Financial Services AI RMF | Examination-oriented controls for financial services |
 | [Google SAIF](google-saif-mapping.md) | Google Secure AI Framework | Lifecycle phases |
 | [CoSAI](cosai-mapping.md) | Coalition for Secure AI | Industry coalition risk map |
 | [AWS Scoping](aws-scoping-mapping.md) | AWS GenAI + Agentic Scoping Matrices | Deployment risk & agency categorization |
@@ -51,7 +52,8 @@ This directory contains detailed mappings between the Zones of Distrust architec
 | Mapping | Framework | Focus |
 |---------|-----------|-------|
 | [Compliance](compliance-mapping.md) | EU AI Act, SOC 2, ISO 27001, ISO 42001 | Certification requirements |
-| [Industry](industry-mapping.md) | HIPAA, PCI DSS, FedRAMP, NERC CIP | Sector-specific regulations |
+| [FedRAMP 20x](fedramp-20x-mapping.md) | FedRAMP 20x Key Security Indicators | Federal cloud authorization (continuous monitoring) |
+| [Industry](industry-mapping.md) | HIPAA, PCI DSS, FedRAMP Rev5, NERC CIP | Sector-specific regulations |
 
 ### Practical Application
 
@@ -98,6 +100,8 @@ Standards for certification and regulatory compliance:
 | SOC 2 | [compliance-mapping](compliance-mapping.md) | Trust Service Criteria |
 | ISO 27001 | [compliance-mapping](compliance-mapping.md) | Information security controls |
 | ISO 42001 | [compliance-mapping](compliance-mapping.md) | AI-specific certification |
+| Treasury FS AI RMF | [treasury-fs-ai-rmf-mapping](treasury-fs-ai-rmf-mapping.md) | Financial services examination framework |
+| FedRAMP 20x | [fedramp-20x-mapping](fedramp-20x-mapping.md) | Federal cloud authorization KSIs |
 
 ---
 
@@ -105,16 +109,16 @@ Standards for certification and regulatory compliance:
 
 Which frameworks address which layers:
 
-| ZoD Layer | OWASP | MAESTRO | ATF | NIST | SAIF | Cisco | MS | NVIDIA | MITRE | AWS | Compliance |
-|-----------|-------|---------|-----|------|------|-------|-----|--------|-------|-----|------------|
-| L1 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| L2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| L3 | ✓ | ~ | ✓ | ~ | ~ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ |
-| L4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ |
-| L5 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ |
-| L6 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| L7 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ |
-| Integrity | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ |
+| ZoD Layer | OWASP | MAESTRO | ATF | NIST | SAIF | Cisco | MS | NVIDIA | MITRE | AWS | Compliance | Treasury FS | FedRAMP 20x |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| L1 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| L2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| L3 | ✓ | ~ | ✓ | ~ | ~ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ | ~ |
+| L4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ | ✓ |
+| L5 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ | ✓ |
+| L6 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| L7 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ | ✓ |
+| Integrity | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 *✓ = explicitly addressed | ~ = partially addressed*
 
@@ -177,12 +181,12 @@ Which frameworks validate which properties:
 
 | Metric | Value |
 |--------|-------|
-| Total mapping documents | 18 |
-| Frameworks/standards covered | 20+ |
+| Total mapping documents | 20 |
+| Frameworks/standards covered | 22+ |
 | Threat taxonomy frameworks | 6 |
-| Methodology frameworks | 8 |
-| Compliance standards | 8+ |
-| Total verification items | 150+ |
+| Methodology frameworks | 9 |
+| Compliance standards | 10+ |
+| Total verification items | 165+ |
 
 ---
 
