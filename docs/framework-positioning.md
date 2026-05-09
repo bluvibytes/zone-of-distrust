@@ -265,6 +265,42 @@ The published frameworks fall into three complementary categories:
 
 ---
 
+### Regulatory Frameworks
+
+#### Treasury Financial Services AI Risk Management Framework (February 2026)
+
+**What it is:** Treasury Department framework operationalizing NIST AI RMF specifically for financial services. Developed with 100+ financial institutions, the Cyber Risk Institute, and federal/state regulators.
+
+**Key contributions:**
+
+- Examination-oriented control objectives across multiple domains
+- Maturity stages (Initial, Minimal, Evolving, Embedded) tied to evidence requirements
+- Domain coverage spanning Governance, Data Practices, Model Validation, Monitoring, Third-Party Risk, Consumer Protection, and AI-specific Cybersecurity
+- Direct alignment with financial services supervisory practice
+
+**What it doesn't provide:** Architectural specification for technical controls.
+
+**ZoD integration:** ZoD provides the architectural pattern that produces evidence for the framework's technical control objectives. ZoD compliance levels (L1-L5) map to FS AI RMF maturity stages. See dedicated mapping at [mappings/treasury-fs-ai-rmf-mapping.md](mappings/treasury-fs-ai-rmf-mapping.md).
+
+---
+
+#### FedRAMP 20x (Phase 2 active 2026)
+
+**What it is:** Federal authorization framework for cloud service providers, reframed under the 2022 FedRAMP Authorization Act and OMB Memorandum M-24-15 from a control-narrative model to an outcome-based, continuously-validated capability assessment.
+
+**Key contributions:**
+
+- 11 themes of Key Security Indicators (KSIs) with machine-readable definitions at github.com/FedRAMP/docs
+- Continuous validation requirement (KSI-AFR-PVA) shifts authorization from point-in-time to persistent
+- Three-day machine-validation cycle for Moderate baseline; three-month for non-machine-based KSIs
+- Phase 2 Moderate Pilot active through March 2026; Phase 3 widescale Q3-Q4 2026
+
+**What it doesn't provide:** None of the 11 KSI themes addresses autonomous agent containment as a distinct capability category. KSI-CNA-MAT acknowledges compromise as a possibility ("lateral movement is minimized if compromised") at the network/service layer; the case where the compromised entity is the reasoning of a machine-based information resource sits at the edge of current 20x scope.
+
+**ZoD integration:** ZoD provides architectural mechanisms that produce continuously-validated evidence for FedRAMP 20x KSIs in CNA, IAM, MLA, SVC, CMT, and SCR themes. ZoD's Integrity Signal Channel directly produces the machine-readable evidence FRR-KSI-02 requires. See dedicated mapping at [mappings/fedramp-20x-mapping.md](mappings/fedramp-20x-mapping.md).
+
+---
+
 ## The Gap ZoD Fills
 
 Autonomous agents introduce risk classes—delegation abuse, tool misuse, task drift, long-horizon autonomy—that cannot be handled purely through model governance. Agents are not just models; they are operators with persistence, tool access, delegation authority, and state.
@@ -292,15 +328,15 @@ ZoD is one of the first frameworks to assemble these capabilities into a single,
 
 ### ZoD Layers → All Frameworks
 
-| ZoD Layer | Cisco | SAIF | OWASP | Microsoft | NVIDIA | MAESTRO | ATF | AWS | MITRE |
-|-----------|-------|------|-------|-----------|--------|---------|-----|-----|-------|
-| L7: Governance | Regulatory mapping | Governance controls | ASI10 | Design considerations | Autonomy levels | Human Oversight | Governance | Risk categorization | — |
-| L6: Monitoring | Detection evasion | Secure Monitoring | ASI09 | Logging/monitoring | ARP methodology | Monitoring & Observability | Monitoring | — | Detection TTPs |
-| L5: Execution | Tool exploitation | Secure Execution | ASI02 | Environment isolation | System harm mapping | Tool & Resource | Execution | — | — |
-| L4: CA/Validation | Multi-agent coord. | Application controls | ASI03 | Control flow regulation | Escalating controls | Orchestration | Access Control | Control selection | — |
-| L3: Cognitive Isolation | Reasoning manipulation | — | ASI01 | Agent injection | Component risk mapping | — | — | — | — |
-| L2: Input Control | Input manipulation | Secure Development | ASI06 | Agent compromise | Pipeline amplification | Inter-Agent Comm. | Input validation | — | Evasion TTPs |
-| L1: OS Foundation | Supply chain | Secure Development | ASI04 | Identity management | Model provenance | Agent Identity | Infrastructure | — | Initial Access |
+| ZoD Layer | Cisco | SAIF | OWASP | Microsoft | NVIDIA | MAESTRO | ATF | AWS | MITRE | Treasury FS | FedRAMP 20x |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| L7: Governance | Regulatory mapping | Governance controls | ASI10 | Design considerations | Autonomy levels | Human Oversight | Governance | Risk categorization | — | Governance, Consumer Protection | KSI-SVC-ACM, KSI-AFR-SCN |
+| L6: Monitoring | Detection evasion | Secure Monitoring | ASI09 | Logging/monitoring | ARP methodology | Monitoring & Observability | Monitoring | — | Detection TTPs | Monitoring | KSI-MLA-EVC, KSI-CNA-RVP |
+| L5: Execution | Tool exploitation | Secure Execution | ASI02 | Environment isolation | System harm mapping | Tool & Resource | Execution | — | — | AI Cybersecurity | KSI-IAM-ELP, KSI-CMT-VTD |
+| L4: CA/Validation | Multi-agent coord. | Application controls | ASI03 | Control flow regulation | Escalating controls | Orchestration | Access Control | Control selection | — | Data Practices, Consumer Protection | KSI-IAM-JIT, KSI-IAM-ELP |
+| L3: Cognitive Isolation | Reasoning manipulation | — | ASI01 | Agent injection | Component risk mapping | — | — | — | — | AI Cybersecurity | KSI-CNA-MAT |
+| L2: Input Control | Input manipulation | Secure Development | ASI06 | Agent compromise | Pipeline amplification | Inter-Agent Comm. | Input validation | — | Evasion TTPs | AI Cybersecurity, Third-Party Risk | KSI-CNA scope |
+| L1: OS Foundation | Supply chain | Secure Development | ASI04 | Identity management | Model provenance | Agent Identity | Infrastructure | — | Initial Access | Model Validation, Third-Party Risk | KSI-CNA-DFP, KSI-IAM-AAM, KSI-SCR-MIT |
 
 *Cells indicate relevance, not direct equivalence. Framework emphases vary.*
 
@@ -399,6 +435,8 @@ The OWASP Top 10 for Agentic Applications documents production incidents that va
 | **SOC 2** | L1 (security), L4-L5 (processing integrity), L6 (availability monitoring), semantic policy (confidentiality) |
 | **ISO 27001** | Access control (L1, L4), cryptographic controls (L4 tokens), operations security (L3, L5), incident management (recovery protocols) |
 | **ISO/IEC 42001** | AI-specific controls—behavioral monitoring, memory audit, semantic intent |
+| **FedRAMP 20x** | KSI evidence generation across CNA, IAM, MLA, SVC, CMT, SCR themes; KSI-CSX-SUM implementation summaries; ISC produces machine-readable evidence required by FRR-KSI-02 |
+| **Treasury FS AI RMF** | Governance (L7), Data Practices (L4, L6), Model Validation (L1, L6), Monitoring (L6, ISC), Third-Party Risk (L1, L2), Consumer Protection (L4, L7), AI Cybersecurity (P1-P12) |
 | **SEC AI Guidance** | L7 (documented oversight), integrity channel (audit trails), formal threat model (risk assessment) |
 
 ---
@@ -425,6 +463,8 @@ The OWASP Top 10 for Agentic Applications documents production incidents that va
 ├── Early: CSA ATF published
 ├── Early: Microsoft SDL for AI updated (agent identity required)
 ├── Feb: Zones of Distrust v0.9 RFC ◄── YOU ARE HERE
+├── 2025-2026: FedRAMP 20x Phase 2 Moderate Pilot active (Nov 2025–Mar 2026)
+└── Q3-Q4: FedRAMP 20x Phase 3 widescale adoption expected
 ```
 
 ---
@@ -477,6 +517,11 @@ To sharpen positioning, ZoD explicitly excludes the following from scope:
 - AWS, "Generative AI Scoping Matrix" and "Agentic AI Scoping Matrix," November 2025. Deployment and agency categorization.
 - Google, "Secure AI Framework (SAIF)," 2023. Lifecycle security model.
 - NIST, "AI Risk Management Framework (AI RMF)," January 2023. Govern/Map/Measure/Manage structure.
+
+**Regulatory Frameworks**
+
+- U.S. Department of the Treasury, "Financial Services AI Risk Management Framework," February 2026. Examination-oriented operationalization of NIST AI RMF for financial services. Developed with Cyber Risk Institute and 100+ financial institutions.
+- General Services Administration / FedRAMP, "FedRAMP 20x," 2025-2026. Continuous-monitoring authorization model under FedRAMP Authorization Act (44 USC § 3609) and OMB Memorandum M-24-15. Machine-readable Key Security Indicators at github.com/FedRAMP/docs (FRMR v0.9.43-beta, 2026-04-08)
 
 **Industry Research**
 - SailPoint, "AI Agents: The New Attack Surface," 2025. 80% unintended actions, 23% credential exposure findings.
