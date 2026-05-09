@@ -171,6 +171,8 @@ payment:
 
 ### FedRAMP for AI Systems
 
+> **See also:** [fedramp-20x-mapping.md](fedramp-20x-mapping.md) for detailed FedRAMP 20x Key Security Indicator (KSI) mapping to ZoD architectural layers.
+
 > **Regulatory Update (2025):** FedRAMP is undergoing significant modernization under OMB Memorandum M-24-15 "Modernizing FedRAMP." The FedRAMP 20x initiative (launched March 2025) introduces a new cloud-native authorization approach emphasizing security over compliance and leveraging automation. Phase 2 pilot is underway through Q2 FY26. Traditional Agency Authorization remains available. Key shifts include security-based (vs. compliance-based) decision making, automated validation of Key Security Indicators, and streamlined significant change notifications.
 
 | FedRAMP Control Family | ZoD Mapping |
