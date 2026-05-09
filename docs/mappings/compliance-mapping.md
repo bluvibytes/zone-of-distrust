@@ -212,33 +212,90 @@ ISO 42001 is the first AI-specific certification standard, addressing AI managem
 
 ---
 
+## FedRAMP 20x
+
+FedRAMP 20x is the federal authorization framework for cloud service providers (CSPs), reframed under the 2022 FedRAMP Authorization Act and OMB Memorandum M-24-15 from a control-narrative model to an outcome-based, continuously-validated capability assessment. Phase 2 of the 20x pilot is active through March 2026; Phase 3 widescale adoption is expected Q3-Q4 2026.
+
+**See the dedicated mapping document:** [FedRAMP 20x Mapping](fedramp-20x-mapping.md)
+
+The dedicated document maps approximately 25 specific Key Security Indicators (KSIs) across 7 theme categories to ZoD architectural layers, with three-tier classification (Direct, Extends, Adjacent) and a section identifying where FedRAMP 20x goes beyond current ZoD scope.
+
+### Summary of Coverage
+
+| KSI Theme | ZoD Implementation |
+| --- | --- |
+| AFR — Authorization by FedRAMP | L1 model provenance, L4 CA validation, L6 baseline monitoring, ISC immutable state |
+| CNA — Cloud Native Architecture | L3 cognitive isolation, L4 token-bound traffic flow, L1 cryptographic attestation |
+| IAM — Identity and Access Management | L4 action-first authorization, L5 constrained execution, L6/L7 anomaly response |
+| MLA — Monitoring, Logging, and Auditing | ISC SIEM integration, L4 log access governance, L6 configuration evaluation |
+| SVC — Service Configuration | L4/L7 policy-as-code, L1/L4 resource integrity, ISC communication validation |
+| CMT — Change Management | ISC change attribution, L1 immutable validation, L4-L6 continuous validation |
+| SCR — Supply Chain Risk | L1 model provenance, L4 third-party constraints, L6 behavioral monitoring |
+
+### Beyond Current ZoD Scope
+
+FedRAMP 20x requires the full breadth of KSI coverage. ZoD provides architectural mechanisms for technical controls in CNA, IAM, MLA, SVC, CMT, SCR, and parts of AFR. The procedural and organizational themes (CED — Cybersecurity Education, INR — Incident Response, RPL — Recovery Planning, PIY — Policy and Inventory) require additional CSP-side processes that ZoD does not provide. See the dedicated mapping for detail.
+
+---
+
+## Treasury FS AI Risk Management Framework
+
+The Treasury Financial Services AI Risk Management Framework (FS AI RMF), released February 2026, operationalizes NIST AI RMF specifically for financial services. Developed with 100+ financial institutions, the Cyber Risk Institute, and federal/state regulators, the framework introduces examination-oriented control objectives across multiple domains with evidence requirements aligned to financial services supervisory practice.
+
+**See the dedicated mapping document:** [Treasury FS AI RMF Mapping](treasury-fs-ai-rmf-mapping.md)
+
+### Summary of Coverage
+
+| Domain | ZoD Implementation |
+| --- | --- |
+| Governance | L7 human governance, policy-as-code |
+| Data Practices | L4 semantic policy, L6 access monitoring |
+| Model Validation | L1 model provenance, L6 behavioral baseline |
+| Monitoring | L6 cross-layer correlation, integrity channel |
+| Third-Party Risk | L1 supply chain verification, L2 inter-agent screening |
+| Consumer Protection | L7 risk-weighted escalation, L4 financial action validation |
+| AI-Specific Cybersecurity | All layers (P1-P12) |
+
+### Adoption Stages
+
+FS AI RMF maturity stages map to ZoD implementation phases:
+
+| Stage | ZoD Implementation Path |
+| --- | --- |
+| Initial | Minimal Deployable Architecture; L4 validation for pilot agents |
+| Minimal | Add L6 behavioral monitoring; expand semantic policy |
+| Evolving | Full 7-layer implementation; multi-agent chain validation |
+| Embedded | HSM-backed CA; enterprise-wide integrity channel; advanced memory audit |
+
+---
+
 ## Compliance Matrix Summary
 
-| Requirement Area | EU AI Act | SOC 2 | ISO 27001 | ISO 42001 |
-|-----------------|-----------|-------|-----------|-----------|
-| Risk management | Art. 9 | CC3 | A.5.1 | 6.1 |
-| Human oversight | Art. 14 | CC1 | A.5.4 | 6.6 |
-| Transparency | Art. 13 | CC2 | A.5.14 | 6.5 |
-| Robustness | Art. 15 | CC7 | A.8.14 | 6.3 |
-| Security | Art. 15 | CC6-7 | A.8 | 6.4 |
-| Logging | Art. 12 | CC4 | A.8.15 | 7.1 |
-| Data governance | Art. 10 | PI | A.8.10-12 | 7.2 |
-| Incident response | — | CC7.5 | A.5.24-26 | 7.3 |
+| Requirement Area | EU AI Act | SOC 2 | ISO 27001 | ISO 42001 | FedRAMP 20x | Treasury FS AI RMF |
+|-----------------|-----------|-------|-----------|-----------|-------------|---------------------|
+| Risk management | Art. 9 | CC3 | A.5.1 | 6.1 | KSI-AFR | Governance |
+| Human oversight | Art. 14 | CC1 | A.5.4 | 6.6 | KSI-AFR | Consumer Protection |
+| Transparency | Art. 13 | CC2 | A.5.14 | 6.5 | Machine-readable evidence | Governance, Consumer Protection |
+| Robustness | Art. 15 | CC7 | A.8.14 | 6.3 | KSI-CNA continuous monitoring | Model Validation |
+| Security | Art. 15 | CC6-7 | A.8 | 6.4 | All KSI domains | AI Cybersecurity |
+| Logging | Art. 12 | CC4 | A.8.15 | 7.1 | KSI-MLA | Monitoring |
+| Data governance | Art. 10 | PI | A.8.10-12 | 7.2 | KSI-SVC, KSI-CMT | Data Practices |
+| Incident response | — | CC7.5 | A.5.24-26 | 7.3 | KSI-INR | Monitoring |
 
 ---
 
 ## ZoD Layer → Compliance Mapping
 
-| ZoD Layer | EU AI Act | SOC 2 | ISO 27001 | ISO 42001 |
-|-----------|-----------|-------|-----------|-----------|
-| L1 | Art. 10 | CC6 | A.8.1-5 | 7.2 |
-| L2 | Art. 10, 15 | CC7 | A.8.7, 23 | 7.2 |
-| L3 | Art. 15 | CC5 | A.8.22, 31 | 6.3 |
-| L4 | Art. 13, 14 | PI, CC6 | A.8.3, 24 | 6.5, 6.6 |
-| L5 | Art. 12 | PI | A.8.15 | 7.1 |
-| L6 | Art. 9 | CC4 | A.8.16 | 7.1 |
-| L7 | Art. 14 | CC1 | A.5 | 6.6 |
-| Integrity | Art. 12, 13 | CC4 | A.8.15 | 7.1 |
+| ZoD Layer | EU AI Act | SOC 2 | ISO 27001 | ISO 42001 | FedRAMP 20x | Treasury FS AI RMF |
+|-----------|-----------|-------|-----------|-----------|-------------|---------------------|
+| L1 | Art. 10 | CC6 | A.8.1-5 | 7.2 | KSI-CNA-DFP, KSI-IAM-AAM, KSI-SCR-MIT | Model Validation, Third-Party Risk |
+| L2 | Art. 10, 15 | CC7 | A.8.7, 23 | 7.2 | KSI-CNA scope | AI Cybersecurity, Third-Party Risk |
+| L3 | Art. 15 | CC5 | A.8.22, 31 | 6.3 | KSI-CNA-MAT | AI Cybersecurity |
+| L4 | Art. 13, 14 | PI, CC6 | A.8.3, 24 | 6.5, 6.6 | KSI-IAM-JIT, KSI-IAM-ELP, KSI-SVC | Data Practices, Consumer Protection |
+| L5 | Art. 12 | PI | A.8.15 | 7.1 | KSI-IAM-ELP, KSI-CMT-VTD | AI Cybersecurity |
+| L6 | Art. 9 | CC4 | A.8.16 | 7.1 | KSI-MLA-EVC, KSI-CNA-RVP, KSI-IAM-SUS | Monitoring |
+| L7 | Art. 14 | CC1 | A.5 | 6.6 | KSI-SVC-ACM, KSI-AFR-SCN | Governance, Consumer Protection |
+| Integrity | Art. 12, 13 | CC4 | A.8.15 | 7.1 | KSI-MLA-OSM, KSI-MLA-RVL, KSI-SVC-VCM | Monitoring, Governance |
 
 ---
 
@@ -292,6 +349,25 @@ ISO 42001 is the first AI-specific certification standard, addressing AI managem
 - [ ] AI robustness demonstrated (P9)
 - [ ] AI transparency achieved (L4, Integrity)
 
+**FedRAMP 20x**
+- [ ] Continuous monitoring operational (L6)
+- [ ] Machine-readable evidence schemas defined (Integrity channel)
+- [ ] Policy-as-code via GitOps (L7)
+- [ ] Production-derived evidence available (L5, L6)
+- [ ] Configuration management automation (L7)
+- [ ] Identity assurance controls (L1, L4)
+- [ ] See [fedramp-20x-mapping.md](fedramp-20x-mapping.md) for full KSI-level verification
+
+**Treasury FS AI RMF**
+- [ ] Governance domain controls operational (L7)
+- [ ] Data Practices controls operational (L4, L6)
+- [ ] Model Validation evidence generated (L1, L6)
+- [ ] Monitoring evidence active (L6, Integrity)
+- [ ] Third-Party Risk controls operational (L1, L2)
+- [ ] Consumer Protection escalation operational (L7)
+- [ ] See [treasury-fs-ai-rmf-mapping.md](treasury-fs-ai-rmf-mapping.md) for full domain verification
+
+
 ---
 
 ## References
@@ -300,6 +376,14 @@ ISO 42001 is the first AI-specific certification standard, addressing AI managem
 - [SOC 2 Trust Services Criteria (AICPA 2017, revised 2022)](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2)
 - [ISO/IEC 27001:2022](https://www.iso.org/standard/27001)
 - [ISO/IEC 42001:2023](https://www.iso.org/standard/42001)
+- [FedRAMP 20x Overview](https://www.fedramp.gov/20x/)
+- [FedRAMP Machine-Readable Documentation (FRMR)](https://github.com/FedRAMP/docs)
+- [FedRAMP Authorization Act (44 USC § 3609)](https://fedramp.gov/docs/authority/law/)
+- [OMB Memorandum M-24-15](https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program-FedRAMP.pdf)
+- [Treasury FS AI Risk Management Framework](https://cyberriskinstitute.org/artificial-intelligence-risk-management/)
+- [NIST SP 800-53 Rev. 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+- [FedRAMP 20x ZoD Mapping](fedramp-20x-mapping.md)
+- [Treasury FS AI RMF ZoD Mapping](treasury-fs-ai-rmf-mapping.md)
 - [ZoD Architecture Specification](../ARCHITECTURE.md)
 - [ZoD Security Properties](../security-properties.md)
 
